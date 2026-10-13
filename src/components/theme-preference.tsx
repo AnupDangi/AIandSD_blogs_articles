@@ -23,6 +23,8 @@ function subscribe(listener: () => void) {
   }
   window.addEventListener("storage", storageChanged);
   window.addEventListener("academy:theme", changed);
+  // A change made in another tab before this one hydrated emits no event we can observe.
+  document.documentElement.dataset.theme = snapshot();
   return () => { window.removeEventListener("storage", storageChanged); window.removeEventListener("academy:theme", changed); };
 }
 
