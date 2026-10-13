@@ -43,6 +43,14 @@ Do not put database URLs, provider secrets, OpenAI keys, or Supabase secret keys
 Production deployment is a manual, reviewed step. The `Deploy to Vercel` GitHub Actions workflow is `workflow_dispatch` only and requires repository secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`); it never runs automatically.
 
 
+## Running locally and signing in
+
+`npm run dev` always serves on **http://localhost:3000** and exits with an error if that port is busy, because sign-in is tied to one address: `NEXT_PUBLIC_APP_URL` (default `http://localhost:3000`) is used for the OAuth redirect, the sign-in cookie, and the CSRF origin check. Opening the app at `127.0.0.1` or another port shows a notice on the sign-in page instead of failing silently.
+
+In the Supabase dashboard (Authentication, URL configuration) add `http://localhost:3000/**` to the redirect URLs. Google and GitHub OAuth apps keep using Supabase's own callback, `https://<project-ref>.supabase.co/auth/v1/callback`. Email links must be opened in the same browser that requested them.
+
+`npm run dev:local` runs the same app on port 3000 against a throwaway local PostgreSQL (data in `.local-stack/`, migrations applied, draft catalog imported and marked published in that local database only). Sign-in still uses your Supabase project, so Google, GitHub and email work, while progress, quiz attempts, hints and bookmarks stay on your machine. It needs PostgreSQL server tools and the private review bundle in `curriculum/private`.
+
 ## Local checks and current release plan
 
 Run npm run test, npm run typecheck, npm run lint, npm run curriculum:public-check, and npm run build. Browser checks use npm run test:e2e against an isolated production build. Database acceptance uses npm run test:integration with disposable local PostgreSQL server tools (or PG_BIN); it never falls back to the app database.

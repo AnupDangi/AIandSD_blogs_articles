@@ -34,3 +34,8 @@ future_plans/
 .planning/
 graphify-out/
 .vercel/
+/certs
+/.env
+/.env.local
+/curriculum/private
+/.local-stack/
