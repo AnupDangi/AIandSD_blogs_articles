@@ -1,0 +1,77 @@
+name: Academy CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: academy-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  persistence:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: academy_test
+          POSTGRES_PASSWORD: local-integration-only
+          POSTGRES_DB: learnlikeadev_test_ci
+        ports: [5432:5432]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run prisma:generate
+      - name: Verify database-backed learning and quota races
+        run: npm run test:integration
+        env:
+          ACADEMY_TEST_DATABASE_URL: postgresql://academy_test:local-integration-only@127.0.0.1:5432/learnlikeadev_test_ci
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run prisma:generate
+      - run: npm run curriculum:public-check
+      # Private keys and reviewed hint packs stay outside GitHub; content:check covers the public manifest.
+      - run: npm run test
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Build with isolated integration credentials
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:54321
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: playwright-public-key-placeholder
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: playwright-anon-key-placeholder
+          NEXT_PUBLIC_APP_URL: http://127.0.0.1:4179
+          DATABASE_URL: postgresql://disabled:disabled@127.0.0.1:65432/disabled
+          DIRECT_URL: postgresql://disabled:disabled@127.0.0.1:65432/disabled
+          SUPABASE_SERVICE_ROLE_KEY: ""
+          OPENAI_API_KEY: ""
+          OPENROUTER_API_KEY: ""
+      - run: npm run public-assets:check
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m unittest discover -s tests -v
+        working-directory: projects/document-intelligence
