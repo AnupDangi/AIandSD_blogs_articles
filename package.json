@@ -1,0 +1,66 @@
+{
+  "name": "learnlikeadev",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:integration": "node --import tsx scripts/run-database-integration.ts",
+    "content:check": "node --import tsx scripts/content-validation.ts",
+    "assessment:cues": "node --import tsx scripts/assessment-cue-audit.ts",
+    "curriculum:public-check": "npm run content:check",
+    "review:export": "node --import tsx scripts/export-review-bundles.ts --out bundle/review-bundle.json",
+    "review:restore": "node --import tsx scripts/restore-review-bundles.ts --from bundle/review-bundle.json --dry-run",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "node --import tsx prisma/migration-preflight.ts && prisma migrate deploy",
+    "curriculum:check": "node --import tsx prisma/import-curriculum.ts --check",
+    "curriculum:import": "node --import tsx prisma/import-curriculum.ts",
+    "public-assets:check": "node --import tsx scripts/check-public-assets.ts"
+  },
+  "dependencies": {
+    "@next/env": "^16.0.0",
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "@supabase/ssr": "0.7.0",
+    "@supabase/supabase-js": "2.117.3",
+    "next": "^16.0.0",
+    "pg": "^8.16.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^22.18.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^16.0.0",
+    "prisma": "7.10.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "prisma": {
+      "mysql2": "3.23.1"
+    },
+    "@prisma/config": {
+      "deepmerge-ts": "^8.0.2"
+    }
+  }
+}

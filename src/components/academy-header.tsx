@@ -1,0 +1,30 @@
+import Link from "next/link";
+import { createSupabaseServerClient } from "@/lib/server/supabase";
+import { BrandMark } from "@/components/brand-mark";
+import { AcademyNavigation } from "./academy-navigation";
+import { ThemePreference } from "./theme-preference";
+
+export async function AcademyHeader() {
+  const supabase = await createSupabaseServerClient();
+  const { data } = supabase ? await supabase.auth.getClaims() : { data: null };
+  const signedIn = typeof data?.claims?.sub === "string";
+  const accountHref = signedIn ? "/settings" : "/sign-in";
+  const accountLabel = signedIn ? "Account" : "Sign in";
+
+  return (
+    <header className="site-header">
+      <div className="header-inner">
+        <Link className="brand" href={signedIn ? "/dashboard" : "/"} aria-label="LearnLikeADev home">
+          <BrandMark priority /><span>learnlikeadev<span className="brand-period">.</span></span>
+        </Link>
+        <AcademyNavigation />
+        <ThemePreference />
+        <Link className="header-action" href={accountHref}><span>{accountLabel}</span></Link>
+        <details className="mobile-menu">
+          <summary aria-label="Open navigation">Menu</summary>
+          <AcademyNavigation mobile />
+        </details>
+      </div>
+    </header>
+  );
+}

@@ -1,0 +1,332 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["app"]
+}
+
+model CourseVersion {
+  id          String       @id @default(cuid())
+  courseId    String
+  version     Int
+  title       String
+  courseSnapshot Json?
+  resourceSnapshot Json?
+  publishedAt DateTime?
+  createdAt   DateTime     @default(now())
+  assessments Assessment[]
+  lessons     LessonSnapshot[]
+  versionedProgress VersionedLearningProgress[]
+  projects    Project[]
+  enrollments Enrollment[]
+  submissions ProjectSubmission[]
+
+  @@unique([courseId, version])
+  @@index([courseId, publishedAt])
+  @@schema("app")
+}
+
+model Assessment {
+  id             String              @id @default(cuid())
+  key            String
+  courseVersionId String
+  title          String
+  version        Int
+  passPercent    Int                 @default(80)
+  publishedAt    DateTime?
+  courseVersion  CourseVersion       @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+  questions      AssessmentQuestion[]
+  attempts       Attempt[]
+
+  @@unique([courseVersionId, key, version])
+  @@index([courseVersionId, publishedAt])
+  @@schema("app")
+}
+
+model AssessmentQuestion {
+  id            String     @id @default(cuid())
+  key           String
+  assessmentId  String
+  position      Int
+  prompt        Json
+  answerKey     Json
+  topicTags     String[]   @default([])
+  feedback      String?
+  assessment    Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  responses     AttemptResponse[]
+  draftResponses AttemptDraftResponse[]
+
+  @@unique([assessmentId, position])
+  @@unique([assessmentId, key])
+  @@index([assessmentId])
+  @@schema("app")
+}
+
+model Enrollment {
+  id              String        @id @default(cuid())
+  userId          String
+  courseVersionId String
+  enrolledAt      DateTime      @default(now())
+  courseVersion   CourseVersion @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, courseVersionId])
+  @@index([userId, enrolledAt])
+  @@index([courseVersionId])
+  @@schema("app")
+}
+
+model Attempt {
+  id                    String            @id @default(cuid())
+  userId                String
+  assessmentId          String
+  assessmentVersion     Int
+  idempotencyKey        String?
+  status                String            @default("in_progress")
+  scorePercent          Int?
+  passed                Boolean?
+  startedAt             DateTime          @default(now())
+  submittedAt           DateTime?
+  assessment            Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Restrict)
+  responses             AttemptResponse[]
+  draftResponses        AttemptDraftResponse[]
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, startedAt])
+  @@index([assessmentId, assessmentVersion])
+  @@schema("app")
+}
+
+model AttemptResponse {
+  id          String             @id @default(cuid())
+  attemptId   String
+  questionId  String
+  response    Json
+  correct     Boolean
+  createdAt   DateTime           @default(now())
+  attempt     Attempt            @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question    AssessmentQuestion @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@index([questionId])
+  @@schema("app")
+}
+
+model AttemptDraftResponse {
+  id         String             @id @default(cuid())
+  attemptId  String
+  questionId String
+  choiceId   String
+  updatedAt  DateTime           @updatedAt
+  attempt    Attempt            @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question   AssessmentQuestion @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId])
+  @@index([questionId])
+  @@schema("app")
+}
+
+model LearningProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  contentType String
+  contentId   String
+  state       String   @default("visited")
+  readAt      DateTime?
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, contentType, contentId])
+  @@index([userId, updatedAt])
+  @@schema("app")
+}
+
+model LessonSnapshot {
+  id              String                     @id @default(cuid())
+  courseVersionId String
+  lessonId        String
+  slug            String
+  title           String
+  chapter         Int
+  sourcePath      String
+  contentMarkdown String
+  contentSha256   String
+  metadata        Json
+  createdAt       DateTime                   @default(now())
+  courseVersion   CourseVersion              @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+  readingProgress VersionedLearningProgress[]
+
+  @@unique([courseVersionId, lessonId])
+  @@unique([courseVersionId, slug])
+  @@index([courseVersionId, chapter])
+  @@schema("app")
+}
+
+model VersionedLearningProgress {
+  id              String         @id @default(cuid())
+  userId          String
+  courseVersionId String
+  lessonId        String
+  contentType     String
+  contentId       String
+  state           String         @default("visited")
+  readAt          DateTime?
+  updatedAt       DateTime       @updatedAt
+  snapshot        LessonSnapshot @relation(fields: [courseVersionId, lessonId], references: [courseVersionId, lessonId], onDelete: Restrict)
+  courseVersion   CourseVersion  @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, courseVersionId, contentType, contentId])
+  @@index([userId, updatedAt])
+  @@schema("app")
+}
+
+model Project {
+  id              String
+  courseVersionId String
+  title           String
+  publishedAt     DateTime?
+  courseVersion   CourseVersion @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+  submissions     ProjectSubmission[]
+
+  @@id([id, courseVersionId])
+  @@index([courseVersionId, publishedAt])
+  @@schema("app")
+}
+
+model ProjectSubmission {
+  id               String   @id @default(cuid())
+  userId           String
+  projectId        String
+  idempotencyKey   String
+  courseVersionId  String
+  repositoryUrl    String
+  commitSha        String?
+  checklist        Json
+  reflection       String
+  submittedAt      DateTime @default(now())
+  project          Project  @relation(fields: [projectId, courseVersionId], references: [id, courseVersionId], onDelete: Restrict)
+  courseVersion    CourseVersion @relation(fields: [courseVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, projectId, submittedAt])
+  @@index([courseVersionId])
+  @@index([projectId, courseVersionId])
+  @@schema("app")
+}
+
+model Profile {
+  userId      String   @id
+  displayName String?
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@schema("app")
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  lessonId  String
+  sectionId String   @default("")
+  createdAt DateTime @default(now())
+
+  @@unique([userId, lessonId, sectionId])
+  @@index([userId, createdAt])
+  @@schema("app")
+}
+
+model HintPack {
+  id          String   @id @default(cuid())
+  taskKey     String
+  version     Int
+  approved    Boolean  @default(false)
+  hints       Json
+  updatedAt   DateTime @updatedAt
+  sessions    HintSession[]
+  requests    TutorRequest[]
+
+  @@unique([taskKey, version])
+  @@schema("app")
+}
+
+model TutorRequest {
+  id             String   @id @default(cuid())
+  userId         String
+  idempotencyKey String
+  taskKey        String
+  requestFingerprint String
+  hintPackId     String
+  response       Json
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  hintPack       HintPack @relation(fields: [hintPackId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, taskKey, createdAt])
+  @@index([hintPackId])
+  @@schema("app")
+}
+
+model HintSession {
+  id          String   @id @default(cuid())
+  userId      String
+  taskKey     String
+  hintPackId  String
+  lastLevel   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  hintPack    HintPack @relation(fields: [hintPackId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, taskKey, hintPackId])
+  @@index([userId, updatedAt])
+  @@index([hintPackId])
+  @@schema("app")
+}
+
+model AiRequestQuota {
+  userId      String
+  utcDay      DateTime @db.Date
+  requestCount Int     @default(0)
+  updatedAt   DateTime @updatedAt
+
+  @@id([userId, utcDay])
+  @@schema("app")
+}
+
+model AiBudgetPeriod {
+  month         String                @id
+  capMicros     Int
+  reservedMicros Int                  @default(0)
+  spentMicros   Int                   @default(0)
+  updatedAt     DateTime              @updatedAt
+  reservations  AiUsageReservation[]
+
+  @@schema("app")
+}
+
+model AiUsageReservation {
+  id                 String         @id @default(cuid())
+  userId             String
+  periodMonth        String
+  model              String
+  reservedMicros     Int
+  actualMicros       Int?
+  inputTokens        Int?
+  outputTokens       Int?
+  providerRequestId  String?
+  status             String         @default("reserved")
+  createdAt          DateTime       @default(now())
+  expiresAt          DateTime
+  reconciledAt       DateTime?
+  period             AiBudgetPeriod @relation(fields: [periodMonth], references: [month], onDelete: Restrict)
+
+  @@index([userId, createdAt])
+  @@index([status, expiresAt])
+  @@index([periodMonth])
+  @@schema("app")
+}
