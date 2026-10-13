@@ -1,0 +1,264 @@
+{
+  "ai-27": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "critical-path",
+    "title": "Latency waterfall: sequential versus parallel tools",
+    "prompt": "Compare this analytical schedule with spans from the separate local timing probe. Parallelize only when both tool calls are independent.",
+    "retrievalMs": 400,
+    "firstTool": { "id": "tool-a", "label": "Tool A", "durationMs": 2000 },
+    "secondTool": { "id": "tool-b", "label": "Tool B", "durationMs": 3000 }
+  },
+  "ai-28": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "SLO budget: keep the critical path inside the deadline",
+    "prompt": "Toy request budget: 800 ms. Retrieval takes 250 ms, two independent tools each take 240 ms, and generation takes 500 ms. Choose the execution policy, predict whether the end-to-end budget is met, then inspect the timing trace.",
+    "controlLabel": "Execution policy",
+    "controlPrompt": "How should the two independent tool calls run?",
+    "predictionPrompt": "Will the request finish within its 800 ms budget?",
+    "options": [
+      {
+        "id": "serial",
+        "label": "Run both tools sequentially",
+        "context": "Critical path = retrieval + tool A + tool B + generation.",
+        "predictions": [{ "id": "met", "label": "Yes, within budget" }, { "id": "missed", "label": "No, deadline exceeded" }, { "id": "unknown", "label": "Cannot tell from these spans" }],
+        "expectedPrediction": "missed",
+        "transitions": [{ "id": "retrieval", "label": "Retrieve evidence", "observation": "0–250 ms · 250 ms elapsed" }, { "id": "tool-a", "label": "Tool A", "observation": "250–490 ms · 490 ms elapsed" }, { "id": "tool-b", "label": "Tool B", "observation": "490–730 ms · 730 ms elapsed" }, { "id": "generation", "label": "Generate answer", "observation": "730–1,230 ms · budget exceeded by 430 ms" }],
+        "result": "1,230 ms total · misses the 800 ms budget by 430 ms.",
+        "explanation": "Sequential independent calls add both durations to the critical path. A request can have fast individual spans and still miss its end-to-end SLO."
+      },
+      {
+        "id": "parallel",
+        "label": "Run both independent tools in parallel",
+        "context": "Critical path = retrieval + max(tool A, tool B) + generation.",
+        "predictions": [{ "id": "met", "label": "Yes, within budget" }, { "id": "missed", "label": "No, deadline exceeded" }, { "id": "unknown", "label": "Cannot tell from these spans" }],
+        "expectedPrediction": "missed",
+        "transitions": [{ "id": "retrieval", "label": "Retrieve evidence", "observation": "0–250 ms · 250 ms elapsed" }, { "id": "tools", "label": "Run independent tools", "observation": "Both run 250–490 ms · 490 ms elapsed" }, { "id": "generation", "label": "Generate answer", "observation": "490–990 ms · budget exceeded by 190 ms" }],
+        "result": "990 ms total · misses the budget by 190 ms, even after parallelizing.",
+        "explanation": "Parallelizing independent work shortens the critical path, but it cannot make a 990 ms path fit an 800 ms deadline. You still need a measured fallback or a smaller scope."
+      },
+      {
+        "id": "degrade",
+        "label": "Parallel tools with a 300 ms generation cap",
+        "context": "Return a concise answer with available evidence when the generation cap is reached.",
+        "predictions": [{ "id": "met", "label": "Yes, within budget" }, { "id": "missed", "label": "No, deadline exceeded" }, { "id": "unknown", "label": "Cannot tell from these spans" }],
+        "expectedPrediction": "met",
+        "transitions": [{ "id": "retrieval", "label": "Retrieve evidence", "observation": "0–250 ms · 250 ms elapsed" }, { "id": "tools", "label": "Run independent tools", "observation": "Both run 250–490 ms · 490 ms elapsed" }, { "id": "generation", "label": "Generate bounded answer", "observation": "490–790 ms · 10 ms budget remains" }],
+        "result": "790 ms total · within budget, with a deliberately shorter response.",
+        "explanation": "A budget is useful only when each stage respects a deadline and the system defines what to return when a stage is capped. This is an analytical toy schedule, not a latency guarantee."
+      }
+    ]
+  },
+  "ai-29": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "Retry policy: spend the deadline once",
+    "prompt": "A request has a 900 ms deadline. The provider attempt can take 500 ms, and a known-good cached response is available in 120 ms. Choose a policy and predict the user-visible outcome after a timeout.",
+    "controlLabel": "Timeout policy",
+    "controlPrompt": "What should the service do after the first attempt times out at 500 ms?",
+    "predictionPrompt": "What does the learner receive before the 900 ms deadline?",
+    "options": [
+      {
+        "id": "unbounded",
+        "label": "Retry without an attempt deadline",
+        "context": "The retry may consume another 500 ms; no fallback is configured.",
+        "predictions": [{ "id": "fallback", "label": "Cached response by the deadline" }, { "id": "late", "label": "A late provider response or timeout" }, { "id": "unsupported", "label": "An answer with unsupported citations" }],
+        "expectedPrediction": "late",
+        "transitions": [{ "id": "attempt-1", "label": "Initial provider call", "observation": "0–500 ms · timeout" }, { "id": "retry", "label": "Retry provider call", "observation": "500–1,000 ms · deadline already exceeded" }, { "id": "response", "label": "Return to learner", "observation": "No bounded response at 900 ms" }],
+        "result": "The retry outlives the request deadline; no timely response is available.",
+        "explanation": "Retries consume the same user-facing budget unless a new deadline is explicitly defined. Unbounded retrying can turn a transient fault into a long outage."
+      },
+      {
+        "id": "bounded-fallback",
+        "label": "One bounded attempt, then serve the cached response",
+        "context": "Use the 500 ms attempt timeout; fallback takes 120 ms and carries its original evidence metadata.",
+        "predictions": [{ "id": "fallback", "label": "Cached response by the deadline" }, { "id": "late", "label": "A late provider response or timeout" }, { "id": "unsupported", "label": "An answer with unsupported citations" }],
+        "expectedPrediction": "fallback",
+        "transitions": [{ "id": "attempt-1", "label": "Initial provider call", "observation": "0–500 ms · timeout" }, { "id": "fallback", "label": "Read known-good cached response", "observation": "500–620 ms · 280 ms remain" }, { "id": "response", "label": "Return bounded fallback", "observation": "620 ms · response returned before deadline" }],
+        "result": "The cached response returns in 620 ms and retains its evidence metadata.",
+        "explanation": "A fallback is safe only when it is known-good, bounded, and honest about its freshness. Do not fabricate current citations from a stale cache."
+      },
+      {
+        "id": "retry-fallback",
+        "label": "One short retry, then cached response",
+        "context": "The retry is capped at 180 ms; the cache fallback takes 120 ms.",
+        "predictions": [{ "id": "fallback", "label": "Cached response by the deadline" }, { "id": "late", "label": "A late provider response or timeout" }, { "id": "unsupported", "label": "An answer with unsupported citations" }],
+        "expectedPrediction": "fallback",
+        "transitions": [{ "id": "attempt-1", "label": "Initial provider call", "observation": "0–500 ms · timeout" }, { "id": "retry", "label": "One capped retry", "observation": "500–680 ms · retry times out" }, { "id": "fallback", "label": "Use cached response", "observation": "680–800 ms · 100 ms remain" }],
+        "result": "The bounded retry fails, then a cached response returns at 800 ms.",
+        "explanation": "A retry can be useful when its error class is retryable and enough time remains for a fallback. Use jitter and idempotency for real systems; these fixed durations are illustrative."
+      }
+    ]
+  },
+  "ai-30": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "Canary gate: an aggregate can hide a broken slice",
+    "prompt": "A candidate has 96% aggregate success, but a high-risk slice has only 70% success. The release policy requires 90% aggregate and 85% for every risk slice. Choose a promotion rule and predict the release action.",
+    "controlLabel": "Promotion rule",
+    "controlPrompt": "Which gate should the release controller use?",
+    "predictionPrompt": "Should this candidate receive more traffic?",
+    "options": [
+      {
+        "id": "aggregate-only",
+        "label": "Gate on aggregate success only",
+        "context": "The aggregate is 96%; this rule ignores slice-level regressions.",
+        "predictions": [{ "id": "promote", "label": "Promote to more traffic" }, { "id": "halt", "label": "Halt and investigate" }, { "id": "rollback", "label": "Roll back immediately" }],
+        "expectedPrediction": "promote",
+        "transitions": [{ "id": "aggregate", "label": "Check aggregate", "observation": "96% ≥ 90% · aggregate gate passes" }, { "id": "traffic", "label": "Increase traffic", "observation": "Candidate receives the next traffic step" }, { "id": "slice", "label": "Inspect risk slice", "observation": "70% < 85% · regression discovered after promotion" }],
+        "result": "The aggregate-only rule promotes a candidate with a known risk-slice regression.",
+        "explanation": "An aggregate can hide harm concentrated in a smaller cohort. A release gate should include the slices that matter to the product and policy."
+      },
+      {
+        "id": "slice-gate",
+        "label": "Require aggregate and every risk slice to pass",
+        "context": "Promote only if aggregate ≥ 90% and every listed risk slice ≥ 85%.",
+        "predictions": [{ "id": "promote", "label": "Promote to more traffic" }, { "id": "halt", "label": "Halt and investigate" }, { "id": "rollback", "label": "Roll back immediately" }],
+        "expectedPrediction": "halt",
+        "transitions": [{ "id": "aggregate", "label": "Check aggregate", "observation": "96% ≥ 90% · aggregate gate passes" }, { "id": "slice", "label": "Check risk slice", "observation": "70% < 85% · slice gate fails" }, { "id": "traffic", "label": "Hold traffic", "observation": "No promotion · assign owner to investigate" }],
+        "result": "Promotion halts until the slice regression is understood and the gate passes.",
+        "explanation": "A failed canary gate is evidence to stop and investigate. It does not alone prove the candidate caused the regression, so compare matched baselines before deciding whether to roll back."
+      },
+      {
+        "id": "auto-rollback",
+        "label": "Rollback on any failed risk slice",
+        "context": "This policy rolls back once a statistically reviewed risk slice falls below its threshold.",
+        "predictions": [{ "id": "promote", "label": "Promote to more traffic" }, { "id": "halt", "label": "Halt and investigate" }, { "id": "rollback", "label": "Roll back immediately" }],
+        "expectedPrediction": "rollback",
+        "transitions": [{ "id": "aggregate", "label": "Check aggregate", "observation": "96% ≥ 90% · aggregate gate passes" }, { "id": "slice", "label": "Check risk slice", "observation": "70% < 85% · reviewed slice gate fails" }, { "id": "rollback", "label": "Restore stable version", "observation": "Traffic returns to the last known-good version" }],
+        "result": "The policy restores the stable version after the reviewed slice gate fails.",
+        "explanation": "Automatic rollback is appropriate only when the signal is reliable, the threshold is predeclared, and rollback is safe. Otherwise halt traffic and investigate first."
+      }
+    ]
+  },
+  "ai-36": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "Provider failure: classify before you retry",
+    "prompt": "The provider returns either a transient timeout or a permanent invalid-credential error. A last-known-good response is available. Choose a recovery policy and predict how it handles each condition.",
+    "controlLabel": "Recovery policy",
+    "controlPrompt": "How should the service classify and recover from provider errors?",
+    "predictionPrompt": "What happens when the selected error occurs?",
+    "options": [
+      {
+        "id": "retry-everything",
+        "label": "Retry every error twice",
+        "context": "Both timeouts and invalid credentials consume two extra attempts.",
+        "predictions": [{ "id": "bounded", "label": "Transient error may recover; permanent error stops early" }, { "id": "waste", "label": "Permanent failures waste retry budget" }, { "id": "success", "label": "Every error is guaranteed to recover" }],
+        "expectedPrediction": "waste",
+        "transitions": [{ "id": "classify", "label": "Receive invalid credential", "observation": "Permanent configuration error" }, { "id": "retry", "label": "Retry attempt 1 and 2", "observation": "Same credential is reused; both calls fail" }, { "id": "fallback", "label": "Use fallback", "observation": "Fallback is delayed until retry budget is consumed" }],
+        "result": "The policy repeats a permanent error and delays the fallback without improving the chance of success.",
+        "explanation": "Retry only errors likely to change on a subsequent attempt. Authentication and schema errors usually need correction, not repetition."
+      },
+      {
+        "id": "classify-retry",
+        "label": "Retry transient errors; fail over on permanent errors",
+        "context": "Timeouts get one jittered retry. Invalid credentials are surfaced and the known-good fallback is available.",
+        "predictions": [{ "id": "bounded", "label": "Transient errors get a capped retry; permanent errors stop early" }, { "id": "waste", "label": "Permanent failures waste retry budget" }, { "id": "fail-fast", "label": "Stop after the first error without fallback" }],
+        "expectedPrediction": "bounded",
+        "transitions": [{ "id": "classify", "label": "Classify provider response", "observation": "Timeout is transient; invalid credentials are permanent" }, { "id": "timeout", "label": "Handle timeout", "observation": "One retry is allowed; if still unavailable, use fallback" }, { "id": "credential", "label": "Handle invalid credential", "observation": "Do not retry; alert operator and return safe fallback" }],
+        "result": "Transient failures get a bounded retry; permanent failures stop, alert, and use the safe fallback.",
+        "explanation": "Retries need a deadline, jitter, and idempotent effects. A fallback must preserve its source and uncertainty; never claim a provider call succeeded when it did not."
+      },
+      {
+        "id": "no-fallback",
+        "label": "Stop after the first provider error",
+        "context": "No retry and no cached response are configured.",
+        "predictions": [{ "id": "bounded", "label": "Transient errors get a capped retry; permanent errors stop early" }, { "id": "waste", "label": "Permanent failures waste retry budget" }, { "id": "fail-fast", "label": "Stop after the first error without fallback" }],
+        "expectedPrediction": "fail-fast",
+        "transitions": [{ "id": "classify", "label": "Receive provider timeout", "observation": "Transient failure detected" }, { "id": "stop", "label": "Do not retry", "observation": "No second attempt is made" }, { "id": "response", "label": "Return status", "observation": "Request is unavailable; no unsupported answer is emitted" }],
+        "result": "The service fails clearly and safely, but gives up even when a bounded retry could recover.",
+        "explanation": "Failing closed avoids invented output, but availability may suffer. A production policy balances a bounded retry and truthful degradation against latency and duplicate side effects."
+      }
+    ]
+  },
+  "ai-39": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "Readiness review: evidence beats a green dashboard",
+    "prompt": "A launch review finds healthy aggregate metrics, but the on-call engineer has not practiced rollback and the alert has no named owner. Choose a readiness policy and predict the launch decision.",
+    "controlLabel": "Readiness policy",
+    "controlPrompt": "What evidence is required before launch?",
+    "predictionPrompt": "Should launch proceed with the evidence currently available?",
+    "options": [
+      {
+        "id": "dashboard-only",
+        "label": "Launch when aggregate dashboard is green",
+        "context": "Current health metrics are green; operational ownership is not checked.",
+        "predictions": [{ "id": "launch", "label": "Launch proceeds" }, { "id": "hold", "label": "Launch is held" }, { "id": "rollback", "label": "Stable version is restored" }],
+        "expectedPrediction": "launch",
+        "transitions": [{ "id": "metrics", "label": "Check aggregate metrics", "observation": "Green · dashboard gate passes" }, { "id": "owner", "label": "Check alert ownership", "observation": "No named responder · unchecked by this policy" }, { "id": "decision", "label": "Launch", "observation": "Release proceeds without practiced response evidence" }],
+        "result": "The dashboard-only policy launches despite missing operational ownership and rollback evidence.",
+        "explanation": "Service health is only one part of readiness. Teams also need an owner, a tested rollback, meaningful alerts, and a runbook that an unfamiliar operator can use."
+      },
+      {
+        "id": "operator-evidence",
+        "label": "Require named ownership and a practiced rollback",
+        "context": "A launch gate checks an alert owner, runbook, and a successful rollback exercise.",
+        "predictions": [{ "id": "launch", "label": "Launch proceeds" }, { "id": "hold", "label": "Launch is held" }, { "id": "rollback", "label": "Stable version is restored" }],
+        "expectedPrediction": "hold",
+        "transitions": [{ "id": "metrics", "label": "Check aggregate metrics", "observation": "Green · metrics gate passes" }, { "id": "owner", "label": "Check operator evidence", "observation": "No named responder and rollback drill missing" }, { "id": "decision", "label": "Hold launch", "observation": "Assign an owner and practice recovery before release" }],
+        "result": "Launch is held until an operator can respond and the rollback path is demonstrated.",
+        "explanation": "Readiness criteria should be concrete and verifiable. A checklist is not complete merely because every box is marked; retain the evidence, owner, and date."
+      },
+      {
+        "id": "accept-risk",
+        "label": "Accept missing controls with a documented exception",
+        "context": "A named risk owner may approve a time-limited exception with a mitigation and expiry.",
+        "predictions": [{ "id": "launch", "label": "Launch proceeds under exception" }, { "id": "hold", "label": "Launch is held" }, { "id": "rollback", "label": "Stable version is restored" }],
+        "expectedPrediction": "hold",
+        "transitions": [{ "id": "metrics", "label": "Check aggregate metrics", "observation": "Green · metrics gate passes" }, { "id": "exception", "label": "Check risk exception", "observation": "No named risk owner or expiry recorded" }, { "id": "decision", "label": "Hold launch", "observation": "No valid exception exists; record owner and expiry first" }],
+        "result": "No exception is valid until an accountable owner accepts the risk and records an expiry.",
+        "explanation": "Risk acceptance is a governance decision, not a way to erase a failed control. A valid exception states the impact, mitigation, owner, and expiry."
+      }
+    ]
+  },
+  "ai-40": {
+    "engine": "production-tabletop",
+    "calculationVersion": "v1",
+    "kind": "decision-trace",
+    "title": "Capstone architecture: trace one request across boundaries",
+    "prompt": "A document assistant must answer with evidence, survive a worker restart, and avoid repeating side effects. Choose an architecture and predict the state after a crash immediately following document retrieval.",
+    "controlLabel": "Workflow architecture",
+    "controlPrompt": "How should the request and its effects be coordinated?",
+    "predictionPrompt": "After the worker restarts, what state can the system safely recover?",
+    "options": [
+      {
+        "id": "unbounded-loop",
+        "label": "Keep state only in an in-memory agent loop",
+        "context": "The process has no durable checkpoint or idempotency record.",
+        "predictions": [{ "id": "resume", "label": "Resume from a durable checkpoint" }, { "id": "restart", "label": "Restart from the beginning and risk duplicate work" }, { "id": "verified", "label": "Return a verified answer without rechecking" }],
+        "expectedPrediction": "restart",
+        "transitions": [{ "id": "retrieve", "label": "Retrieve documents", "observation": "Evidence is held only in process memory" }, { "id": "crash", "label": "Worker crashes", "observation": "Memory and current step are lost" }, { "id": "restart", "label": "New worker starts", "observation": "No checkpoint exists; workflow starts over" }],
+        "result": "The request restarts without knowing which work or side effects already occurred.",
+        "explanation": "An in-memory loop is simple, but it cannot resume safely after process loss. Any repeated external effect needs an idempotency strategy."
+      },
+      {
+        "id": "durable-bounded",
+        "label": "Persist bounded state and idempotent step results",
+        "context": "Each step has a deadline, a durable checkpoint, an evidence reference, and a stable idempotency key.",
+        "predictions": [{ "id": "resume", "label": "Resume from a durable checkpoint" }, { "id": "restart", "label": "Restart from the beginning and risk duplicate work" }, { "id": "verified", "label": "Return a verified answer without rechecking" }],
+        "expectedPrediction": "resume",
+        "transitions": [{ "id": "retrieve", "label": "Retrieve documents", "observation": "Store evidence references and retrieval version" }, { "id": "checkpoint", "label": "Commit workflow checkpoint", "observation": "Step state and idempotency key are durable" }, { "id": "crash", "label": "Crash and resume", "observation": "New worker loads checkpoint and continues with the saved evidence" }],
+        "result": "The request resumes from the saved retrieval checkpoint; downstream effects retain the same idempotency key.",
+        "explanation": "Durable state enables recovery only when checkpoint writes are atomic, side effects are idempotent or deduplicated, and the evidence version remains inspectable."
+      },
+      {
+        "id": "stateless-call",
+        "label": "Use one stateless provider request per user turn",
+        "context": "The provider call is stateless, but this workflow requires retrieval and a later external write.",
+        "predictions": [{ "id": "resume", "label": "Resume from a durable checkpoint" }, { "id": "restart", "label": "Restart from the beginning and risk duplicate work" }, { "id": "verified", "label": "Return a verified answer without rechecking" }],
+        "expectedPrediction": "restart",
+        "transitions": [{ "id": "retrieve", "label": "Retrieve documents", "observation": "Retrieval result is not saved with the request" }, { "id": "crash", "label": "Worker crashes", "observation": "No workflow state survives process loss" }, { "id": "restart", "label": "New worker starts", "observation": "The full operation must run again; write deduplication is still required" }],
+        "result": "The request starts over because no workflow checkpoint or effect record exists.",
+        "explanation": "A stateless call can be right for a single-turn task. Multi-step work with interruption or external effects needs a state owner, retry policy, and recovery contract."
+      }
+    ]
+  }
+}

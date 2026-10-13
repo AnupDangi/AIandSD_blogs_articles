@@ -1,0 +1,101 @@
+{
+  "ai-08": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Embedding neighborhood",
+    "query": "similar meaning semantic vector",
+    "defaultChunkSize": 1,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "ai08-a", "text": "An embedding maps a text span to a numeric vector used for similarity search.", "relevant": true },
+      { "id": "ai08-b", "text": "Two differently worded passages can have nearby vectors when their meaning is related.", "relevant": true },
+      { "id": "ai08-c", "text": "A vector dimension count changes storage size but does not name a human concept.", "relevant": false },
+      { "id": "ai08-d", "text": "Exact nearest-neighbor search compares every stored vector with the query vector.", "relevant": false }
+    ]
+  },
+  "ai-09": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Approximate nearest-neighbor recall",
+    "query": "approximate nearest neighbors recall candidate search",
+    "defaultChunkSize": 1,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "ai09-a", "text": "An exact search ranks every vector and supplies the reference top-k set.", "relevant": true },
+      { "id": "ai09-b", "text": "An approximate index visits a smaller candidate set to reduce search work.", "relevant": true },
+      { "id": "ai09-c", "text": "ANN recall compares returned neighbors with the exact reference neighbors.", "relevant": true },
+      { "id": "ai09-d", "text": "A smaller index file alone does not prove that query latency improved.", "relevant": false }
+    ]
+  },
+  "ai-10": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Chunk boundary and retained context",
+    "query": "chunk heading context source boundary",
+    "defaultChunkSize": 2,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "ai10-a", "text": "Section: Storage limits. The account export is capped at 40 MB per archive.", "relevant": true },
+      { "id": "ai10-b", "text": "The limit applies to each archive, not to the number of files in the account.", "relevant": true },
+      { "id": "ai10-c", "text": "A sentence-only split can detach a number from the heading that defines its scope.", "relevant": true },
+      { "id": "ai10-d", "text": "Keep source identifiers and offsets so an answer can point back to its passage.", "relevant": false }
+    ]
+  },
+  "ai-11": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Lexical and dense retrieval fusion",
+    "query": "rare error code timeout retry search",
+    "defaultChunkSize": 1,
+    "defaultTopK": 3,
+    "sentences": [
+      { "id": "ai11-a", "text": "Error E417 means the request exceeded the upstream deadline.", "relevant": true },
+      { "id": "ai11-b", "text": "Retry only transient timeouts, using a bounded attempt count and jitter.", "relevant": true },
+      { "id": "ai11-c", "text": "A lexical ranker can find the rare code while dense retrieval finds a paraphrase.", "relevant": true },
+      { "id": "ai11-d", "text": "Reciprocal-rank fusion combines positions from ranked lists without comparing raw scores.", "relevant": true }
+    ]
+  },
+  "ai-12": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Candidate reranking and coverage",
+    "query": "rerank candidates evidence coverage order",
+    "defaultChunkSize": 1,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "ai12-a", "text": "A reranker reorders retrieved candidates; it cannot recover a document that retrieval never returned.", "relevant": true },
+      { "id": "ai12-b", "text": "Coverage asks whether the candidate contains the important query terms or evidence.", "relevant": true },
+      { "id": "ai12-c", "text": "A fixed candidate set makes retrieval recall and reranking quality separate measurements.", "relevant": true },
+      { "id": "ai12-d", "text": "Increasing the final context length can add irrelevant passages and raise cost.", "relevant": false }
+    ]
+  },
+  "ai-13": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Production retrieval eligibility",
+    "query": "retrieval vector search",
+    "defaultChunkSize": 1,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "current-1", "text": "Vector search uses embeddings to find related documents.", "relevant": true, "sourceStatus": "current" },
+      { "id": "current-2", "text": "BM25 ranks lexical term overlap.", "relevant": false, "sourceStatus": "current" },
+      { "id": "stale-1", "text": "Retrieval vector search uses an obsolete policy snapshot.", "relevant": false, "sourceStatus": "stale" },
+      { "id": "restricted-1", "text": "Retrieval vector search accesses confidential customer files.", "relevant": false, "sourceStatus": "restricted" },
+      { "id": "current-3", "text": "Search results need citations tied to current source documents.", "relevant": true, "sourceStatus": "current" }
+    ]
+  },
+  "ai-14": {
+    "engine": "retrieval-microscope",
+    "calculationVersion": "v1",
+    "title": "Retrieval evaluation by query label",
+    "query": "citation coverage labeled retrieval evaluation",
+    "defaultChunkSize": 1,
+    "defaultTopK": 2,
+    "sentences": [
+      { "id": "ai14-a", "text": "A retrieval test case records the query and its expected relevant source identifiers.", "relevant": true },
+      { "id": "ai14-b", "text": "Recall at k measures the share of labeled relevant sources present in the top k.", "relevant": true },
+      { "id": "ai14-c", "text": "Averaging across queries can hide a failing language or document-type slice.", "relevant": true },
+      { "id": "ai14-d", "text": "Citation coverage does not by itself prove that an answer is semantically correct.", "relevant": false }
+    ]
+  }
+}

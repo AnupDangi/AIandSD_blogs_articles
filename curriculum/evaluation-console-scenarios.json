@@ -1,0 +1,102 @@
+{
+  "ai-22": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "slice-threshold",
+    "title": "Frozen evaluation slices",
+    "prompt": "Raise the release floor and inspect which slices fail. Scores use a tiny fixed teaching fixture.",
+    "defaultThreshold": 0.72,
+    "slices": [
+      { "id": "grounded", "label": "Grounded answers", "score": 0.86, "count": 42 },
+      { "id": "incomplete", "label": "Incomplete questions", "score": 0.61, "count": 18 },
+      { "id": "long", "label": "Long documents", "score": 0.77, "count": 26 },
+      { "id": "adversarial", "label": "Adversarial inputs", "score": 0.48, "count": 14 }
+    ]
+  },
+  "ai-23": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "judge-calibration",
+    "title": "Calibrate the evaluator",
+    "prompt": "Compare judge confidence with fixed reviewer labels. A higher threshold trades false passes for more false rejects.",
+    "defaultThreshold": 0.7,
+    "cases": [
+      { "id": "j1", "label": "Cites the current policy", "humanLabel": "pass", "confidence": 0.94, "rationale": "The cited passage supports the stated limit." },
+      { "id": "j2", "label": "Adds an account-wide claim", "humanLabel": "fail", "confidence": 0.88, "rationale": "The evidence states a per-export limit, not an account-wide cap." },
+      { "id": "j3", "label": "Abstains on missing region data", "humanLabel": "pass", "confidence": 0.76, "rationale": "The answer clearly identifies the missing evidence." },
+      { "id": "j4", "label": "Guesses a missing region value", "humanLabel": "fail", "confidence": 0.63, "rationale": "The fixture has no source for this value." },
+      { "id": "j5", "label": "Uses a private source", "humanLabel": "fail", "confidence": 0.54, "rationale": "The response violates the source allowlist." },
+      { "id": "j6", "label": "Quotes an allowed source accurately", "humanLabel": "pass", "confidence": 0.81, "rationale": "The claim and citation match the reviewed source." }
+    ]
+  },
+  "ai-24": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "trajectory",
+    "title": "Evaluate the path and the answer",
+    "prompt": "A correct final answer can still follow an unsafe path. Inspect both outcome and action evidence.",
+    "runs": [
+      { "id": "grounded", "label": "Grounded lookup", "finalOutcome": "pass", "steps": [
+        { "id": "scope", "action": "Check tenant scope", "observation": "Requested tenant is authorized", "expected": true },
+        { "id": "retrieve", "action": "Retrieve current policy", "observation": "Current source doc-17 returned", "expected": true },
+        { "id": "answer", "action": "Answer with citation", "observation": "Claim is supported by doc-17", "expected": true }
+      ] },
+      { "id": "unsafe-correct", "label": "Correct answer via forbidden source", "finalOutcome": "pass", "steps": [
+        { "id": "scope", "action": "Check tenant scope", "observation": "Scope check skipped", "expected": false },
+        { "id": "retrieve", "action": "Retrieve private record", "observation": "Disallowed source returned", "expected": false },
+        { "id": "answer", "action": "Answer with citation", "observation": "Final text happens to match the policy", "expected": false }
+      ] },
+      { "id": "safe-abstain", "label": "Safe abstention", "finalOutcome": "fail", "steps": [
+        { "id": "scope", "action": "Check tenant scope", "observation": "Requested tenant is authorized", "expected": true },
+        { "id": "retrieve", "action": "Search current policy", "observation": "No supporting passage found", "expected": true },
+        { "id": "answer", "action": "Return not-found", "observation": "No unsupported claim was made", "expected": true }
+      ] }
+    ]
+  },
+  "ai-25": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "trace-completeness",
+    "title": "Reconstruct one request",
+    "prompt": "Inspect required trace spans and identify missing evidence without exposing sensitive prompt content.",
+    "requiredSpans": ["request", "authorization", "retrieval", "generation", "validation", "response"],
+    "traces": [
+      { "id": "complete", "label": "Complete bounded request", "presentSpans": ["request", "authorization", "retrieval", "generation", "validation", "response"], "spanTraceIds": [{ "span": "request", "traceId": "tr-104" }, { "span": "authorization", "traceId": "tr-104" }, { "span": "retrieval", "traceId": "tr-104" }, { "span": "generation", "traceId": "tr-104" }, { "span": "validation", "traceId": "tr-104" }, { "span": "response", "traceId": "tr-104" }], "note": "All required spans share one trace ID, so the request path can be reconstructed." },
+      { "id": "missing-retrieval", "label": "Retrieval span missing", "presentSpans": ["request", "authorization", "generation", "validation", "response"], "spanTraceIds": [{ "span": "request", "traceId": "tr-205" }, { "span": "authorization", "traceId": "tr-205" }, { "span": "generation", "traceId": "tr-205" }, { "span": "validation", "traceId": "tr-205" }, { "span": "response", "traceId": "tr-205" }], "note": "The recorded spans correlate, but the missing retrieval span means you cannot distinguish an empty search from an unrecorded retrieval failure." },
+      { "id": "orphaned", "label": "Uncorrelated spans", "presentSpans": ["request", "authorization", "retrieval", "generation", "validation", "response"], "spanTraceIds": [{ "span": "request", "traceId": "tr-301" }, { "span": "authorization", "traceId": "tr-301" }, { "span": "retrieval", "traceId": "tr-301" }, { "span": "generation", "traceId": "tr-882" }, { "span": "validation", "traceId": "tr-882" }, { "span": "response", "traceId": "tr-882" }], "note": "All required spans are present, but they split across two trace IDs. The single request cannot be reconstructed across that boundary." }
+    ]
+  },
+  "ai-26": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "cost-per-success",
+    "title": "Cost per successful task",
+    "prompt": "Compare total spend and success count together. These invented values are accounting fixtures, not provider prices.",
+    "candidates": [
+      { "id": "small", "label": "Small route", "cost": 1.4, "tasks": 100, "successes": 70, "source": "Synthetic fixed workload; no provider billing." },
+      { "id": "balanced", "label": "Balanced route", "cost": 3.2, "tasks": 100, "successes": 82, "source": "Synthetic fixed workload; no provider billing." },
+      { "id": "reasoning", "label": "Reasoning route", "cost": 6.3, "tasks": 100, "successes": 90, "source": "Synthetic fixed workload; no provider billing." }
+    ]
+  },
+  "ai-34": {
+    "engine": "evaluation-console",
+    "calculationVersion": "v1",
+    "kind": "release-gate",
+    "title": "Regression promotion gate",
+    "prompt": "Compare the same frozen cases. Aggregate improvement cannot override a critical slice falling below its floor.",
+    "aggregateFloor": 0.9,
+    "sliceFloor": 0.8,
+    "candidates": [
+      { "id": "incumbent", "label": "Incumbent", "aggregate": 0.91, "slices": [
+        { "id": "core", "label": "Core grounded answers", "score": 0.94 },
+        { "id": "uploaded", "label": "Uploaded documents", "score": 0.95 },
+        { "id": "adversarial", "label": "Adversarial inputs", "score": 0.82 }
+      ] },
+      { "id": "candidate", "label": "Candidate", "aggregate": 0.94, "slices": [
+        { "id": "core", "label": "Core grounded answers", "score": 0.97 },
+        { "id": "uploaded", "label": "Uploaded documents", "score": 0.78 },
+        { "id": "adversarial", "label": "Adversarial inputs", "score": 0.83 }
+      ] }
+    ]
+  }
+}

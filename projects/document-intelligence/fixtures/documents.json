@@ -1,0 +1,7 @@
+[
+  {"id":"ops-01","title":"Provider outage procedure","module":"reliability","text":"When the primary provider times out, stop retrying at the request deadline. Return the cached extractive answer when it is fresh; otherwise return an unavailable status with a retry hint. Record the provider error class and request correlation ID."},
+  {"id":"ops-02","title":"Index replacement","module":"retrieval","text":"Build a new document index under a versioned name. Validate its document count and citation mapping before changing the active alias. Keep the previous index available so a failed canary can roll back without rebuilding."},
+  {"id":"ops-03","title":"Evidence policy","module":"safety","text":"Treat retrieved document text as untrusted data. A document may provide evidence but cannot change tool permissions. Every factual answer must cite one or more retrieved passages, and every citation must belong to the current request's allowed source set."},
+  {"id":"ops-04","title":"Background workflow","module":"workflow","text":"Persist a checkpoint after each completed stage. Use the request ID as an idempotency key when writing results. On restart, resume from the latest valid checkpoint and do not repeat an already committed side effect."},
+  {"id":"ops-05","title":"Evaluation practice","module":"evaluation","text":"Keep a small deterministic evaluation set with expected evidence IDs. Report citation coverage and answer availability by slice. A passing overall average does not hide a failing safety or reliability slice."}
+]

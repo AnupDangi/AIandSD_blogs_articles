@@ -1,0 +1,831 @@
+{
+  "courseId": "applied-ai",
+  "version": 1,
+  "publicationStatus": "in-progress",
+  "readiness": "incomplete-editorial-review",
+  "sourceChapterCount": 40,
+  "formativeQuestionCount": 200,
+  "moduleAssessmentCount": 80,
+  "finalAssessmentCount": 30,
+  "modules": [
+    {
+      "id": "foundations",
+      "assessmentId": "foundations-assessment",
+      "questionIds": [
+        "foundations-assessment-q01",
+        "foundations-assessment-q02",
+        "foundations-assessment-q03",
+        "foundations-assessment-q04",
+        "foundations-assessment-q05",
+        "foundations-assessment-q06",
+        "foundations-assessment-q07",
+        "foundations-assessment-q08",
+        "foundations-assessment-q09",
+        "foundations-assessment-q10"
+      ],
+      "chapterRange": "01-07"
+    },
+    {
+      "id": "retrieval",
+      "assessmentId": "retrieval-assessment",
+      "questionIds": [
+        "retrieval-assessment-q01",
+        "retrieval-assessment-q02",
+        "retrieval-assessment-q03",
+        "retrieval-assessment-q04",
+        "retrieval-assessment-q05",
+        "retrieval-assessment-q06",
+        "retrieval-assessment-q07",
+        "retrieval-assessment-q08",
+        "retrieval-assessment-q09",
+        "retrieval-assessment-q10"
+      ],
+      "chapterRange": "08-14"
+    },
+    {
+      "id": "workflows",
+      "assessmentId": "workflows-assessment",
+      "questionIds": [
+        "workflows-assessment-q01",
+        "workflows-assessment-q02",
+        "workflows-assessment-q03",
+        "workflows-assessment-q04",
+        "workflows-assessment-q05",
+        "workflows-assessment-q06",
+        "workflows-assessment-q07",
+        "workflows-assessment-q08",
+        "workflows-assessment-q09",
+        "workflows-assessment-q10"
+      ],
+      "chapterRange": "15-21"
+    },
+    {
+      "id": "evaluation",
+      "assessmentId": "evaluation-assessment",
+      "questionIds": [
+        "evaluation-assessment-q01",
+        "evaluation-assessment-q02",
+        "evaluation-assessment-q03",
+        "evaluation-assessment-q04",
+        "evaluation-assessment-q05",
+        "evaluation-assessment-q06",
+        "evaluation-assessment-q07",
+        "evaluation-assessment-q08",
+        "evaluation-assessment-q09",
+        "evaluation-assessment-q10"
+      ],
+      "chapterRange": "22-26"
+    },
+    {
+      "id": "reliability",
+      "assessmentId": "reliability-assessment",
+      "questionIds": [
+        "reliability-assessment-q01",
+        "reliability-assessment-q02",
+        "reliability-assessment-q03",
+        "reliability-assessment-q04",
+        "reliability-assessment-q05",
+        "reliability-assessment-q06",
+        "reliability-assessment-q07",
+        "reliability-assessment-q08",
+        "reliability-assessment-q09",
+        "reliability-assessment-q10"
+      ],
+      "chapterRange": "27-30"
+    },
+    {
+      "id": "safety",
+      "assessmentId": "safety-assessment",
+      "questionIds": [
+        "safety-assessment-q01",
+        "safety-assessment-q02",
+        "safety-assessment-q03",
+        "safety-assessment-q04",
+        "safety-assessment-q05",
+        "safety-assessment-q06",
+        "safety-assessment-q07",
+        "safety-assessment-q08",
+        "safety-assessment-q09",
+        "safety-assessment-q10"
+      ],
+      "chapterRange": "31-34"
+    },
+    {
+      "id": "efficiency",
+      "assessmentId": "efficiency-assessment",
+      "questionIds": [
+        "efficiency-assessment-q01",
+        "efficiency-assessment-q02",
+        "efficiency-assessment-q03",
+        "efficiency-assessment-q04",
+        "efficiency-assessment-q05",
+        "efficiency-assessment-q06",
+        "efficiency-assessment-q07",
+        "efficiency-assessment-q08",
+        "efficiency-assessment-q09",
+        "efficiency-assessment-q10"
+      ],
+      "chapterRange": "35-38"
+    },
+    {
+      "id": "capstone",
+      "assessmentId": "capstone-assessment",
+      "questionIds": [
+        "capstone-assessment-q01",
+        "capstone-assessment-q02",
+        "capstone-assessment-q03",
+        "capstone-assessment-q04",
+        "capstone-assessment-q05",
+        "capstone-assessment-q06",
+        "capstone-assessment-q07",
+        "capstone-assessment-q08",
+        "capstone-assessment-q09",
+        "capstone-assessment-q10"
+      ],
+      "chapterRange": "39-40"
+    }
+  ],
+  "finalAssessment": {
+    "id": "final-assessment",
+    "passThreshold": 0.8,
+    "unlimitedRetries": true,
+    "questionIds": [
+      "final-assessment-q01",
+      "final-assessment-q02",
+      "final-assessment-q03",
+      "final-assessment-q04",
+      "final-assessment-q05",
+      "final-assessment-q06",
+      "final-assessment-q07",
+      "final-assessment-q08",
+      "final-assessment-q09",
+      "final-assessment-q10",
+      "final-assessment-q11",
+      "final-assessment-q12",
+      "final-assessment-q13",
+      "final-assessment-q14",
+      "final-assessment-q15",
+      "final-assessment-q16",
+      "final-assessment-q17",
+      "final-assessment-q18",
+      "final-assessment-q19",
+      "final-assessment-q20",
+      "final-assessment-q21",
+      "final-assessment-q22",
+      "final-assessment-q23",
+      "final-assessment-q24",
+      "final-assessment-q25",
+      "final-assessment-q26",
+      "final-assessment-q27",
+      "final-assessment-q28",
+      "final-assessment-q29",
+      "final-assessment-q30"
+    ]
+  },
+  "sourceDrafts": [
+    {
+      "chapter": 1,
+      "path": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 2,
+      "path": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 3,
+      "path": "docs/applied-ai/ch03-transformer-attention-for-engineers.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 4,
+      "path": "docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 5,
+      "path": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 6,
+      "path": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 7,
+      "path": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 8,
+      "path": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 9,
+      "path": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 10,
+      "path": "docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 11,
+      "path": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 12,
+      "path": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 13,
+      "path": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 14,
+      "path": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 15,
+      "path": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 16,
+      "path": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 17,
+      "path": "docs/applied-ai/ch17-react-planning-and-decomposition.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 18,
+      "path": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 19,
+      "path": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 20,
+      "path": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 21,
+      "path": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 22,
+      "path": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 23,
+      "path": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 24,
+      "path": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 25,
+      "path": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 26,
+      "path": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 27,
+      "path": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 28,
+      "path": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 29,
+      "path": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 30,
+      "path": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 31,
+      "path": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 32,
+      "path": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 33,
+      "path": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 34,
+      "path": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 35,
+      "path": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 36,
+      "path": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 37,
+      "path": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 38,
+      "path": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 39,
+      "path": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md",
+      "status": "preserved; editorial review required"
+    },
+    {
+      "chapter": 40,
+      "path": "docs/applied-ai/ch40-complete-production-agent-architecture.md",
+      "status": "preserved; editorial review required"
+    }
+  ],
+  "videoResources": [],
+  "assessmentNote": "Public prompts contain no answer keys. Protected grading keys are not included in this manifest.",
+  "formativeAssessments": [
+    {
+      "id": "ai-01-formative",
+      "lessonId": "ai-01",
+      "questionIds": [
+        "ai-01-q1",
+        "ai-01-q2",
+        "ai-01-q3",
+        "ai-01-q4",
+        "ai-01-q5"
+      ]
+    },
+    {
+      "id": "ai-02-formative",
+      "lessonId": "ai-02",
+      "questionIds": [
+        "ai-02-q1",
+        "ai-02-q2",
+        "ai-02-q3",
+        "ai-02-q4",
+        "ai-02-q5"
+      ]
+    },
+    {
+      "id": "ai-03-formative",
+      "lessonId": "ai-03",
+      "questionIds": [
+        "ai-03-q1",
+        "ai-03-q2",
+        "ai-03-q3",
+        "ai-03-q4",
+        "ai-03-q5"
+      ]
+    },
+    {
+      "id": "ai-04-formative",
+      "lessonId": "ai-04",
+      "questionIds": [
+        "ai-04-q1",
+        "ai-04-q2",
+        "ai-04-q3",
+        "ai-04-q4",
+        "ai-04-q5"
+      ]
+    },
+    {
+      "id": "ai-05-formative",
+      "lessonId": "ai-05",
+      "questionIds": [
+        "ai-05-q1",
+        "ai-05-q2",
+        "ai-05-q3",
+        "ai-05-q4",
+        "ai-05-q5"
+      ]
+    },
+    {
+      "id": "ai-06-formative",
+      "lessonId": "ai-06",
+      "questionIds": [
+        "ai-06-q1",
+        "ai-06-q2",
+        "ai-06-q3",
+        "ai-06-q4",
+        "ai-06-q5"
+      ]
+    },
+    {
+      "id": "ai-07-formative",
+      "lessonId": "ai-07",
+      "questionIds": [
+        "ai-07-q1",
+        "ai-07-q2",
+        "ai-07-q3",
+        "ai-07-q4",
+        "ai-07-q5"
+      ]
+    },
+    {
+      "id": "ai-08-formative",
+      "lessonId": "ai-08",
+      "questionIds": [
+        "ai-08-q1",
+        "ai-08-q2",
+        "ai-08-q3",
+        "ai-08-q4",
+        "ai-08-q5"
+      ]
+    },
+    {
+      "id": "ai-09-formative",
+      "lessonId": "ai-09",
+      "questionIds": [
+        "ai-09-q1",
+        "ai-09-q2",
+        "ai-09-q3",
+        "ai-09-q4",
+        "ai-09-q5"
+      ]
+    },
+    {
+      "id": "ai-10-formative",
+      "lessonId": "ai-10",
+      "questionIds": [
+        "ai-10-q1",
+        "ai-10-q2",
+        "ai-10-q3",
+        "ai-10-q4",
+        "ai-10-q5"
+      ]
+    },
+    {
+      "id": "ai-11-formative",
+      "lessonId": "ai-11",
+      "questionIds": [
+        "ai-11-q1",
+        "ai-11-q2",
+        "ai-11-q3",
+        "ai-11-q4",
+        "ai-11-q5"
+      ]
+    },
+    {
+      "id": "ai-12-formative",
+      "lessonId": "ai-12",
+      "questionIds": [
+        "ai-12-q1",
+        "ai-12-q2",
+        "ai-12-q3",
+        "ai-12-q4",
+        "ai-12-q5"
+      ]
+    },
+    {
+      "id": "ai-13-formative",
+      "lessonId": "ai-13",
+      "questionIds": [
+        "ai-13-q1",
+        "ai-13-q2",
+        "ai-13-q3",
+        "ai-13-q4",
+        "ai-13-q5"
+      ]
+    },
+    {
+      "id": "ai-14-formative",
+      "lessonId": "ai-14",
+      "questionIds": [
+        "ai-14-q1",
+        "ai-14-q2",
+        "ai-14-q3",
+        "ai-14-q4",
+        "ai-14-q5"
+      ]
+    },
+    {
+      "id": "ai-15-formative",
+      "lessonId": "ai-15",
+      "questionIds": [
+        "ai-15-q1",
+        "ai-15-q2",
+        "ai-15-q3",
+        "ai-15-q4",
+        "ai-15-q5"
+      ]
+    },
+    {
+      "id": "ai-16-formative",
+      "lessonId": "ai-16",
+      "questionIds": [
+        "ai-16-q1",
+        "ai-16-q2",
+        "ai-16-q3",
+        "ai-16-q4",
+        "ai-16-q5"
+      ]
+    },
+    {
+      "id": "ai-17-formative",
+      "lessonId": "ai-17",
+      "questionIds": [
+        "ai-17-q1",
+        "ai-17-q2",
+        "ai-17-q3",
+        "ai-17-q4",
+        "ai-17-q5"
+      ]
+    },
+    {
+      "id": "ai-18-formative",
+      "lessonId": "ai-18",
+      "questionIds": [
+        "ai-18-q1",
+        "ai-18-q2",
+        "ai-18-q3",
+        "ai-18-q4",
+        "ai-18-q5"
+      ]
+    },
+    {
+      "id": "ai-19-formative",
+      "lessonId": "ai-19",
+      "questionIds": [
+        "ai-19-q1",
+        "ai-19-q2",
+        "ai-19-q3",
+        "ai-19-q4",
+        "ai-19-q5"
+      ]
+    },
+    {
+      "id": "ai-20-formative",
+      "lessonId": "ai-20",
+      "questionIds": [
+        "ai-20-q1",
+        "ai-20-q2",
+        "ai-20-q3",
+        "ai-20-q4",
+        "ai-20-q5"
+      ]
+    },
+    {
+      "id": "ai-21-formative",
+      "lessonId": "ai-21",
+      "questionIds": [
+        "ai-21-q1",
+        "ai-21-q2",
+        "ai-21-q3",
+        "ai-21-q4",
+        "ai-21-q5"
+      ]
+    },
+    {
+      "id": "ai-22-formative",
+      "lessonId": "ai-22",
+      "questionIds": [
+        "ai-22-q1",
+        "ai-22-q2",
+        "ai-22-q3",
+        "ai-22-q4",
+        "ai-22-q5"
+      ]
+    },
+    {
+      "id": "ai-23-formative",
+      "lessonId": "ai-23",
+      "questionIds": [
+        "ai-23-q1",
+        "ai-23-q2",
+        "ai-23-q3",
+        "ai-23-q4",
+        "ai-23-q5"
+      ]
+    },
+    {
+      "id": "ai-24-formative",
+      "lessonId": "ai-24",
+      "questionIds": [
+        "ai-24-q1",
+        "ai-24-q2",
+        "ai-24-q3",
+        "ai-24-q4",
+        "ai-24-q5"
+      ]
+    },
+    {
+      "id": "ai-25-formative",
+      "lessonId": "ai-25",
+      "questionIds": [
+        "ai-25-q1",
+        "ai-25-q2",
+        "ai-25-q3",
+        "ai-25-q4",
+        "ai-25-q5"
+      ]
+    },
+    {
+      "id": "ai-26-formative",
+      "lessonId": "ai-26",
+      "questionIds": [
+        "ai-26-q1",
+        "ai-26-q2",
+        "ai-26-q3",
+        "ai-26-q4",
+        "ai-26-q5"
+      ]
+    },
+    {
+      "id": "ai-27-formative",
+      "lessonId": "ai-27",
+      "questionIds": [
+        "ai-27-q1",
+        "ai-27-q2",
+        "ai-27-q3",
+        "ai-27-q4",
+        "ai-27-q5"
+      ]
+    },
+    {
+      "id": "ai-28-formative",
+      "lessonId": "ai-28",
+      "questionIds": [
+        "ai-28-q1",
+        "ai-28-q2",
+        "ai-28-q3",
+        "ai-28-q4",
+        "ai-28-q5"
+      ]
+    },
+    {
+      "id": "ai-29-formative",
+      "lessonId": "ai-29",
+      "questionIds": [
+        "ai-29-q1",
+        "ai-29-q2",
+        "ai-29-q3",
+        "ai-29-q4",
+        "ai-29-q5"
+      ]
+    },
+    {
+      "id": "ai-30-formative",
+      "lessonId": "ai-30",
+      "questionIds": [
+        "ai-30-q1",
+        "ai-30-q2",
+        "ai-30-q3",
+        "ai-30-q4",
+        "ai-30-q5"
+      ]
+    },
+    {
+      "id": "ai-31-formative",
+      "lessonId": "ai-31",
+      "questionIds": [
+        "ai-31-q1",
+        "ai-31-q2",
+        "ai-31-q3",
+        "ai-31-q4",
+        "ai-31-q5"
+      ]
+    },
+    {
+      "id": "ai-32-formative",
+      "lessonId": "ai-32",
+      "questionIds": [
+        "ai-32-q1",
+        "ai-32-q2",
+        "ai-32-q3",
+        "ai-32-q4",
+        "ai-32-q5"
+      ]
+    },
+    {
+      "id": "ai-33-formative",
+      "lessonId": "ai-33",
+      "questionIds": [
+        "ai-33-q1",
+        "ai-33-q2",
+        "ai-33-q3",
+        "ai-33-q4",
+        "ai-33-q5"
+      ]
+    },
+    {
+      "id": "ai-34-formative",
+      "lessonId": "ai-34",
+      "questionIds": [
+        "ai-34-q1",
+        "ai-34-q2",
+        "ai-34-q3",
+        "ai-34-q4",
+        "ai-34-q5"
+      ]
+    },
+    {
+      "id": "ai-35-formative",
+      "lessonId": "ai-35",
+      "questionIds": [
+        "ai-35-q1",
+        "ai-35-q2",
+        "ai-35-q3",
+        "ai-35-q4",
+        "ai-35-q5"
+      ]
+    },
+    {
+      "id": "ai-36-formative",
+      "lessonId": "ai-36",
+      "questionIds": [
+        "ai-36-q1",
+        "ai-36-q2",
+        "ai-36-q3",
+        "ai-36-q4",
+        "ai-36-q5"
+      ]
+    },
+    {
+      "id": "ai-37-formative",
+      "lessonId": "ai-37",
+      "questionIds": [
+        "ai-37-q1",
+        "ai-37-q2",
+        "ai-37-q3",
+        "ai-37-q4",
+        "ai-37-q5"
+      ]
+    },
+    {
+      "id": "ai-38-formative",
+      "lessonId": "ai-38",
+      "questionIds": [
+        "ai-38-q1",
+        "ai-38-q2",
+        "ai-38-q3",
+        "ai-38-q4",
+        "ai-38-q5"
+      ]
+    },
+    {
+      "id": "ai-39-formative",
+      "lessonId": "ai-39",
+      "questionIds": [
+        "ai-39-q1",
+        "ai-39-q2",
+        "ai-39-q3",
+        "ai-39-q4",
+        "ai-39-q5"
+      ]
+    },
+    {
+      "id": "ai-40-formative",
+      "lessonId": "ai-40",
+      "questionIds": [
+        "ai-40-q1",
+        "ai-40-q2",
+        "ai-40-q3",
+        "ai-40-q4",
+        "ai-40-q5"
+      ]
+    }
+  ]
+}

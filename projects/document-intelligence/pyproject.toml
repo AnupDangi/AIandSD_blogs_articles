@@ -1,0 +1,13 @@
+[project]
+name = "learnlikeadev-document-intelligence"
+version = "0.1.0"
+description = "Deterministic, local-first course project for evidence-backed document answers"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.unittest]
+start-directory = "tests"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

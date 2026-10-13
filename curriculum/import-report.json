@@ -1,0 +1,1932 @@
+{
+  "generatedAt": "2026-10-10",
+  "inventoryVersion": 4,
+  "scope": "Preservation and migration inventory of original learning sources and retained learning assets. PDFs, sprint pages, and System Design drafts remain unchanged; the forty Applied AI Markdown files are cleaned working drafts and their pre-edit Markdown versions are not separately archived in this repository.",
+  "summary": {
+    "appliedAiChapterDrafts": 40,
+    "systemDesignChapterDrafts": 52,
+    "sprintPages": 60,
+    "referencePdfs": 4,
+    "cloudIndexes": 1,
+    "embeddedDiagramPlaceholders": 0,
+    "standaloneLearningDiagrams": 3,
+    "otherLearningIndexesAndNotes": 5,
+    "inventoryRecords": 208,
+    "countsBySourceCategory": {
+      "60-day-sprint-page": 60,
+      "applied-ai-appendix-source": 5,
+      "applied-ai-chapter-draft": 40,
+      "applied-ai-index": 1,
+      "brand-visual-asset": 2,
+      "cloud-track-index": 1,
+      "embedded-authored-mechanism-map": 37,
+      "learning-diagram-asset": 3,
+      "original-reference-pdf": 4,
+      "repository-learning-index": 1,
+      "sprint-index": 1,
+      "system-design-chapter-draft": 52,
+      "system-design-index": 1
+    },
+    "authoredMechanismMaps": 37
+  },
+  "diagramInventory": {
+    "standaloneLearningAssetsFound": [
+      "public/attention-context-analogy.png",
+      "public/inference-continuous-batching.webp",
+      "public/retrieval-contextual-chunking.png"
+    ],
+    "embeddedFigurePlaceholderSources": [],
+    "note": "All forty lessons now have an accessible authored mechanism map (37) or captioned conceptual artwork with adjacent simulation (3). Original source walkthroughs are retained. The initial 17-entry description-only inventory undercounted the prose-only sections; the current all-chapter scan supersedes it. Newly authored maps and generated images are instructional aids, not recovered PDF figures or measured system traces. Editorial/subject-matter review remains required.",
+    "historicalDescriptionOnlySources": [
+      "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md"
+    ],
+    "authoredMechanismMapSources": [
+      "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",
+      "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md",
+      "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md",
+      "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md",
+      "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md",
+      "docs/applied-ai/ch17-react-planning-and-decomposition.md",
+      "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md",
+      "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md",
+      "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md",
+      "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md",
+      "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md",
+      "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md",
+      "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md",
+      "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md",
+      "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md",
+      "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md",
+      "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md",
+      "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md",
+      "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md",
+      "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md",
+      "docs/applied-ai/ch40-complete-production-agent-architecture.md"
+    ]
+  },
+  "inventory": [
+    {
+      "sourcePath": "docs/60-day/day01.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day01.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day02.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day02.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day03.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day03.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day04.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day04.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day05.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day05.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day06.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day06.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day07.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day07.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day08.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day08.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day09.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day09.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day10.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day10.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day11.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day11.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day12.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day12.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day13.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day13.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day14.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day14.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day15.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day15.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day16.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day16.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day17.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day17.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day18.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day18.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day19.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day19.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day20.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day20.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day21.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day21.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day22.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day22.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day23.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day23.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day24.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day24.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day25.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day25.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day26.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day26.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day27.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day27.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day28.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day28.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day29.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day29.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day30.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day30.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day31.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day31.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day32.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day32.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day33.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day33.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day34.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day34.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day35.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day35.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day36.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day36.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day37.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day37.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day38.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day38.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day39.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day39.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day40.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day40.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day41.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day41.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day42.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day42.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day43.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day43.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day44.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day44.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day45.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day45.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day46.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day46.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day47.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day47.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day48.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day48.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day49.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day49.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day50.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day50.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day51.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day51.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day52.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day52.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day53.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day53.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day54.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day54.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day55.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day55.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day56.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day56.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day57.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day57.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day58.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day58.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day59.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day59.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/60-day/day60.md",
+      "sourceCategory": "60-day-sprint-page",
+      "currentDisposition": "Retained unchanged as the current sprint reading source; not yet mapped into interactive daily activities.",
+      "destination": "docs/60-day/index.md (sprint path); docs/60-day/day60.md remains canonical",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 1
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 2
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch03-transformer-attention-for-engineers.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch03-transformer-attention-for-engineers.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 3
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 4
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 5
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 6
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 7
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 8
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 9
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 10
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 11
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 12
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 13
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 14
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 15
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 16
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch17-react-planning-and-decomposition.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch17-react-planning-and-decomposition.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 17
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 18
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 19
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 20
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 21
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 22
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 23
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 24
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 25
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 26
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 27
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 28
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 29
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 30
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 31
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 32
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 33
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 34
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 35
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 36
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 37
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 38
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 39
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md",
+      "sourceCategory": "applied-ai-chapter-draft",
+      "currentDisposition": "Edited into a cleaned working lesson draft for the flagship course. The source PDF remains preserved unchanged; the pre-edit Markdown draft has no separate copy in this repository.",
+      "destination": "docs/applied-ai/ch40-complete-production-agent-architecture.md (cleaned working draft); source chapter remains in Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "draft-needs-editorial-review",
+      "chapter": 40
+    },
+    {
+      "sourcePath": "docs/system-design/ch01-what-happens-when-you-type-a.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch01-what-happens-when-you-type-a.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 1
+    },
+    {
+      "sourcePath": "docs/system-design/ch02-dns-naming-caching-and-failure.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch02-dns-naming-caching-and-failure.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 2
+    },
+    {
+      "sourcePath": "docs/system-design/ch03-tcp-quic-tls-and-connection-cost.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch03-tcp-quic-tls-and-connection-cost.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 3
+    },
+    {
+      "sourcePath": "docs/system-design/ch04-http-apis-contracts-idempotency-and-pagination.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch04-http-apis-contracts-idempotency-and-pagination.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 4
+    },
+    {
+      "sourcePath": "docs/system-design/ch05-cdns-and-edge-caching-why-this.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch05-cdns-and-edge-caching-why-this.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 5
+    },
+    {
+      "sourcePath": "docs/system-design/ch06-capacity-estimation-and-back-of-the-envelope-math.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch06-capacity-estimation-and-back-of-the-envelope-math.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 6
+    },
+    {
+      "sourcePath": "docs/system-design/ch07-vertical-vs-horizontal-scaling.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch07-vertical-vs-horizontal-scaling.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 7
+    },
+    {
+      "sourcePath": "docs/system-design/ch08-load-balancing-and-health-checks.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch08-load-balancing-and-health-checks.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 8
+    },
+    {
+      "sourcePath": "docs/system-design/ch09-stateless-services-sessions-and-shared-state.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch09-stateless-services-sessions-and-shared-state.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 9
+    },
+    {
+      "sourcePath": "docs/system-design/ch10-rate-limiting-and-quotas.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch10-rate-limiting-and-quotas.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 10
+    },
+    {
+      "sourcePath": "docs/system-design/ch11-autoscaling-saturation-and-warm-up-time.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch11-autoscaling-saturation-and-warm-up-time.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 11
+    },
+    {
+      "sourcePath": "docs/system-design/ch12-tail-latency-and-fan-out-why-this.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch12-tail-latency-and-fan-out-why-this.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 12
+    },
+    {
+      "sourcePath": "docs/system-design/ch13-relational-data-modeling-and-constraints.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch13-relational-data-modeling-and-constraints.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 13
+    },
+    {
+      "sourcePath": "docs/system-design/ch14-transactions-and-acid-why-this-exists.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch14-transactions-and-acid-why-this-exists.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 14
+    },
+    {
+      "sourcePath": "docs/system-design/ch15-isolation-mvcc-and-concurrency-anomalies.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch15-isolation-mvcc-and-concurrency-anomalies.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 15
+    },
+    {
+      "sourcePath": "docs/system-design/ch16-indexes-b-tree-hash-gin-brin.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch16-indexes-b-tree-hash-gin-brin.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 16
+    },
+    {
+      "sourcePath": "docs/system-design/ch17-replication-failover-and-replication-lag.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch17-replication-failover-and-replication-lag.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 17
+    },
+    {
+      "sourcePath": "docs/system-design/ch18-caching-cache-aside-ttl-and-stampedes.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch18-caching-cache-aside-ttl-and-stampedes.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 18
+    },
+    {
+      "sourcePath": "docs/system-design/ch19-redis-persistence-eviction-and-failure.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch19-redis-persistence-eviction-and-failure.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 19
+    },
+    {
+      "sourcePath": "docs/system-design/ch20-sharding-and-partition-key-design.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch20-sharding-and-partition-key-design.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 20
+    },
+    {
+      "sourcePath": "docs/system-design/ch21-consistent-hashing-and-membership-churn.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch21-consistent-hashing-and-membership-churn.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 21
+    },
+    {
+      "sourcePath": "docs/system-design/ch22-nosql-data-models-kv-document-column.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch22-nosql-data-models-kv-document-column.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 22
+    },
+    {
+      "sourcePath": "docs/system-design/ch23-object-storage-content-addressing-and-large.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch23-object-storage-content-addressing-and-large.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 23
+    },
+    {
+      "sourcePath": "docs/system-design/ch24-logical-time-causality-and-lamport-clocks.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch24-logical-time-causality-and-lamport-clocks.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 24
+    },
+    {
+      "sourcePath": "docs/system-design/ch25-quorums-and-replicated-reads-writes.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch25-quorums-and-replicated-reads-writes.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 25
+    },
+    {
+      "sourcePath": "docs/system-design/ch26-consensus-and-raft-why-this-exists.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch26-consensus-and-raft-why-this-exists.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 26
+    },
+    {
+      "sourcePath": "docs/system-design/ch27-distributed-ids-and-snowflake.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch27-distributed-ids-and-snowflake.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 27
+    },
+    {
+      "sourcePath": "docs/system-design/ch28-queues-backpressure-and-queueing-theory.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch28-queues-backpressure-and-queueing-theory.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 28
+    },
+    {
+      "sourcePath": "docs/system-design/ch29-kafka-logs-partitions-and-consumer-groups.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch29-kafka-logs-partitions-and-consumer-groups.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 29
+    },
+    {
+      "sourcePath": "docs/system-design/ch30-delivery-semantics-and-idempotent-consumers.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch30-delivery-semantics-and-idempotent-consumers.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 30
+    },
+    {
+      "sourcePath": "docs/system-design/ch31-retry-topics-poison-messages-and-dlqs.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch31-retry-topics-poison-messages-and-dlqs.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 31
+    },
+    {
+      "sourcePath": "docs/system-design/ch32-transactional-outbox-and-the-dual-write-problem.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch32-transactional-outbox-and-the-dual-write-problem.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 32
+    },
+    {
+      "sourcePath": "docs/system-design/ch33-sagas-and-distributed-business-transactions.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch33-sagas-and-distributed-business-transactions.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 33
+    },
+    {
+      "sourcePath": "docs/system-design/ch34-consistency-models-and-convergence.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch34-consistency-models-and-convergence.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 34
+    },
+    {
+      "sourcePath": "docs/system-design/ch35-observability-metrics-logs-traces-and-baggage.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch35-observability-metrics-logs-traces-and-baggage.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 35
+    },
+    {
+      "sourcePath": "docs/system-design/ch36-slis-slos-error-budgets-and-burn.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch36-slis-slos-error-budgets-and-burn.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 36
+    },
+    {
+      "sourcePath": "docs/system-design/ch37-timeouts-retries-backoff-and-jitter.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch37-timeouts-retries-backoff-and-jitter.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 37
+    },
+    {
+      "sourcePath": "docs/system-design/ch38-circuit-breakers-bulkheads-and-dependency-isolation.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch38-circuit-breakers-bulkheads-and-dependency-isolation.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 38
+    },
+    {
+      "sourcePath": "docs/system-design/ch39-load-shedding-and-admission-control.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch39-load-shedding-and-admission-control.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 39
+    },
+    {
+      "sourcePath": "docs/system-design/ch40-canaries-feature-flags-and-rollback.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch40-canaries-feature-flags-and-rollback.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 40
+    },
+    {
+      "sourcePath": "docs/system-design/ch41-multi-region-design-and-disaster-recovery.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch41-multi-region-design-and-disaster-recovery.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 41
+    },
+    {
+      "sourcePath": "docs/system-design/ch42-schema-and-data-migrations-without-downtime.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch42-schema-and-data-migrations-without-downtime.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 42
+    },
+    {
+      "sourcePath": "docs/system-design/ch43-discord-storing-trillions-of-messages.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch43-discord-storing-trillions-of-messages.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 43
+    },
+    {
+      "sourcePath": "docs/system-design/ch44-discord-indexing-trillions-of-messages.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch44-discord-indexing-trillions-of-messages.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 44
+    },
+    {
+      "sourcePath": "docs/system-design/ch45-github-partitioning-relational-databases.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch45-github-partitioning-relational-databases.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 45
+    },
+    {
+      "sourcePath": "docs/system-design/ch46-meta-scaling-memcache.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch46-meta-scaling-memcache.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 46
+    },
+    {
+      "sourcePath": "docs/system-design/ch47-meta-haystack-photo-storage.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch47-meta-haystack-photo-storage.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 47
+    },
+    {
+      "sourcePath": "docs/system-design/ch48-stripe-rate-limiters-as-reliability-infrastructure.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch48-stripe-rate-limiters-as-reliability-infrastructure.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 48
+    },
+    {
+      "sourcePath": "docs/system-design/ch49-uber-kafka-retry-and-dead-letter-architecture.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch49-uber-kafka-retry-and-dead-letter-architecture.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 49
+    },
+    {
+      "sourcePath": "docs/system-design/ch50-cloudflare-durable-objects-and-stateful-coordination.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch50-cloudflare-durable-objects-and-stateful-coordination.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 50
+    },
+    {
+      "sourcePath": "docs/system-design/ch51-cloudflare-consistent-hashing-for-worker-warmth.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch51-cloudflare-consistent-hashing-for-worker-warmth.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 51
+    },
+    {
+      "sourcePath": "docs/system-design/ch52-google-dapper-and-distributed-tracing.md",
+      "sourceCategory": "system-design-chapter-draft",
+      "currentDisposition": "Retained unchanged as future roadmap/topic-library material; not yet mapped to interactive lessons.",
+      "destination": "docs/system-design/index.md (topic roadmap); docs/system-design/ch52-google-dapper-and-distributed-tracing.md remains canonical",
+      "reviewStatus": "roadmap",
+      "chapter": 52
+    },
+    {
+      "sourcePath": "60_Days_AI_Engineering_System_Design_Roadmap_Anup_Dangi.pdf",
+      "sourceCategory": "original-reference-pdf",
+      "currentDisposition": "Relocated byte-for-byte into the original-PDF source folder; SHA-256 matches the original tracked Git blob.",
+      "destination": "source-material/original-pdfs/60_Days_AI_Engineering_System_Design_Roadmap_Anup_Dangi.pdf",
+      "reviewStatus": "retained",
+      "sha256": "51853b06c09697cbed0f4cb39960716fa6cad6c54a7b411979e16c85c68e3ea9"
+    },
+    {
+      "sourcePath": "Practical_AI_Engineering_Anup_Dangi.pdf",
+      "sourceCategory": "original-reference-pdf",
+      "currentDisposition": "Relocated byte-for-byte into the original-PDF source folder; SHA-256 matches the original tracked Git blob.",
+      "destination": "source-material/original-pdfs/Practical_AI_Engineering_Anup_Dangi.pdf",
+      "reviewStatus": "retained",
+      "sha256": "3ad26756cb168bf6236ab2d22b0b17b1f8f1bdf40439652195297181a1f14b97"
+    },
+    {
+      "sourcePath": "Practical_System_Design_Anup_Dangi.pdf",
+      "sourceCategory": "original-reference-pdf",
+      "currentDisposition": "Relocated byte-for-byte into the original-PDF source folder; SHA-256 matches the original tracked Git blob.",
+      "destination": "source-material/original-pdfs/Practical_System_Design_Anup_Dangi.pdf",
+      "reviewStatus": "retained",
+      "sha256": "542f4f49fafebec29102a0440db11cac452a1d8f50679c5390573594bfdd80fa"
+    },
+    {
+      "sourcePath": "Senior_Cloud_Production_Engineering_Field_Manual.pdf",
+      "sourceCategory": "original-reference-pdf",
+      "currentDisposition": "Relocated byte-for-byte into the original-PDF source folder; SHA-256 matches the original tracked Git blob.",
+      "destination": "source-material/original-pdfs/Senior_Cloud_Production_Engineering_Field_Manual.pdf",
+      "reviewStatus": "retained",
+      "sha256": "a8fdd77456ed6b54dc5b38e5ddd398dfadbed686b244fb051cd2c75c0e7cc491"
+    },
+    {
+      "sourcePath": "docs/index.md",
+      "sourceCategory": "repository-learning-index",
+      "currentDisposition": "Retained unchanged as the current learning-track overview.",
+      "destination": "docs/index.md",
+      "reviewStatus": "retained"
+    },
+    {
+      "sourcePath": "docs/60-day/index.md",
+      "sourceCategory": "sprint-index",
+      "currentDisposition": "Retained unchanged as the 60-day roadmap index.",
+      "destination": "docs/60-day/index.md",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/applied-ai/index.md",
+      "sourceCategory": "applied-ai-index",
+      "currentDisposition": "Retained unchanged as the 40-chapter source outline and project-track index.",
+      "destination": "docs/applied-ai/index.md",
+      "reviewStatus": "mapped-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/system-design/index.md",
+      "sourceCategory": "system-design-index",
+      "currentDisposition": "Retained unchanged as the 52-chapter System Design roadmap.",
+      "destination": "docs/system-design/index.md",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/cloud/index.md",
+      "sourceCategory": "cloud-track-index",
+      "currentDisposition": "Retained unchanged; current Cloud material is an index only, with no chapter drafts.",
+      "destination": "docs/cloud/index.md",
+      "reviewStatus": "roadmap"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch03-transformer-attention-for-engineers.md",
+      "sourceCategory": "learning-diagram-asset",
+      "currentDisposition": "Generated conceptual lesson illustration is integrated with accessible alt text and a caption; it is supplementary artwork, not a simulator trace or measured result.",
+      "destination": "public/attention-context-analogy.png; src/content/applied-ai.ts#ai-03-model",
+      "reviewStatus": "integrated-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md",
+      "sourceCategory": "learning-diagram-asset",
+      "currentDisposition": "Generated conceptual lesson illustration is integrated with accessible alt text and a caption; it is supplementary artwork, not a simulator trace or measured result.",
+      "destination": "public/inference-continuous-batching.webp; src/content/applied-ai.ts#ai-04-model",
+      "reviewStatus": "integrated-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md",
+      "sourceCategory": "learning-diagram-asset",
+      "currentDisposition": "Generated conceptual lesson illustration is integrated with accessible alt text and a caption; it is supplementary artwork, not a simulator trace or measured result.",
+      "destination": "public/retrieval-contextual-chunking.png; src/content/applied-ai.ts#ai-10-model",
+      "reviewStatus": "integrated-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "public/brand-mark.svg",
+      "sourceCategory": "brand-visual-asset",
+      "currentDisposition": "Legacy vector brand mark retained; the academy currently renders its generated transparent PNG counterpart through BrandMark.",
+      "destination": "public/brand-mark.svg",
+      "reviewStatus": "retained-legacy"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#project-briefs",
+      "sourceCategory": "applied-ai-appendix-source",
+      "currentDisposition": "Five extracted project briefs retained and reorganized as reusable course appendix material.",
+      "destination": "docs/applied-ai/appendices.md#project-briefs; project milestones 1–8",
+      "reviewStatus": "needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#formulas-and-glossary",
+      "sourceCategory": "applied-ai-appendix-source",
+      "currentDisposition": "Formula and glossary material separated from the final chapter for cross-course reference.",
+      "destination": "docs/applied-ai/appendices.md#formulas-and-glossary",
+      "reviewStatus": "needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#shared-release-checklist",
+      "sourceCategory": "applied-ai-appendix-source",
+      "currentDisposition": "Shared release checklist retained as a standalone operational appendix.",
+      "destination": "docs/applied-ai/appendices.md#shared-release-checklist",
+      "reviewStatus": "needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#master-recall-questions",
+      "sourceCategory": "applied-ai-appendix-source",
+      "currentDisposition": "Master recall questions retained separately from chapter instruction.",
+      "destination": "docs/applied-ai/appendices.md#master-recall-questions",
+      "reviewStatus": "needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#consolidated-source-references",
+      "sourceCategory": "applied-ai-appendix-source",
+      "currentDisposition": "Consolidated references preserved in the appendix pending live verification.",
+      "destination": "docs/applied-ai/appendices.md#consolidated-source-references",
+      "reviewStatus": "needs-source-verification"
+    },
+    {
+      "sourcePath": "public/brand-symbol.png",
+      "sourceCategory": "brand-visual-asset",
+      "currentDisposition": "Generated transparent open-book/terminal-path symbol used by BrandMark across the header, sign-in, footer, and app icon.",
+      "destination": "src/components/brand-mark.tsx; public/brand-symbol.png",
+      "reviewStatus": "integrated-needs-small-size-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch17-react-planning-and-decomposition.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch17-react-planning-and-decomposition.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    },
+    {
+      "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md",
+      "sourceCategory": "embedded-authored-mechanism-map",
+      "currentDisposition": "Source walkthrough retained and supplemented by a chapter-specific accessible authored mechanism map. This is an instructional addition, not a recovered PDF figure.",
+      "destination": "docs/applied-ai/ch40-complete-production-agent-architecture.md (inline authored mechanism map)",
+      "reviewStatus": "authored-needs-editorial-review"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "source": "docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md",
+      "destination": "src/content/applied-ai.ts#ai-01; docs/applied-ai/ch01-the-ai-engineering-stack-from-model.md remains canonical",
+      "chapter": 1,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md",
+      "destination": "src/content/applied-ai.ts#ai-02; docs/applied-ai/ch02-tokens-decoding-and-generation-what-happens.md remains canonical",
+      "chapter": 2,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch03-transformer-attention-for-engineers.md",
+      "destination": "src/content/applied-ai.ts#ai-03; docs/applied-ai/ch03-transformer-attention-for-engineers.md remains canonical",
+      "chapter": 3,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md",
+      "destination": "src/content/applied-ai.ts#ai-04; docs/applied-ai/ch04-inference-kv-cache-and-continuous-batching.md remains canonical",
+      "chapter": 4,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md",
+      "destination": "src/content/applied-ai.ts#ai-05; docs/applied-ai/ch05-structured-outputs-and-typed-interfaces.md remains canonical",
+      "chapter": 5,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md",
+      "destination": "src/content/applied-ai.ts#ai-06; docs/applied-ai/ch06-prompt-engineering-as-software-engineering.md remains canonical",
+      "chapter": 6,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",
+      "destination": "src/content/applied-ai.ts#ai-07; docs/applied-ai/ch07-model-selection-routing-and-cascades.md remains canonical",
+      "chapter": 7,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md",
+      "destination": "src/content/applied-ai.ts#ai-08; docs/applied-ai/ch08-embeddings-and-semantic-space-represent-meaning.md remains canonical",
+      "chapter": 8,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md",
+      "destination": "src/content/applied-ai.ts#ai-09; docs/applied-ai/ch09-vector-search-exact-hnsw-and-ivf.md remains canonical",
+      "chapter": 9,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md",
+      "destination": "src/content/applied-ai.ts#ai-10; docs/applied-ai/ch10-chunking-and-contextual-retrieval-preserve-meaning.md remains canonical",
+      "chapter": 10,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md",
+      "destination": "src/content/applied-ai.ts#ai-11; docs/applied-ai/ch11-hybrid-retrieval-and-rank-fusion-combine.md remains canonical",
+      "chapter": 11,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md",
+      "destination": "src/content/applied-ai.ts#ai-12; docs/applied-ai/ch12-reranking-and-context-assembly-retrieve-broadly.md remains canonical",
+      "chapter": 12,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md",
+      "destination": "src/content/applied-ai.ts#ai-13; docs/applied-ai/ch13-production-rag-architecture-treat-retrieval-as.md remains canonical",
+      "chapter": 13,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md",
+      "destination": "src/content/applied-ai.ts#ai-14; docs/applied-ai/ch14-retrieval-evaluation-diagnose-whether-the-model.md remains canonical",
+      "chapter": 14,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md",
+      "destination": "src/content/applied-ai.ts#ai-15; docs/applied-ai/ch15-agent-fundamentals-workflows-agents-and-the.md remains canonical",
+      "chapter": 15,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md",
+      "destination": "src/content/applied-ai.ts#ai-16; docs/applied-ai/ch16-tool-design-and-agent-computer-interfaces.md remains canonical",
+      "chapter": 16,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch17-react-planning-and-decomposition.md",
+      "destination": "src/content/applied-ai.ts#ai-17; docs/applied-ai/ch17-react-planning-and-decomposition.md remains canonical",
+      "chapter": 17,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch18-context-engineering-give-the-model-the.md",
+      "destination": "src/content/applied-ai.ts#ai-18; docs/applied-ai/ch18-context-engineering-give-the-model-the.md remains canonical",
+      "chapter": 18,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md",
+      "destination": "src/content/applied-ai.ts#ai-19; docs/applied-ai/ch19-memory-state-and-artifacts-do-not.md remains canonical",
+      "chapter": 19,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md",
+      "destination": "src/content/applied-ai.ts#ai-20; docs/applied-ai/ch20-multi-agent-systems-parallelism-and-specialization-without.md remains canonical",
+      "chapter": 20,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md",
+      "destination": "src/content/applied-ai.ts#ai-21; docs/applied-ai/ch21-durable-long-running-agents-hours-of-work.md remains canonical",
+      "chapter": 21,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md",
+      "destination": "src/content/applied-ai.ts#ai-22; docs/applied-ai/ch22-evaluation-datasets-and-failure-taxonomy.md remains canonical",
+      "chapter": 22,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md",
+      "destination": "src/content/applied-ai.ts#ai-23; docs/applied-ai/ch23-llm-as-judge-calibration-evaluate-the-evaluator.md remains canonical",
+      "chapter": 23,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md",
+      "destination": "src/content/applied-ai.ts#ai-24; docs/applied-ai/ch24-agent-trajectory-evaluation-the-final-answer.md remains canonical",
+      "chapter": 24,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md",
+      "destination": "src/content/applied-ai.ts#ai-25; docs/applied-ai/ch25-observability-and-tracing-reconstruct-what-one.md remains canonical",
+      "chapter": 25,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md",
+      "destination": "src/content/applied-ai.ts#ai-26; docs/applied-ai/ch26-cost-engineering-measure-cost-per-successful.md remains canonical",
+      "chapter": 26,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md",
+      "destination": "src/content/applied-ai.ts#ai-27; docs/applied-ai/ch27-latency-engineering-optimize-the-critical-path.md remains canonical",
+      "chapter": 27,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md",
+      "destination": "src/content/applied-ai.ts#ai-28; docs/applied-ai/ch28-slos-and-resource-budgets-for-ai.md remains canonical",
+      "chapter": 28,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md",
+      "destination": "src/content/applied-ai.ts#ai-29; docs/applied-ai/ch29-retries-fallbacks-and-graceful-degradation.md remains canonical",
+      "chapter": 29,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md",
+      "destination": "src/content/applied-ai.ts#ai-30; docs/applied-ai/ch30-canary-releases-and-ai-regression-gates.md remains canonical",
+      "chapter": 30,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md",
+      "destination": "src/content/applied-ai.ts#ai-31; docs/applied-ai/ch31-security-sandboxing-and-agent-containment.md remains canonical",
+      "chapter": 31,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md",
+      "destination": "src/content/applied-ai.ts#ai-32; docs/applied-ai/ch32-human-approval-and-risk-tiered-autonomy.md remains canonical",
+      "chapter": 32,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md",
+      "destination": "src/content/applied-ai.ts#ai-33; docs/applied-ai/ch33-verification-provenance-and-evidence-bearing-outputs.md remains canonical",
+      "chapter": 33,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md",
+      "destination": "src/content/applied-ai.ts#ai-34; docs/applied-ai/ch34-continuous-improvement-and-repair-loops.md remains canonical",
+      "chapter": 34,
+      "status": "mapped-to-course-index-needs-editorial-repair"
+    },
+    {
+      "source": "docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md",
+      "destination": "src/content/applied-ai.ts#ai-35; docs/applied-ai/ch35-prompt-caching-and-reuse-reduce-repeated.md remains canonical",
+      "chapter": 35,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    },
+    {
+      "source": "docs/applied-ai/ch36-model-and-provider-failure-modes-design.md",
+      "destination": "src/content/applied-ai.ts#ai-36; docs/applied-ai/ch36-model-and-provider-failure-modes-design.md remains canonical",
+      "chapter": 36,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    },
+    {
+      "source": "docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md",
+      "destination": "src/content/applied-ai.ts#ai-37; docs/applied-ai/ch37-prompt-injection-and-untrusted-context.md remains canonical",
+      "chapter": 37,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    },
+    {
+      "source": "docs/applied-ai/ch38-background-jobs-and-resumable-execution.md",
+      "destination": "src/content/applied-ai.ts#ai-38; docs/applied-ai/ch38-background-jobs-and-resumable-execution.md remains canonical",
+      "chapter": 38,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    },
+    {
+      "source": "docs/applied-ai/ch39-production-checklists-and-operational-readiness.md",
+      "destination": "src/content/applied-ai.ts#ai-39; docs/applied-ai/ch39-production-checklists-and-operational-readiness.md remains canonical",
+      "chapter": 39,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    },
+    {
+      "source": "docs/applied-ai/ch40-complete-production-agent-architecture.md",
+      "destination": "src/content/applied-ai.ts#ai-40; docs/applied-ai/ch40-complete-production-agent-architecture.md remains canonical",
+      "chapter": 40,
+      "status": "mapped-to-course-index-needs-substantive-rewrite"
+    }
+  ],
+  "referencePdfs": [
+    {
+      "path": "60_Days_AI_Engineering_System_Design_Roadmap_Anup_Dangi.pdf",
+      "status": "preserved unchanged",
+      "destination": "source-material/original-pdfs/60_Days_AI_Engineering_System_Design_Roadmap_Anup_Dangi.pdf",
+      "sha256": "51853b06c09697cbed0f4cb39960716fa6cad6c54a7b411979e16c85c68e3ea9"
+    },
+    {
+      "path": "Practical_AI_Engineering_Anup_Dangi.pdf",
+      "status": "preserved unchanged",
+      "destination": "source-material/original-pdfs/Practical_AI_Engineering_Anup_Dangi.pdf",
+      "sha256": "3ad26756cb168bf6236ab2d22b0b17b1f8f1bdf40439652195297181a1f14b97"
+    },
+    {
+      "path": "Practical_System_Design_Anup_Dangi.pdf",
+      "status": "preserved unchanged",
+      "destination": "source-material/original-pdfs/Practical_System_Design_Anup_Dangi.pdf",
+      "sha256": "542f4f49fafebec29102a0440db11cac452a1d8f50679c5390573594bfdd80fa"
+    },
+    {
+      "path": "Senior_Cloud_Production_Engineering_Field_Manual.pdf",
+      "status": "preserved unchanged",
+      "destination": "source-material/original-pdfs/Senior_Cloud_Production_Engineering_Field_Manual.pdf",
+      "sha256": "a8fdd77456ed6b54dc5b38e5ddd398dfadbed686b244fb051cd2c75c0e7cc491"
+    }
+  ],
+  "editorialFindings": [
+    "All four original PDFs are preserved unchanged in source-material/original-pdfs; 60 sprint pages and 52 System Design chapter drafts remain unchanged at their source paths.",
+    "The 40 Applied AI Markdown files are cleaned working drafts mapped to lesson metadata. Their pre-edit Markdown versions are not separately archived in this repository; the source Practical_AI_Engineering_Anup_Dangi.pdf remains preserved unchanged.",
+    "A primary-source audit covers 68 course resources; all have dated URL/topic checks. Exact lesson fit still needs editorial review. The two video records do not yet have verified relevant timestamps or durations.",
+    "Applied AI chapters 35–40 have focused technical corrections and authored mechanism maps but remain drafts; full editorial and subject-matter review of all forty lessons is still pending.",
+    "System Design has 52 chapter drafts available as roadmap material; none are mapped to interactive lessons yet.",
+    "Cloud currently has an index only; no Cloud chapter drafts were found.",
+    "An all-forty-chapter diagram scan now finds 37 accessible authored mechanism maps and three captioned conceptual illustrations. No description-only figure section remains; original PDF figures were not recovered. All lesson aids complement their interactive engines and require editorial review.",
+    "Several source URLs required correction or canonicalization during extraction repair; the current Applied AI chapter references are checked against the resource manifest, and remaining editorial work is recorded in the resource audit."
+  ],
+  "courseReadiness": "in-progress; the flagship course is not a complete reviewed course"
+}

@@ -1,0 +1,27 @@
+{
+  "ai-02": {
+    "engine": "attention",
+    "calculationVersion": "v1",
+    "kind": "token-sampling",
+    "title": "Reliable-tools next-token example",
+    "prompt": "An engineer builds reliable tools",
+    "defaultTemperature": 1,
+    "defaultTopP": 0.8,
+    "candidates": [
+      { "token": "carefully", "logit": 2.4 },
+      { "token": "quickly", "logit": 1.8 },
+      { "token": "today", "logit": 0.7 },
+      { "token": ".", "logit": -0.2 }
+    ]
+  },
+  "ai-03": {
+    "engine": "attention",
+    "calculationVersion": "v1",
+    "kind": "attention-mechanism",
+    "title": "Causal attention at ‘placed’",
+    "prompt": "Select the query token ‘placed’ and compare its available key positions with causal masking on and off. These fixed vectors are for arithmetic practice, not a transformer trace.",
+    "tokens": ["The", "engineer", "placed", "the", "book", "on", "the", "table", "because", "it", "was", "unstable"],
+    "defaultQueryIndex": 2,
+    "defaultCausalMask": true
+  }
+}

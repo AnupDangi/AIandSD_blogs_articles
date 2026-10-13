@@ -1,0 +1,1282 @@
+[
+  {
+    "id": "huyenchip-pitfalls",
+    "title": "Common pitfalls when building generative AI applications",
+    "provider": "Chip Huyen",
+    "url": "https://huyenchip.com/2025/01/16/ai-engineering-pitfalls.html",
+    "section": "Article overview; six production pitfalls",
+    "durationMinutes": null,
+    "purpose": "Use this reading to compare a simple baseline and task-level evaluation against premature system complexity.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-01",
+      "ai-26",
+      "ai-27"
+    ],
+    "relevantSection": "Use the sections on product quality, starting too complex, evaluation, and deployment readiness.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "hf-llm-course",
+    "title": "Tokenizers",
+    "provider": "Hugging Face",
+    "url": "https://huggingface.co/learn/llm-course/chapter6/1",
+    "section": "Chapter 6: Tokenizers",
+    "durationMinutes": null,
+    "purpose": "Inspect how subword tokenizers turn text into token IDs and why token counts depend on the chosen vocabulary.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-02"
+    ],
+    "relevantSection": "Tokenization algorithms and tokenizer behavior; paired with the lesson’s toy tokenizer.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "hf-tokenizers-overview-video",
+    "title": "Tokenizers Overview",
+    "provider": "Hugging Face",
+    "url": "https://www.youtube.com/watch?v=VFp38yj8h3A",
+    "type": "video",
+    "section": "Opening Tokenizers Overview video in Hugging Face LLM course, chapter 2: Tokenizers",
+    "durationMinutes": null,
+    "timestamp": null,
+    "purpose": "Compare word, character, and subword tokenizer families using the publisher’s overview and accompanying text.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-02"
+    ],
+    "relevantSection": "The opening video on the official Tokenizers lesson (chapter 2, section 4) uses this video ID. The companion text covers word-based, character-based, and subword tokenization. Runtime and chapter timestamp remain unverified."
+  },
+  {
+    "id": "sampling",
+    "title": "Generation configurations: temperature, top-k, top-p, and test time compute",
+    "provider": "Chip Huyen",
+    "url": "https://huyenchip.com/2024/01/16/sampling.html",
+    "section": "Article overview; generation configurations",
+    "durationMinutes": null,
+    "purpose": "Experiment with temperature and sampling filters, then relate the token distribution to the output you observe.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-02"
+    ],
+    "relevantSection": "Compare how temperature, top-k, and top-p change next-token sampling.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "annotated-transformer",
+    "title": "The Annotated Transformer",
+    "provider": "Harvard NLP",
+    "url": "https://nlp.seas.harvard.edu/annotated-transformer/",
+    "section": "The Annotated Transformer",
+    "durationMinutes": null,
+    "purpose": "Trace a code-oriented Transformer implementation alongside the lesson’s attention equations.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-03"
+    ],
+    "relevantSection": "Model Architecture, scaled dot-product attention, and Batches and Masking; direct page fetch exceeded the browser content limit, but the official indexed page confirms these sections.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "attention-paper",
+    "title": "Attention Is All You Need",
+    "provider": "arXiv · Vaswani et al.",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "section": "Abstract and Section 3.2: Attention",
+    "durationMinutes": null,
+    "purpose": "Read the original scaled dot-product and multi-head attention formulation behind the toy attention simulation.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-03"
+    ],
+    "relevantSection": "Original scaled dot-product and multi-head attention formulation.",
+    "type": "paper",
+    "timestamp": null
+  },
+  {
+    "id": "paged-attention-paper",
+    "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
+    "provider": "SOSP",
+    "url": "https://arxiv.org/abs/2309.06180",
+    "section": "Abstract and PagedAttention design",
+    "durationMinutes": null,
+    "purpose": "Study the KV-cache memory-management design that motivates paged attention and serving throughput.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-04"
+    ],
+    "relevantSection": "KV-cache memory management and serving throughput.",
+    "type": "paper",
+    "timestamp": null
+  },
+  {
+    "id": "vllm",
+    "title": "vLLM documentation",
+    "provider": "vLLM",
+    "url": "https://docs.vllm.ai/en/latest/",
+    "section": "User Guide and Quickstart",
+    "durationMinutes": null,
+    "purpose": "See how an open-source serving engine exposes batching and memory-management choices for inference.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-04"
+    ],
+    "relevantSection": "Inference and serving system concepts; provider-specific implementation reference.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-structured",
+    "title": "Structured model outputs",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "section": "Structured Outputs guide",
+    "durationMinutes": null,
+    "purpose": "Compare schema-constrained responses with ordinary JSON mode, then add application-level semantic validation.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-05"
+    ],
+    "relevantSection": "Schema-constrained responses, strict mode, and the distinction from JSON mode.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "pydantic",
+    "title": "Models",
+    "provider": "Pydantic Docs",
+    "url": "https://pydantic.dev/docs/validation/latest/concepts/models/",
+    "section": "Models",
+    "durationMinutes": null,
+    "purpose": "Use typed models to parse and validate data at the application boundary; type validity does not prove factual accuracy.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-05"
+    ],
+    "relevantSection": "Basic model usage, data conversion, and validating untrusted data against declared types.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "lilian-prompt",
+    "title": "Prompt Engineering",
+    "provider": "Lilian Weng",
+    "url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+    "section": "Prompt Engineering",
+    "durationMinutes": null,
+    "purpose": "Review foundational prompt techniques, then test which ones still help with the model and task you use.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-06"
+    ],
+    "relevantSection": "Foundational prompt techniques; model-specific behavior should be tested against current provider docs.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-models",
+    "title": "OpenAI API models",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/models",
+    "section": "Models catalog",
+    "durationMinutes": null,
+    "purpose": "Compare model identifiers and documented capabilities when designing a replaceable provider adapter; recheck this volatile catalog before release.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-07"
+    ],
+    "relevantSection": "Current model catalog; names and capabilities are time-sensitive and should be rechecked when implementing.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "predictive-preference",
+    "title": "Predictive Human Preference: From Model Ranking to Model Routing",
+    "provider": "Chip Huyen",
+    "url": "https://huyenchip.com/2024/02/28/predictive-human-preference.html",
+    "section": "Article overview; model routing",
+    "durationMinutes": null,
+    "purpose": "Connect model-routing decisions to measured human preference rather than price or benchmark rank alone.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-07"
+    ],
+    "relevantSection": "Conceptual model selection and routing; not provider API instructions.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-embeddings",
+    "title": "Vector embeddings",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/embeddings",
+    "section": "Embeddings guide",
+    "durationMinutes": null,
+    "purpose": "Follow a provider-specific example of turning text into vectors for semantic retrieval.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-08"
+    ],
+    "relevantSection": "Embedding generation and vector representation; OpenAI-specific examples.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "sentence-transformers",
+    "title": "Sentence Transformers Quickstart",
+    "provider": "Sentence Transformers",
+    "url": "https://www.sbert.net/docs/quickstart.html",
+    "section": "Quickstart",
+    "durationMinutes": null,
+    "purpose": "Build local sentence embeddings and compare semantic search with cross-encoder reranking.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-08"
+    ],
+    "relevantSection": "Embedding generation, semantic search, and cross-encoder reranking.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "faiss",
+    "title": "FAISS Getting started",
+    "provider": "Meta",
+    "url": "https://github.com/facebookresearch/faiss/wiki/Getting-started",
+    "section": "Getting started",
+    "durationMinutes": null,
+    "purpose": "Learn the basic lifecycle of building an index and retrieving nearest vectors with FAISS.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-09"
+    ],
+    "relevantSection": "Vector similarity indexes and nearest-neighbor search in Meta FAISS.",
+    "type": "code",
+    "timestamp": null
+  },
+  {
+    "id": "pgvector",
+    "title": "pgvector",
+    "provider": "pgvector",
+    "url": "https://github.com/pgvector/pgvector",
+    "section": "README: exact search, HNSW, and IVFFlat",
+    "durationMinutes": null,
+    "purpose": "Compare exact vector search with HNSW and IVFFlat indexes inside PostgreSQL.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-09"
+    ],
+    "relevantSection": "PostgreSQL vector search and index trade-offs.",
+    "type": "code",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-contextual",
+    "title": "Contextual Retrieval in AI Systems",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/contextual-retrieval",
+    "section": "Contextual Retrieval and Reranking",
+    "durationMinutes": null,
+    "purpose": "Compare contextualized chunks, lexical and vector retrieval, and reranking; treat reported gains as this source’s own experiment.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-10",
+      "ai-11",
+      "ai-13"
+    ],
+    "relevantSection": "First-party experimental write-up on chunk context, BM25, embeddings, and reranking; reported results are Anthropic’s experiments.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "langchain-splitters",
+    "title": "Text splitters concepts",
+    "provider": "LangChain",
+    "url": "https://docs.langchain.com/oss/python/integrations/splitters",
+    "section": "Text splitter integrations; text structure-based, length-based, and document structure-based strategies",
+    "durationMinutes": null,
+    "purpose": "Compare character-, token-, and document-structure-based splitting strategies and their trade-offs before testing chunk boundaries on the course fixture.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-10"
+    ],
+    "relevantSection": "The current official integrations guide sections on text structure, length, and document structure; it recommends starting with RecursiveCharacterTextSplitter for many use cases.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "cross-encoder",
+    "title": "Cross-Encoders",
+    "provider": "Sentence Transformers",
+    "url": "https://www.sbert.net/examples/cross_encoder/applications/README.html",
+    "section": "Cross-Encoder applications",
+    "durationMinutes": null,
+    "purpose": "Inspect how a cross-encoder jointly scores each query-document pair to rerank retrieved candidates.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-12"
+    ],
+    "relevantSection": "Pairwise query-document scoring and reranking.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "eugeneyan-patterns",
+    "title": "Patterns for Building LLM-based Systems & Products",
+    "provider": "Eugene Yan",
+    "url": "https://eugeneyan.com/writing/llm-patterns/",
+    "section": "Article overview; system patterns",
+    "durationMinutes": null,
+    "purpose": "Use the author’s production patterns as design alternatives for decomposing LLM application work.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-12",
+      "ai-13"
+    ],
+    "relevantSection": "Author’s patterns for LLM systems; use as a conceptual reference.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "beir",
+    "title": "BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models",
+    "provider": "SIGIR / arXiv",
+    "url": "https://arxiv.org/abs/2104.08663",
+    "section": "Abstract and benchmark methodology",
+    "durationMinutes": null,
+    "purpose": "Use the BEIR benchmark to understand out-of-distribution retrieval evaluation across heterogeneous datasets.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-14"
+    ],
+    "relevantSection": "Retrieval benchmark design and out-of-distribution evaluation.",
+    "type": "paper",
+    "timestamp": null
+  },
+  {
+    "id": "ir-evaluation",
+    "title": "Evaluation of ranked retrieval results",
+    "provider": "Stanford Information Retrieval Book",
+    "url": "https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-ranked-retrieval-results-1.html",
+    "section": "Evaluation of ranked retrieval results",
+    "durationMinutes": null,
+    "purpose": "Review precision, recall, MAP, and precision-at-k for evaluating ranked retrieval results.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-14"
+    ],
+    "relevantSection": "Precision-recall, MAP, and ranked retrieval metrics.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-agents",
+    "title": "Building effective agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "section": "Building blocks, workflows, and agents",
+    "durationMinutes": null,
+    "purpose": "Compare workflow patterns and tool interfaces; this is conceptual guidance, not current SDK documentation.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-15",
+      "ai-16",
+      "ai-17",
+      "ai-20",
+      "ai-34",
+      "ai-40"
+    ],
+    "relevantSection": "Conceptual agent patterns; article dates to 2024 and should not be treated as current SDK guidance.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-agents",
+    "title": "Agents SDK",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/agents/sdk",
+    "section": "Agents SDK guide",
+    "durationMinutes": null,
+    "purpose": "Use the current SDK guide to understand the provider-specific primitives behind tool-using agents.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-15",
+      "ai-19",
+      "ai-40"
+    ],
+    "relevantSection": "Current OpenAI Agents SDK concepts and implementation.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "react-paper",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+    "provider": "ICLR / arXiv",
+    "url": "https://arxiv.org/abs/2210.03629",
+    "section": "Abstract and method",
+    "durationMinutes": null,
+    "purpose": "Read the original reasoning-and-acting method and distinguish its research setup from production orchestration.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-17"
+    ],
+    "relevantSection": "The original reasoning-plus-action prompting approach.",
+    "type": "paper",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-context-engineering",
+    "title": "Effective context engineering for AI agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "section": "Article overview; context engineering",
+    "durationMinutes": null,
+    "purpose": "Use this article to reason about selecting and structuring context across an agent’s working process.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-18"
+    ],
+    "relevantSection": "Context selection and management in agent systems.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-harnesses",
+    "title": "Effective harnesses for long-running agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+    "section": "Article overview; harness design",
+    "durationMinutes": null,
+    "purpose": "Study how harnesses preserve progress, validation, and context during long-running agent work.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-19",
+      "ai-21"
+    ],
+    "relevantSection": "Persisting context, progress, and verification across long-running tasks.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-multi-agent",
+    "title": "How we built our multi-agent research system",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "section": "Article overview; multi-agent architecture",
+    "durationMinutes": null,
+    "purpose": "Inspect a first-party multi-agent research architecture and decide where parallel roles add useful evidence.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-20"
+    ],
+    "relevantSection": "First-party report on a research system with specialized agents and orchestration.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "hamel-evals",
+    "title": "Case Study: Putting Evals Into Production",
+    "provider": "Hamel Husain",
+    "url": "https://hamel.dev/notes/llm/ai-product-engineering/evals-production.html",
+    "section": "Article overview; evals in production",
+    "durationMinutes": null,
+    "purpose": "Follow a production case study on error analysis, rubric agreement, judge validation, and continuously run evaluations.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-22",
+      "ai-23"
+    ],
+    "relevantSection": "Error analysis, rubric agreement, judge validation, and production eval loops.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "hamel-youtube-evals",
+    "title": "How To Build AI Evals",
+    "provider": "Hamel’s AI Product Engineering series; session by Lucas Machado Rocha",
+    "url": "https://youtu.be/mF4CaijvJos",
+    "type": "video",
+    "section": "Linked recording: How To Build AI Evals",
+    "durationMinutes": null,
+    "timestamp": null,
+    "purpose": "Compare error-analysis-first evaluation and judge validation with human labels through the linked lesson-planner case study.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-22",
+      "ai-23"
+    ],
+    "relevantSection": "The publisher’s Case Study: Putting Evals Into Production links this recording as Lucas Machado Rocha’s end-to-end example. Read its sections on error analysis before rubrics, annotator agreement, and judge validation. Runtime and chapter timestamp remain unverified."
+  },
+  {
+    "id": "openai-agent-evals",
+    "title": "Evaluate agent workflows",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/agent-evals",
+    "section": "Evaluate agent workflows",
+    "durationMinutes": null,
+    "purpose": "Explore trace graders, datasets, and evaluation runs for measuring multi-step agent behavior.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-24",
+      "ai-34"
+    ],
+    "relevantSection": "Trace-based graders, datasets, and evaluation runs.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-tracing",
+    "title": "Tracing",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/agents-api/tracing",
+    "section": "Tracing guide",
+    "durationMinutes": null,
+    "purpose": "See how to inspect traces produced by the OpenAI Agents SDK.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-25"
+    ],
+    "relevantSection": "OpenAI agent trace spans and trace inspection.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "opentelemetry",
+    "title": "Traces",
+    "provider": "OpenTelemetry",
+    "url": "https://opentelemetry.io/docs/concepts/signals/traces/",
+    "section": "Signals: traces",
+    "durationMinutes": null,
+    "purpose": "Learn how traces and spans represent a request across multiple application and provider operations.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-25",
+      "ai-40"
+    ],
+    "relevantSection": "Distributed trace structure and spans.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-pricing",
+    "title": "API pricing",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/pricing",
+    "section": "API pricing",
+    "durationMinutes": null,
+    "purpose": "Estimate provider-specific token costs; published pricing can change and should be checked at implementation time.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-26"
+    ],
+    "relevantSection": "Provider-specific token pricing; prices and model availability change over time.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-latency",
+    "title": "Latency optimization",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/latency-optimization",
+    "section": "Latency optimization",
+    "durationMinutes": null,
+    "purpose": "Apply provider-specific latency tactics to reduce the measured critical path in a request.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-27"
+    ],
+    "relevantSection": "Provider-specific latency tactics; supports lesson 27, not general SLO or retry policy.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "sre-alerting",
+    "title": "Prometheus Alerting: Turn SLOs into Alerts",
+    "provider": "Google SRE Workbook",
+    "url": "https://sre.google/workbook/alerting-on-slos/",
+    "section": "Alerting on SLOs",
+    "durationMinutes": null,
+    "purpose": "Translate service-level objectives into multi-window alerts that respond to meaningful error-budget burn.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-28"
+    ],
+    "relevantSection": "Error-budget-based alerting and multi-window burn-rate patterns.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "fowler-feature-toggles",
+    "title": "Feature Toggles (aka Feature Flags)",
+    "provider": "Martin Fowler",
+    "url": "https://martinfowler.com/articles/feature-toggles.html",
+    "section": "Article overview; release and operational toggles",
+    "durationMinutes": null,
+    "purpose": "Use feature-toggle patterns to control rollout, compare variants, and keep rollback paths available.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-30"
+    ],
+    "relevantSection": "Feature-flag patterns relevant to controlled releases and rollback.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-agent-safety",
+    "title": "Our framework for developing safe and trustworthy agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/news/our-framework-for-developing-safe-and-trustworthy-agents",
+    "section": "Human control and safeguards for high-stakes agent actions",
+    "durationMinutes": null,
+    "purpose": "Use Anthropic’s safety framework to examine human control and safeguards for consequential agent actions.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-32"
+    ],
+    "relevantSection": "Anthropic’s safety framework discusses maintaining human control over consequential actions.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "owasp-prompt-injection",
+    "title": "LLM01:2025 Prompt Injection",
+    "provider": "OWASP GenAI Security Project",
+    "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+    "section": "LLM01:2025 Prompt Injection",
+    "durationMinutes": null,
+    "purpose": "Identify prompt-injection risks in untrusted input and retrieved documents, then map mitigations to the data flow.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-31",
+      "ai-37"
+    ],
+    "relevantSection": "Threat framing and mitigations for untrusted instructions and retrieved content.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-agent-guardrails",
+    "title": "Guardrails and human review",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/agents/guardrails-approvals",
+    "section": "Human review and approvals",
+    "durationMinutes": null,
+    "purpose": "Understand how a sensitive tool call can pause for human approval and resume after a decision.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-32"
+    ],
+    "relevantSection": "Approval pauses and resumes sensitive agent tool calls.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-prompt-caching",
+    "title": "Prompt caching",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
+    "section": "Prompt caching guide",
+    "durationMinutes": null,
+    "purpose": "Measure when repeated prompt prefixes can reduce input cost and latency for supported models.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-35"
+    ],
+    "relevantSection": "Cache eligibility, latency, and cost behavior for repeated prompt prefixes.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-rate-limits",
+    "title": "Rate limits",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/rate-limits",
+    "section": "Rate limits guide",
+    "durationMinutes": null,
+    "purpose": "Read provider rate-limit behavior and design bounded handling for capacity errors.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-36"
+    ],
+    "relevantSection": "Rate-limit headers, handling capacity limits, and retry behavior.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-background",
+    "title": "Background mode",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/background",
+    "section": "Background mode guide",
+    "durationMinutes": null,
+    "purpose": "Compare provider background requests with the project’s own durable checkpoint and resume requirements.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-38"
+    ],
+    "relevantSection": "Provider-specific long-running requests; complement with durable-job checkpoints in the project.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-production",
+    "title": "Production best practices",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/production-best-practices",
+    "section": "Production best practices",
+    "durationMinutes": null,
+    "purpose": "Review provider production practices for key handling and operational readiness.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-39"
+    ],
+    "relevantSection": "API key safety and production application practices.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-error-codes",
+    "title": "Error codes",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/error-codes",
+    "type": "reading",
+    "section": "Error codes and handling errors",
+    "durationMinutes": null,
+    "timestamp": null,
+    "purpose": "Classify retryable provider errors separately from authentication, quota, and invalid-request failures.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-29",
+      "ai-36"
+    ],
+    "relevantSection": "Error-code table and handling guidance; provider-specific reference for retry classification."
+  },
+  {
+    "id": "w3c-prov-primer",
+    "title": "PROV Model Primer",
+    "provider": "W3C",
+    "url": "https://www.w3.org/TR/prov-primer/",
+    "type": "reading",
+    "section": "PROV data model primer",
+    "durationMinutes": null,
+    "timestamp": null,
+    "purpose": "Use the W3C provenance model to name the entities, activities, and agents needed to audit an evidence-bearing answer.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-33"
+    ],
+    "relevantSection": "Introductory explanation of the W3C PROV data model for provenance interchange."
+  },
+  {
+    "id": "aws-timeouts-retries",
+    "title": "Timeouts, retries, and backoff with jitter",
+    "provider": "AWS Builders’ Library",
+    "url": "https://builder.aws.com/content/3EumjoZascWd1oZiEgL8ORlv3qE/timeouts-retries-and-backoff-with-jitter",
+    "section": "Timeouts, retries, and backoff with jitter",
+    "durationMinutes": null,
+    "purpose": "Use AWS’s production guidance to choose downstream timeouts and bound retries with backoff and jitter.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-29"
+    ],
+    "relevantSection": "Timeout selection, retry budgets, and exponential backoff with jitter.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "openai-latest-model-guidance",
+    "title": "Using GPT-6",
+    "provider": "OpenAI",
+    "url": "https://developers.openai.com/api/docs/guides/latest-model",
+    "section": "Using GPT-6 / latest model guide",
+    "durationMinutes": null,
+    "purpose": "Compare the provider’s current model guidance with task-specific quality, latency, and cost evidence; recheck this time-sensitive page before implementation.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-07"
+    ],
+    "relevantSection": "Current model guidance; the page title and recommendations can change as the latest model changes.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-prompt-engineering",
+    "title": "Prompt engineering overview",
+    "provider": "Anthropic",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+    "section": "Prompt engineering overview",
+    "durationMinutes": null,
+    "purpose": "Review a provider’s prompt-engineering overview, then test techniques against a defined task and held-out examples.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-06"
+    ],
+    "relevantSection": "Prompt engineering overview and links to task-specific techniques.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "faiss-index-guide",
+    "title": "Guidelines to choose an index",
+    "provider": "Meta FAISS",
+    "url": "https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-an-index",
+    "section": "Guidelines to choose an index",
+    "durationMinutes": null,
+    "purpose": "Compare FAISS index families against search accuracy, memory, training, and latency requirements.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-09"
+    ],
+    "relevantSection": "Index choice guidance and trade-offs across search speed, quality, and memory.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "vllm-project",
+    "title": "vLLM: a high-throughput and memory-efficient inference and serving engine",
+    "provider": "vLLM",
+    "url": "https://github.com/vllm-project/vllm",
+    "section": "Repository overview and README",
+    "durationMinutes": null,
+    "purpose": "Inspect the open-source project behind an LLM serving engine and connect its implementation to batching and KV-cache concepts.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-04"
+    ],
+    "relevantSection": "Project overview, serving-engine description, and links to implementation documentation.",
+    "type": "code",
+    "timestamp": null
+  },
+  {
+    "id": "hamel-product-engineering-notes",
+    "title": "AI Product Engineering Notes",
+    "provider": "Hamel’s Blog",
+    "url": "https://hamel.dev/notes/llm/ai-product-engineering/",
+    "section": "AI Product Engineering Notes index",
+    "durationMinutes": null,
+    "purpose": "Browse the author’s applied notes for examples of evidence-driven product engineering and iterative improvement.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-33",
+      "ai-34"
+    ],
+    "relevantSection": "Index of AI product engineering notes; follow relevant linked notes rather than treating the index as a single prescriptive method.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "huyenchip-llm-engineering",
+    "title": "Building LLM applications for production",
+    "provider": "Chip Huyen",
+    "url": "https://huyenchip.com/2023/04/11/llm-engineering.html",
+    "section": "Building LLM applications for production",
+    "durationMinutes": null,
+    "purpose": "Use this overview of LLM application engineering to frame system boundaries, quality, and deployment trade-offs; check newer provider docs for implementation details.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-01",
+      "ai-26",
+      "ai-27"
+    ],
+    "relevantSection": "Article overview and production-system considerations; its 2023 examples may predate current APIs.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-parallel-c-compiler",
+    "title": "Building a C compiler with a team of parallel Claudes",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/building-c-compiler",
+    "section": "Building a C compiler with a team of parallel Claudes",
+    "durationMinutes": null,
+    "purpose": "Study a reported parallel-agent engineering case and identify coordination, integration, and verification costs.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-20"
+    ],
+    "relevantSection": "The case-study process and observed coordination and integration trade-offs; results are Anthropic’s own report.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-code-execution-mcp",
+    "title": "Code execution with MCP: building more efficient AI agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/code-execution-with-mcp",
+    "section": "Code execution with MCP",
+    "durationMinutes": null,
+    "purpose": "Examine how code execution can change an agent’s context and tool-use costs, then compare it with the lesson’s bounded context choices.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-18"
+    ],
+    "relevantSection": "Code-execution pattern, tool interaction, and the associated security considerations.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-agent-evals",
+    "title": "Demystifying evals for AI agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "section": "Demystifying evals for AI agents",
+    "durationMinutes": null,
+    "purpose": "Compare an agent-evaluation workflow with the lesson’s dataset, trajectory, and judge-calibration choices.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-22",
+      "ai-23",
+      "ai-24"
+    ],
+    "relevantSection": "Evaluation design, task and trajectory inspection, and practical agent-eval examples; this is Anthropic’s engineering guidance.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-containment",
+    "title": "How we contain Claude across products",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/how-we-contain-claude",
+    "section": "How we contain Claude across products",
+    "durationMinutes": null,
+    "purpose": "Study a provider’s reported containment layers and compare them with independently defined trust boundaries and failure drills.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-31"
+    ],
+    "relevantSection": "Containment layers, boundaries, and defense-in-depth examples; this is Anthropic’s own system description.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "anthropic-tools-for-agents",
+    "title": "Writing effective tools for AI agents—using AI agents",
+    "provider": "Anthropic",
+    "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+    "section": "Writing effective tools for AI agents",
+    "durationMinutes": null,
+    "purpose": "Identify tool-interface design practices that reduce ambiguity and make agent actions easier to evaluate.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-16"
+    ],
+    "relevantSection": "Tool design principles and Anthropic’s reported experiments; treat claims as source-specific evidence.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "elastic-bm25-similarity",
+    "title": "Similarity settings",
+    "provider": "Elastic Elasticsearch Reference",
+    "url": "https://www.elastic.co/docs/reference/elasticsearch/index-settings/similarity",
+    "section": "Similarity settings",
+    "durationMinutes": null,
+    "purpose": "Inspect Elasticsearch BM25 similarity settings and relate analyzer and scoring choices to lexical retrieval behavior.",
+    "verifiedOn": "2026-10-08",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-11"
+    ],
+    "relevantSection": "Similarity configuration and BM25 parameters in the current Elasticsearch reference.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "aws-timeouts-retries-original",
+    "title": "Timeouts, retries, and backoff with jitter",
+    "provider": "Amazon Builders' Library",
+    "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+    "section": "Timeouts; Retries and backoff; Jitter",
+    "durationMinutes": null,
+    "purpose": "Choose an end-to-end timeout and a bounded retry policy that does not amplify a provider outage.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-36"
+    ],
+    "relevantSection": "The article's retry amplification example, single retry point, timeout selection, and jitter guidance. This original URL redirects to AWS Builder Center.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "aws-idempotent-retries",
+    "title": "Making retries safe with idempotent APIs",
+    "provider": "Amazon Builders' Library",
+    "url": "https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/",
+    "section": "Retrying and side effects; Reducing client complexity",
+    "durationMinutes": null,
+    "purpose": "Distinguish a retryable request from a duplicate side effect after an ambiguous timeout.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-36"
+    ],
+    "relevantSection": "Retrying and the potential for undesirable side effects; client request IDs and semantic equivalence.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "owasp-prompt-injection-cheat-sheet",
+    "title": "LLM Prompt Injection Prevention Cheat Sheet",
+    "provider": "OWASP Cheat Sheet Series",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+    "section": "Attack types; Secure implementation pipeline",
+    "durationMinutes": null,
+    "purpose": "Trace direct and indirect injection through an application and select controls enforced outside the model.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-37"
+    ],
+    "relevantSection": "Direct and indirect channels, least-privilege tools, action-specific approval, and adversarial boundary tests.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "sqlite-transactions",
+    "title": "Transaction",
+    "provider": "SQLite documentation",
+    "url": "https://www.sqlite.org/lang_transaction.html",
+    "section": "2. Transactions; 2.1. Read transactions versus write transactions",
+    "durationMinutes": null,
+    "purpose": "Use transaction behavior to reason about guarded local job-state updates and commit outcomes.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-38"
+    ],
+    "relevantSection": "BEGIN, COMMIT, ROLLBACK, and SQLite's single-writer behavior; the local exercise uses these database boundaries.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "sqlite-atomic-commit",
+    "title": "Atomic Commit in SQLite",
+    "provider": "SQLite documentation",
+    "url": "https://www.sqlite.org/atomiccommit.html",
+    "section": "1. Introduction; 3. Single File Commit; 9. Things That Can Go Wrong",
+    "durationMinutes": null,
+    "purpose": "Explain what a local database commit protects when resuming a job after a crash.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-38"
+    ],
+    "relevantSection": "Atomicity applies to changes in one database transaction; this article covers rollback-journal mode, not external side effects.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "google-sre-canarying",
+    "title": "Canarying Releases",
+    "provider": "Google SRE Workbook",
+    "url": "https://sre.google/workbook/canarying-releases/",
+    "section": "Chapter 16: Canarying Releases",
+    "durationMinutes": null,
+    "purpose": "Design a limited rollout with control and canary measurements, promotion criteria, and rollback decisions.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-39",
+      "ai-40"
+    ],
+    "relevantSection": "Canary definition, analysis against a control, and rollout decisions informed by service reliability.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "google-sre-error-budget-policy",
+    "title": "Example Error Budget Policy",
+    "provider": "Google SRE Workbook",
+    "url": "https://sre.google/workbook/error-budget-policy/",
+    "section": "Appendix B: Example Error Budget Policy",
+    "durationMinutes": null,
+    "purpose": "Translate an SLO miss into an explicit release and reliability-work decision.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-39"
+    ],
+    "relevantSection": "Goals, SLO Miss Policy, Outage Policy, and the example's decision rules; adapt thresholds to the learner's service.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "opentelemetry-context-propagation",
+    "title": "Context propagation",
+    "provider": "OpenTelemetry documentation",
+    "url": "https://opentelemetry.io/docs/concepts/context-propagation/",
+    "section": "Context; Propagation; Security best practices",
+    "durationMinutes": null,
+    "purpose": "Correlate a request across services while keeping sensitive values out of propagated baggage.",
+    "verifiedOn": "2026-10-10",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-40"
+    ],
+    "relevantSection": "Trace and span context, external-service boundaries, and the Baggage security guidance.",
+    "type": "reading",
+    "timestamp": null
+  },
+  {
+    "id": "fsdl-llm-foundations-video",
+    "title": "LLM Foundations",
+    "provider": "Full Stack Deep Learning · LLM Bootcamp 2023",
+    "url": "https://www.youtube.com/watch?v=MyFrMFab6bo&t=731s",
+    "type": "video",
+    "section": "12:11 · Transformer Architecture; 16:51 · Masked Multi-Head Attention",
+    "durationMinutes": null,
+    "timestamp": "12:11",
+    "purpose": "Compare the decoder architecture and causal attention with the lesson’s Q/K/V toy example.",
+    "verifiedOn": "2026-10-11",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-03"
+    ],
+    "relevantSection": "12:11 · Transformer Architecture; 16:51 · Masked Multi-Head Attention. Publisher lecture page verifies the video/topic; named chapters are from the published video chapter list. Runtime remains unverified. Historical 2023 lecture: model/provider choices and SDK examples need current documentation; lesson fit remains editorially unreviewed."
+  },
+  {
+    "id": "fsdl-prompt-engineering-video",
+    "title": "Learn to Spell: Prompt Engineering",
+    "provider": "Full Stack Deep Learning · LLM Bootcamp 2023",
+    "url": "https://www.youtube.com/watch?v=JnBHR_yL2w8&t=135s",
+    "type": "video",
+    "section": "02:15 · Statistical models; 40:23 · Prompting playbook",
+    "durationMinutes": null,
+    "timestamp": "02:15",
+    "purpose": "Compare next-token intuition and prompt experiments with explicit software acceptance criteria.",
+    "verifiedOn": "2026-10-11",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-02",
+      "ai-06"
+    ],
+    "relevantSection": "02:15 · Statistical models; 40:23 · Prompting playbook. Publisher lecture page verifies the video/topic; named chapters are from the published video chapter list. Runtime remains unverified. Historical 2023 lecture: model/provider choices and SDK examples need current documentation; lesson fit remains editorially unreviewed."
+  },
+  {
+    "id": "fsdl-augmented-models-video",
+    "title": "Augmented Language Models",
+    "provider": "Full Stack Deep Learning · LLM Bootcamp 2023",
+    "url": "https://www.youtube.com/watch?v=YdeuQhlHmCA",
+    "type": "video",
+    "section": "External knowledge, vector indexes, and external tools",
+    "durationMinutes": null,
+    "timestamp": null,
+    "purpose": "Connect retrieval and tool augmentation to the cumulative document intelligence project; use the lesson’s current primary sources for implementation APIs.",
+    "verifiedOn": "2026-10-11",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-08",
+      "ai-09",
+      "ai-10",
+      "ai-11",
+      "ai-12",
+      "ai-13",
+      "ai-14",
+      "ai-15"
+    ],
+    "relevantSection": "External knowledge, vector indexes, and external tools. Publisher lecture page verifies the video/topic; named chapters are from the published video chapter list. Runtime remains unverified. Historical 2023 lecture: model/provider choices and SDK examples need current documentation; lesson fit remains editorially unreviewed."
+  },
+  {
+    "id": "fsdl-llmops-video",
+    "title": "LLMOps",
+    "provider": "Full Stack Deep Learning · LLM Bootcamp 2023",
+    "url": "https://www.youtube.com/watch?v=Fquj2u7ay40&t=1355s",
+    "type": "video",
+    "section": "22:35 · Testing; 28:15 · Test practice; 35:05 · Evaluation metrics; 37:40 · Deployment and monitoring",
+    "durationMinutes": null,
+    "timestamp": "22:35",
+    "purpose": "Relate evaluation sets, regression checks, and monitoring to the course’s production evidence requirements.",
+    "verifiedOn": "2026-10-11",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-22",
+      "ai-24",
+      "ai-25",
+      "ai-39"
+    ],
+    "relevantSection": "22:35 · Testing; 28:15 · Test practice; 35:05 · Evaluation metrics; 37:40 · Deployment and monitoring. Publisher lecture page verifies the video/topic; named chapters are from the published video chapter list. Runtime remains unverified. Historical 2023 lecture: model/provider choices and SDK examples need current documentation; lesson fit remains editorially unreviewed."
+  },
+  {
+    "id": "fsdl-askfsdl-video",
+    "title": "Project Walkthrough: askFSDL",
+    "provider": "Full Stack Deep Learning · LLM Bootcamp 2023",
+    "url": "https://www.youtube.com/watch?v=pUKs4xM1r5U&t=313s",
+    "type": "video",
+    "section": "05:13 · Data cleaning; 28:40 · Embeddings ETL; 33:30 · Monitoring",
+    "durationMinutes": null,
+    "timestamp": "05:13",
+    "purpose": "Compare a sourced Q&A project’s ingestion and monitoring boundaries with the course capstone; recreate the course fixtures rather than relying on the 2023 stack.",
+    "verifiedOn": "2026-10-11",
+    "verificationStatus": "link-verified",
+    "lessonIds": [
+      "ai-10",
+      "ai-13",
+      "ai-25",
+      "ai-40"
+    ],
+    "relevantSection": "05:13 · Data cleaning; 28:40 · Embeddings ETL; 33:30 · Monitoring. Publisher lecture page verifies the video/topic; named chapters are from the published video chapter list. Runtime remains unverified. Historical 2023 lecture: model/provider choices and SDK examples need current documentation; lesson fit remains editorially unreviewed."
+  }
+]

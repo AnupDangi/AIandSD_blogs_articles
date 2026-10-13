@@ -1,0 +1,17 @@
+{
+  "ai-04": {
+    "engine": "inference-scheduler",
+    "calculationVersion": "v1",
+    "title": "KV cache under concurrent decode",
+    "prompt": "The cache estimate uses the chapter's illustrative 32-layer, 8-KV-head, 128-wide, FP16 assumptions. Change sequence length and active sequences to inspect KV bytes; queue delay, throughput, and prefix reuse remain illustrative scheduler estimates.",
+    "layers": 32,
+    "kvHeads": 8,
+    "headDimension": 128,
+    "bytesPerValue": 2,
+    "defaultSequenceTokens": 8192,
+    "defaultActiveSequences": 1,
+    "defaultBatchSize": 4,
+    "defaultConcurrency": 6,
+    "defaultPrefixReuse": true
+  }
+}

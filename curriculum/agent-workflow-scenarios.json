@@ -1,0 +1,148 @@
+{
+  "ai-15": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Bounded agent loop",
+    "prompt": "Inspect the control loop: every observation either advances a bounded step or ends the run.",
+    "injectedEventLabel": "Replay the last observation",
+    "injectedEventOutcome": "The repeated observation is recognized; it does not authorize an extra action.",
+    "injectedEventAfterState": "observe",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "request", "label": "Accept task", "detail": "Validate the requested outcome and establish the run boundary." },
+      { "id": "observe", "label": "Observe", "detail": "Read the current fixture and record the evidence available to this step." },
+      { "id": "decide", "label": "Choose one action", "detail": "Select a bounded action from the allowed set." },
+      { "id": "act", "label": "Run action", "detail": "Execute once and capture the result as an observation." },
+      { "id": "check", "label": "Check stop rule", "detail": "Finish when the goal is met; otherwise continue only within the budget." },
+      { "id": "done", "label": "Finish", "detail": "Return the outcome with evidence and a trace of the steps taken." }
+    ]
+  },
+  "ai-16": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Typed tool boundary",
+    "prompt": "Follow a tool request from schema validation through scoped execution and evidence checks.",
+    "injectedEventLabel": "Replay the tool result",
+    "injectedEventOutcome": "The idempotency key maps the repeated result to the prior operation; no second side effect is applied.",
+    "injectedEventAfterState": "verify",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "intent", "label": "Read intent", "detail": "Translate the requested outcome into a narrow tool operation." },
+      { "id": "validate", "label": "Validate arguments", "detail": "Reject missing, extra, or out-of-scope fields before execution." },
+      { "id": "authorize", "label": "Check permission", "detail": "Confirm the actor and resource scope are allowed for this operation." },
+      { "id": "execute", "label": "Execute tool", "detail": "Perform one bounded operation and retain its operation ID." },
+      { "id": "verify", "label": "Check evidence", "detail": "Verify the returned evidence before using it in a response." },
+      { "id": "respond", "label": "Respond", "detail": "Report only the result supported by the verified tool output." }
+    ]
+  },
+  "ai-17": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Plan, observe, and replan",
+    "prompt": "A plan is a revisable hypothesis. Inspect the observation boundary before each next action.",
+    "injectedEventLabel": "Replay the prior observation",
+    "injectedEventOutcome": "A duplicate observation is recorded once; it must not consume another action or change the plan twice.",
+    "injectedEventAfterState": "observe",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "goal", "label": "Define goal", "detail": "Write an observable completion condition and a hard action budget." },
+      { "id": "plan", "label": "Save plan", "detail": "Choose the next bounded step and record why it is expected to help." },
+      { "id": "execute", "label": "Execute step", "detail": "Run the selected step without expanding its permissions." },
+      { "id": "observe", "label": "Inspect result", "detail": "Compare the actual observation with the plan's assumption." },
+      { "id": "replan", "label": "Replan or stop", "detail": "Revise only when evidence changes the next best action; stop at the budget." },
+      { "id": "finish", "label": "Report outcome", "detail": "State what completed, what did not, and what evidence supports the report." }
+    ]
+  },
+  "ai-18": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Context selection pipeline",
+    "prompt": "Trace how task scope, evidence selection, and a bounded context produce the next model input.",
+    "injectedEventLabel": "Replay the same evidence page",
+    "injectedEventOutcome": "The evidence page is deduplicated by stable source identity before context assembly.",
+    "injectedEventAfterState": "rank",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "task", "label": "Resolve task", "detail": "Extract the current question and constraints that remain relevant." },
+      { "id": "retrieve", "label": "Retrieve evidence", "detail": "Gather candidate passages within the caller's authorized scope." },
+      { "id": "rank", "label": "Rank candidates", "detail": "Prefer relevant, current, and source-diverse evidence." },
+      { "id": "fit", "label": "Fit context budget", "detail": "Keep the highest-value evidence under the input budget." },
+      { "id": "assemble", "label": "Assemble context", "detail": "Separate trusted instructions from untrusted document text." },
+      { "id": "inspect", "label": "Inspect prompt", "detail": "Check omissions and source boundaries before the model call." }
+    ]
+  },
+  "ai-19": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Checkpointed memory and artifacts",
+    "prompt": "Inspect which workflow facts belong in durable state and which can be recomputed.",
+    "injectedEventLabel": "Replay the checkpoint write",
+    "injectedEventOutcome": "A stable checkpoint key makes the repeated write idempotent; the saved state remains unchanged.",
+    "injectedEventAfterState": "checkpoint",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "start", "label": "Start run", "detail": "Create a run ID and initialize the durable state version." },
+      { "id": "search", "label": "Search docs", "detail": "Record the completed search result reference, not an unbounded prompt transcript." },
+      { "id": "checkpoint", "label": "Save checkpoint", "detail": "Persist state, completed step IDs, and artifact references atomically." },
+      { "id": "interrupt", "label": "Interrupt safely", "detail": "Stop work after the latest committed checkpoint." },
+      { "id": "resume", "label": "Resume run", "detail": "Reload the saved version and skip already committed effects." },
+      { "id": "finish", "label": "Complete task", "detail": "Store the final result and terminal run status." }
+    ]
+  },
+  "ai-20": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Scoped parallel workers",
+    "prompt": "Parallel work is useful only when worker scope and merge rules are explicit.",
+    "injectedEventLabel": "Deliver one worker result twice",
+    "injectedEventOutcome": "The merge layer accepts a worker result ID once and ignores the duplicate delivery.",
+    "injectedEventAfterState": "collect",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "decompose", "label": "Decompose task", "detail": "Split work into independent, reviewable scopes." },
+      { "id": "assign", "label": "Assign worker scopes", "detail": "Give each worker explicit inputs, outputs, and write ownership." },
+      { "id": "run", "label": "Run workers", "detail": "Workers operate within their assigned scope and shared budget." },
+      { "id": "collect", "label": "Collect results", "detail": "Validate worker IDs, output shape, and completion state." },
+      { "id": "merge", "label": "Merge once", "detail": "Resolve conflicts and apply each accepted result exactly once." },
+      { "id": "review", "label": "Review combined work", "detail": "Check the integrated result against the original task and tests." }
+    ]
+  },
+  "ai-21": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Durable long-running workflow",
+    "prompt": "Follow a resumable task across interruption while keeping effects bounded and idempotent.",
+    "injectedEventLabel": "Redeliver the completion event",
+    "injectedEventOutcome": "The event ID is already committed; the workflow returns its recorded result without repeating the effect.",
+    "injectedEventAfterState": "complete",
+    "injectedEventMode": "replay",
+    "states": [
+      { "id": "accept", "label": "Accept job", "detail": "Persist the request, owner, deadline, and idempotency key." },
+      { "id": "search", "label": "Search docs", "detail": "Execute the bounded read step and retain its output reference." },
+      { "id": "save", "label": "Commit checkpoint", "detail": "Persist step completion before acknowledging the event." },
+      { "id": "interrupt", "label": "Worker stops", "detail": "A crash ends this process; durable state remains available." },
+      { "id": "resume", "label": "Resume from checkpoint", "detail": "A replacement worker loads the committed state and continues." },
+      { "id": "complete", "label": "Commit completion", "detail": "Mark the result terminal exactly once and retain the audit trail." }
+    ]
+  },
+  "ai-38": {
+    "engine": "agent-state-machine",
+    "calculationVersion": "v1",
+    "title": "Optimistic concurrency on workflow state",
+    "prompt": "Two workers can resume from one checkpoint. A version check must prevent a stale worker from overwriting newer state.",
+    "injectedEventLabel": "Attempt stale revision-4 write",
+    "injectedEventOutcome": "Reload the current state before trying again.",
+    "injectedEventAfterState": "staleB",
+    "injectedEventMode": "optimistic-write",
+    "expectedRevision": 4,
+    "currentRevision": 5,
+    "states": [
+      { "id": "read4", "label": "Workers read revision 4", "detail": "Workers A and B load the same state version and both prepare a next step." },
+      { "id": "commitA", "label": "Worker A commits", "detail": "A conditional write succeeds for expected revision 4 and creates revision 5." },
+      { "id": "staleB", "label": "Worker B is stale", "detail": "B still holds revision 4; applying its result would overwrite A's update." },
+      { "id": "reject", "label": "Reject stale write", "detail": "Compare-and-swap returns a conflict; the stale update is not applied." },
+      { "id": "reload", "label": "Reload revision 5", "detail": "B reloads current state and recomputes from the latest checkpoint." },
+      { "id": "commitB", "label": "Commit valid next state", "detail": "B can commit only against the newly observed revision." }
+    ]
+  }
+}
