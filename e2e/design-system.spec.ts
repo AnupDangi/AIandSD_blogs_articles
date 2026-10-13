@@ -116,7 +116,7 @@ test("topic modules and video previews expose real lesson and source links", asy
   await expect(page.locator(".topic-card").first().getByRole("link", { name: /Open lesson/ })).toHaveAttribute("href", /\/learn\//);
   await page.goto("/resources?format=video");
   await expect(page.locator(".video-thumbnail")).toHaveCount(resourceManifest.filter((item) => item.type === "video" && /(?:youtube\.com|youtu\.be)/.test(item.url)).length);
-  await expect(page.locator(".video-thumbnail").first()).toHaveAttribute("aria-label", /Watch .* on YouTube/);
+  await expect(page.locator(".video-thumbnail").first()).toHaveAttribute("aria-label", /Play .* \(loads YouTube\)/);
   for (const width of [320, 390, 1280]) {
     await page.setViewportSize({ width, height: 800 });
     const thumbnail = await page.locator(".resource-row:has(.video-thumbnail) .video-thumbnail").first().boundingBox();

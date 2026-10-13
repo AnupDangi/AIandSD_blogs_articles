@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { courses, lessons } from "@/content/catalog";
-import { VideoThumbnail } from "@/components/video-thumbnail";
+import { VideoPlayer } from "@/components/video-player";
 import resourceManifest from "../../../../curriculum/resources.json";
 import "@/components/library-discovery.css";
 
@@ -47,7 +47,7 @@ export default async function ResourcesPage({ searchParams }: ResourcePageProps)
     </form>
     <div className="library-results-summary"><p>{resources.length} {resources.length === 1 ? "source" : "sources"}{filtered ? " matching your filters" : " available"}</p>{filtered && <Link href="/resources">Clear filters</Link>}</div>
     {resources.length ? <div className="resource-list">{resources.map((item) => <article className="resource-row" key={item.id}>
-      {item.type === "video" && <VideoThumbnail url={item.url} title={item.title} />}
+      {item.type === "video" && <VideoPlayer url={item.url} title={item.title} section={item.section} />}
       <div className="resource-copy">
         <div className="resource-metadata"><span>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span><span>{item.provider}</span>{item.durationMinutes && <span>{item.durationMinutes} min</span>}{item.timestamp && <span>{item.timestamp}</span>}</div>
         <h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}<span className="sr-only"> (opens in a new tab)</span></a></h2>

@@ -116,36 +116,53 @@
 @media(prefers-reduced-motion:reduce){.diagram-node rect{transition:none}}
 
 /* A validated YouTube ID supplies the image; the gradient and label remain useful if it cannot load. */
-.video-thumbnail{position:relative;display:flex;flex:0 0 190px;min-height:108px;align-items:center;justify-content:center;overflow:hidden;border-radius:var(--radius-control);background-color:var(--ink);background-position:center;background-size:cover;color:white;text-decoration:none}
+.video-embed{display:flex;flex:0 0 190px;flex-direction:column;gap:8px;min-width:0}
+.video-embed-compact{flex-basis:112px}
+.video-thumbnail{position:relative;display:flex;width:100%;aspect-ratio:16/9;min-height:0;padding:0;border:0;cursor:pointer;align-items:center;justify-content:center;overflow:hidden;border-radius:var(--radius-control);background-color:var(--ink);background-position:center;background-size:cover;color:white;font:inherit;text-decoration:none}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius-control);background:var(--ink)}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-chapters{display:flex;flex-direction:column;gap:5px;margin:0;padding:0;list-style:none}
+.video-chapters button{width:100%;padding:6px 9px;border:1px solid var(--line,#c9d3d0);border-radius:var(--radius-control);background:transparent;color:inherit;font:inherit;font-size:13px;line-height:1.3;text-align:left;cursor:pointer}
+.video-chapters button:hover{background:rgba(31,122,115,.1)}
+.video-chapters button:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.video-chapter-time{font-family:var(--font-mono,monospace);font-weight:600}
+.video-embed-compact:not(.video-embed-active) .video-chapters{display:none}
+.video-embed-active{flex:1 0 100%;width:100%;max-width:none}
+.video-embed-active .video-chapters{flex-direction:row;flex-wrap:wrap}
+.video-embed-active .video-chapters button{width:auto}
 .video-thumbnail>span{display:grid;place-items:center;width:46px;height:34px;border-radius:9px;background:#c4302b;color:white;font-size:17px;transition:transform .18s ease}
 .video-thumbnail:hover>span{transform:scale(1.12)}
 .video-thumbnail>small{position:absolute;bottom:7px;left:9px;font-size:11px;font-weight:600;text-shadow:0 1px 3px #111}
 .video-thumbnail:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-.lesson-references article .video-thumbnail-compact{flex-basis:112px;min-height:64px;align-self:flex-start}
-.lesson-references article .video-thumbnail-compact>span{width:34px;height:25px;font-size:12px}
-.lesson-references article .video-thumbnail-compact>small{font-size:8px}
-.studio-library .resource-row:has(.video-thumbnail){grid-template-columns:190px minmax(0,1fr) auto;gap:20px}
+.lesson-references article .video-embed-compact{align-self:flex-start}
+.video-embed-compact .video-thumbnail>span{width:34px;height:25px;font-size:12px}
+.video-embed-compact .video-thumbnail>small{font-size:8px}
+.studio-library .resource-row:has(.video-embed){grid-template-columns:190px minmax(0,1fr) auto;gap:20px}
 
-@media(max-width:700px){.video-thumbnail{width:100%;max-width:360px;min-height:180px}.lesson-references article:has(.video-thumbnail){flex-wrap:wrap}}
+@media(max-width:700px){.video-embed:not(.video-embed-compact){max-width:360px}.lesson-references article:has(.video-embed){flex-wrap:wrap}}
+.lesson-references article:has(.video-embed-active){flex-wrap:wrap}
 @media(prefers-reduced-motion:reduce){.video-thumbnail>span{transition:none}}
 @media(max-width:767px){
-.studio-library .resource-row:has(.video-thumbnail){grid-template-columns:minmax(0,1fr);gap:12px}
-.studio-library .resource-row .video-thumbnail{grid-column:1;justify-self:stretch;width:100%;max-width:none;aspect-ratio:16/9;min-height:0}
+.studio-library .resource-row:has(.video-embed){grid-template-columns:minmax(0,1fr);gap:12px}
+.studio-library .resource-row .video-embed{grid-column:1;justify-self:stretch;width:100%;max-width:none}
 .studio-library .resource-row .resource-copy{grid-column:1;min-width:0}
 .studio-library .resource-row .source-open{grid-column:1;justify-self:start}
-.lesson-references article:has(.video-thumbnail){display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
-.lesson-references article .video-thumbnail-compact{width:100%;max-width:240px;aspect-ratio:16/9;min-height:0}
-.lesson-references article:has(.video-thumbnail)>div{min-width:0;overflow-wrap:anywhere}
-.lesson-references article:has(.video-thumbnail)>.reference-status{grid-column:1}
+.lesson-references article:has(.video-embed){display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.lesson-references article .video-embed-compact{width:100%;max-width:240px}
+.lesson-references article .video-embed-active{max-width:none}
+.lesson-references article:has(.video-embed)>div:not(.video-embed){min-width:0;overflow-wrap:anywhere}
+.lesson-references article:has(.video-embed)>.reference-status{grid-column:1}
 }
 /* Keep all three desktop resource columns explicit: the generic resource link rule targets anchors. */
 @media(min-width:768px){
-.studio-library .resource-row:has(.video-thumbnail){grid-template-columns:190px minmax(0,1fr) auto}
-.studio-library .resource-row .video-thumbnail{grid-column:1;width:190px;justify-self:start}
+.studio-library .resource-row:has(.video-embed){grid-template-columns:190px minmax(0,1fr) auto}
+.studio-library .resource-row .video-embed{grid-column:1;width:190px;justify-self:start}
+.studio-library .resource-row .video-embed-active{grid-column:1/-1;width:100%;max-width:none}
+.studio-library .resource-row:has(.video-embed-active) .resource-copy{grid-column:1/3}
 .studio-library .resource-row .resource-copy{grid-column:2;min-width:0}
 .studio-library .resource-row .source-open{grid-column:3;justify-self:start}
 }
-.lesson-references article:has(.video-thumbnail){min-width:0}
-.lesson-references article:has(.video-thumbnail)>div{flex:1;min-width:0;overflow-wrap:anywhere}
-.lesson-references article .video-thumbnail-compact{flex:0 0 112px;width:112px}
-.lesson-references article:has(.video-thumbnail)>.reference-status{max-width:80px;white-space:normal;text-align:right}
+.lesson-references article:has(.video-embed){min-width:0}
+.lesson-references article:has(.video-embed)>div:not(.video-embed){flex:1;min-width:0;overflow-wrap:anywhere}
+.lesson-references article .video-embed-compact:not(.video-embed-active){flex:0 0 112px;width:112px}
+.lesson-references article:has(.video-embed)>.reference-status{max-width:80px;white-space:normal;text-align:right}
