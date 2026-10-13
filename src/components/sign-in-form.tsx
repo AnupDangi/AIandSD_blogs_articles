@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
+import { callbackErrorMessage } from "@/lib/auth-errors";
 
 type Status = { kind: "idle" | "loading" | "sent" | "error"; message: string };
 
-export function SignInForm({ next, initialError }: { next: string; initialError?: string }) {
+export function SignInForm({ next, initialError, canonicalOrigin }: { next: string; initialError?: string; canonicalOrigin?: string }) {
+  const currentOrigin = useSyncExternalStore(subscribeNever, () => window.location.origin, () => "");
+  const wrongOrigin = canonicalOrigin && currentOrigin && currentOrigin !== canonicalOrigin ? canonicalOrigin : null;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>(initialError ? { kind: "error", message: errorMessage(initialError) } : { kind: "idle", message: "" });
 
@@ -28,7 +31,7 @@ export function SignInForm({ next, initialError }: { next: string; initialError?
         return;
       }
       if (provider === "email" && result.sent) {
-        setStatus({ kind: "sent", message: `If ${email} can receive mail, a sign-in link is on its way. Check your inbox.` });
+        setStatus({ kind: "sent", message: `If ${email} can receive mail, a sign-in link is on its way. Open it in this same browser. New accounts are created automatically the first time you sign in.` });
         return;
       }
       setStatus({ kind: "error", message: "Sign-in could not be started. Please try again." });
@@ -38,6 +41,7 @@ export function SignInForm({ next, initialError }: { next: string; initialError?
   }
 
   return <div className="sign-in-form-wrap">
+    {wrongOrigin && <div className="sign-in-status sign-in-status-error" role="alert">Sign-in only works at <a href={`${wrongOrigin}/sign-in?next=${encodeURIComponent(next)}`}>{wrongOrigin}</a>. You opened this page at {currentOrigin}, so the sign-in cookie and redirect would not match.</div>}
     <div className="oauth-sign-in-options">
       <button className="oauth-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("google")}>Continue with Google <span aria-hidden="true">↗</span></button>
       <button className="oauth-sign-in github-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("github")}>Continue with GitHub <span aria-hidden="true">↗</span></button>
@@ -53,8 +57,5 @@ export function SignInForm({ next, initialError }: { next: string; initialError?
   </div>;
 }
 
-function errorMessage(error?: string) {
-  if (error === "setup_required") return "Sign-in is not configured on this deployment yet. You can continue learning as a guest.";
-  if (error === "missing_code" || error === "callback_failed") return "That sign-in link could not be completed. Request a fresh link or try GitHub again.";
-  return "Sign-in is temporarily unavailable. Please try again, or continue as a guest.";
-}
+const subscribeNever = () => () => {};
+function errorMessage(error?: string) { return callbackErrorMessage(error); }

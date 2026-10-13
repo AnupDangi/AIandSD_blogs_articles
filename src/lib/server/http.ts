@@ -52,7 +52,11 @@ export function rejectCrossOrigin(request: Request) {
   }
   const fetchSite = request.headers.get("sec-fetch-site");
   if (!requestOrigin || requestOrigin !== expectedOrigin || fetchSite === "cross-site") {
-    return NextResponse.json({ error: "cross_origin_request" }, { status: 403 });
+    return NextResponse.json({
+      error: "cross_origin_request",
+      message: configuredOrigin ? `Open this app at ${expectedOrigin} to continue. It is configured for that address only.` : "This request did not come from this app.",
+      expectedOrigin,
+    }, { status: 403 });
   }
   return null;
 }

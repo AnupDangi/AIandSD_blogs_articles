@@ -15,8 +15,12 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
     </div>
     <div className="sign-in-card">
       <div className="sign-in-card-heading"><BrandMark /><div><span className="eyebrow">Your learning account</span><h2>Welcome to the studio.</h2><p>Sign in or create your account.</p></div></div>
-      <SignInForm next={next} initialError={params.error}/>
+      <SignInForm next={next} initialError={params.error} canonicalOrigin={canonicalOrigin()}/>
       <p className="sign-in-back"><Link href="/courses">← Continue as a guest</Link></p>
     </div>
   </section>;
+}
+
+function canonicalOrigin() {
+  try { return process.env.NEXT_PUBLIC_APP_URL ? new URL(process.env.NEXT_PUBLIC_APP_URL).origin : undefined; } catch { return undefined; }
 }

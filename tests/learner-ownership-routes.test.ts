@@ -250,7 +250,7 @@ describe("learner ownership route contracts", () => {
     }, "https://attacker.example"));
 
     expect(response.status).toBe(403);
-    expect(await response.json()).toEqual({ error: "cross_origin_request" });
+    expect(await response.json()).toMatchObject({ error: "cross_origin_request" });
     expect(testState.getDatabase).not.toHaveBeenCalled();
     expect(progressDatabase.learningProgress.upsert).not.toHaveBeenCalled();
   });

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createSupabaseServerClient } from "@/lib/server/supabase";
 import { badRequest, noStoreJson, readJson, rejectCrossOrigin } from "@/lib/server/http";
+import { describeSignInFailure } from "@/lib/auth-errors";
 
 const inputSchema = z.discriminatedUnion("provider", [
   z.object({ provider: z.literal("github"), next: z.string().optional() }).strict(),
@@ -30,7 +31,10 @@ export async function POST(request: Request) {
       provider: parsed.data.provider,
       options: { redirectTo: callback.toString() },
     });
-    if (error || !data.url) return NextResponse.json({ error: "sign_in_unavailable" }, { status: 503 });
+    if (error || !data.url) {
+      const failure = describeSignInFailure(error, "oauth");
+      return NextResponse.json({ error: failure.error, message: failure.message }, { status: failure.status });
+    }
     return noStoreJson({ url: data.url });
   }
 
@@ -38,6 +42,9 @@ export async function POST(request: Request) {
     email: parsed.data.email,
     options: { emailRedirectTo: callback.toString() },
   });
-  if (error) return NextResponse.json({ error: "sign_in_unavailable" }, { status: 503 });
+  if (error) {
+    const failure = describeSignInFailure(error, "email");
+    return NextResponse.json({ error: failure.error, message: failure.message }, { status: failure.status });
+  }
   return noStoreJson({ sent: true });
 }
