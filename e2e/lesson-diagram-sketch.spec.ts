@@ -38,3 +38,30 @@ test("Chapter 40 diagram sketch fits the mobile Simulate view", async ({ page })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
   expect(renderErrors).toEqual([]);
 });
+
+const additionalSketches = [
+  { slug: "production-rag-architecture", title: "Where does an unusable source enter retrieval?", option: "Authorize before retrieval", summary: /Allowed source IDs come from the trusted request identity/ },
+  { slug: "retries-fallbacks-and-graceful-degradation", title: "What should happen when the reranker slows down?", option: "Skip the optional reranker and label the result", summary: /Valid only if the no-reranker path meets the minimum quality gate/ },
+  { slug: "prompt-injection-and-untrusted-context", title: "Where does the authorization boundary live?", option: "Enforce an application allowlist at each boundary", summary: /citation IDs cannot exceed the supplied set/ },
+] as const;
+
+for (const item of additionalSketches) {
+  test(`${item.slug} has an authored diagram sketch with a text equivalent`, async ({ page }) => {
+    const renderErrors = collectRenderErrors(page);
+    await page.goto(`/learn/${item.slug}`);
+    const sketch = page.getByRole("region", { name: item.title });
+    await expect(sketch).toBeVisible();
+    await expect(sketch.getByRole("radio")).toHaveCount(3);
+    await expect(sketch.getByRole("list", { name: "Diagram text equivalent" }).getByRole("listitem")).toHaveCount(5);
+    await sketch.getByRole("radio", { name: item.option }).check();
+    await expect(sketch.getByText(item.summary)).toBeVisible();
+    await sketch.getByRole("button", { name: /03 / }).click();
+    await expect(sketch.getByRole("button", { name: /03 / })).toHaveAttribute("aria-pressed", "true");
+    expect(renderErrors).toEqual([]);
+  });
+}
+
+test("lessons without a sketch render no diagram region", async ({ page }) => {
+  await page.goto("/learn/transformer-attention-for-engineers");
+  await expect(page.locator(".lesson-diagram-sketch")).toHaveCount(0);
+});

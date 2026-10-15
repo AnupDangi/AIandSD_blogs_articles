@@ -1,0 +1,111 @@
+{
+  "ai-13": {
+    "title": "Where does an unusable source enter retrieval?",
+    "intro": "Choose where authorization happens, then follow one restricted passage through the same query path. The ordered text below is equivalent to the sketch.",
+    "options": [
+      {
+        "id": "no-filter",
+        "label": "Retrieve everything, filter nothing",
+        "summary": "The restricted passage shares the query terms, enters the top two, and displaces a current relevant chunk.",
+        "nodes": ["User question", "Retrieve top two", "Restricted passage ranks in", "Context assembled", "Answer cites restricted source"],
+        "edges": ["searches the whole index", "matches query terms", "displaces a relevant chunk", "cites what it was given"]
+      },
+      {
+        "id": "authorize-first",
+        "label": "Authorize before retrieval",
+        "summary": "Allowed source IDs come from the trusted request identity, so ineligible text never reaches ranking.",
+        "nodes": ["User question", "Derive allowed source IDs", "Retrieve eligible chunks only", "Context assembled", "Answer cites allowed sources"],
+        "edges": ["identity is server-owned", "restricts the candidate set", "ranks only eligible text", "citations stay in the set"]
+      },
+      {
+        "id": "check-after",
+        "label": "Check citations only after generation",
+        "summary": "The citation check blocks the output, but the restricted passage already displaced relevant evidence.",
+        "nodes": ["User question", "Retrieve top two", "Restricted passage ranks in", "Answer drafted", "Citation check rejects it"],
+        "edges": ["searches the whole index", "matches query terms", "displaces a relevant chunk", "late check finds the source"]
+      }
+    ]
+  },
+  "ai-29": {
+    "title": "What should happen when the reranker slows down?",
+    "intro": "Choose a policy for a reranker that takes 4 s instead of 0.3 s under a 12 s objective. The ordered text below is equivalent to the sketch.",
+    "options": [
+      {
+        "id": "retry-same",
+        "label": "Retry the slow call until it succeeds",
+        "summary": "Three four-second attempts alone consume the whole 12 s objective and leave no time for other work.",
+        "nodes": ["Request arrives", "Reranker takes 4 s", "Retry the same call", "Deadline is exhausted", "User sees a timeout"],
+        "edges": ["starts the reranker", "attempt one is slow", "attempt two is slow", "no time remains"]
+      },
+      {
+        "id": "degrade",
+        "label": "Skip the optional reranker and label the result",
+        "summary": "Valid only if the no-reranker path meets the minimum quality gate; the lower-feature mode is traced and shown.",
+        "nodes": ["Request arrives", "Reranker takes 4 s", "Budget check fails", "Degraded path runs", "Labeled answer returned"],
+        "edges": ["starts the reranker", "remaining budget is too small", "skip the optional stage", "response is labeled and traced"]
+      },
+      {
+        "id": "minimal",
+        "label": "Return an unavailable result defined in advance",
+        "summary": "Used when required work cannot finish within the contract; no supporting evidence is invented.",
+        "nodes": ["Request arrives", "Required stage cannot finish", "Minimal rung selected", "Clear partial or unavailable result", "Failure is traced"],
+        "edges": ["starts required work", "contract cannot be met", "predefined behavior applies", "outcome is recorded"]
+      }
+    ]
+  },
+  "ai-37": {
+    "title": "Where does the authorization boundary live?",
+    "intro": "Choose what enforces access when a retrieved document says to cite private material. The ordered text below is equivalent to the sketch.",
+    "options": [
+      {
+        "id": "prompt-only",
+        "label": "Tell the model not to follow document text",
+        "summary": "A prompt instruction is not enforcement; a different prompt, model or passage may behave differently.",
+        "nodes": ["Request arrives", "Document says to cite private data", "Prompt asks model to ignore it", "Model output varies", "Private source may be cited"],
+        "edges": ["retrieves a document", "text looks like an instruction", "relies on model behavior", "no independent check"]
+      },
+      {
+        "id": "app-allowlist",
+        "label": "Enforce an application allowlist at each boundary",
+        "summary": "Only a narrow property is proven: citation IDs cannot exceed the supplied set. It is not general immunity.",
+        "nodes": ["Request arrives", "Server sets allowed IDs", "Retrieval uses allowed IDs", "Citations checked against the set", "Outside source is rejected"],
+        "edges": ["identity is authenticated", "filters before search", "document text cannot add IDs", "forged citation fails"]
+      },
+      {
+        "id": "refusal",
+        "label": "Rely on the model to refuse",
+        "summary": "A refusal is not access control, and refusing every document would also fail benign users.",
+        "nodes": ["Request arrives", "Document says to cite private data", "Model may refuse", "Behavior changes later", "Access is unprotected"],
+        "edges": ["retrieves a document", "text looks like an instruction", "next model or prompt differs", "no policy gate remains"]
+      }
+    ]
+  },
+  "ai-40": {
+    "title": "Where does the workflow state live?",
+    "intro": "Choose an architecture to redraw the same request path. Select a step in the sketch or the text list to inspect it; the ordered text below is equivalent to the sketch.",
+    "options": [
+      {
+        "id": "memory",
+        "label": "Keep state only in an in-memory agent loop",
+        "summary": "A process crash loses the current step and evidence reference.",
+        "nodes": ["Learner request", "In-memory coordinator", "Retrieve evidence", "Worker crash", "Restart from request"],
+        "edges": ["starts", "loads evidence", "loses process state", "no checkpoint"]
+      },
+      {
+        "id": "durable",
+        "label": "Persist bounded state and idempotent step results",
+        "summary": "Persist the step and evidence reference before continuing; reuse an idempotency key after restart.",
+        "nodes": ["Learner request", "Bounded coordinator", "Retrieve evidence", "Worker crash", "Resume with same key"],
+        "edges": ["starts", "stores evidence reference", "crash loses process only", "resumes from checkpoint"],
+        "default": true
+      },
+      {
+        "id": "stateless",
+        "label": "Use one stateless provider request per user turn",
+        "summary": "A single provider call has no durable record of the retrieval or downstream write.",
+        "nodes": ["Learner request", "Provider call", "Retrieve evidence", "Worker crash", "Restart full operation"],
+        "edges": ["starts", "issue a separate provider request", "loses process state", "may repeat work"]
+      }
+    ]
+  }
+}
