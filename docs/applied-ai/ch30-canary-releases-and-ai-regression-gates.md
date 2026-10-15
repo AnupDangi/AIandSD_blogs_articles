@@ -10,9 +10,9 @@ Define a known-good control and a candidate, combine offline regression tests wi
 
 ## Figure walkthrough
 
-The general release pattern is that control and candidate pass offline gates first, then a stable small cohort receives the candidate. The repository starter can exercise only synthetic local fixture comparisons; it has no deployment, traffic routing, or live canary.
+The general release pattern is that control and candidate pass offline gates first, then a stable small cohort receives the candidate. A local exercise in your own project can run only synthetic offline comparisons; it has no deployment, traffic routing, or live canary.
 
-**Authored instructional mechanism map — predeclared release gates.** This table connects the source release pattern with the separately labeled local fixture exercise.
+**Authored instructional mechanism map — predeclared release gates.** This table connects the source release pattern with the separately labeled local offline exercise.
 
 | Stage | Required evidence | Branch |
 |---|---|---|
@@ -21,7 +21,7 @@ The general release pattern is that control and candidate pass offline gates fir
 | Expose stable small cohort | Actual traffic routing and cohort identity | Compare live quality, latency, errors, cost, and safety |
 | Promote or roll back | Signals remain within the agreed limits | Expand exposure or restore the compatible control |
 
-**Local gate worksheet:** control fixture `5/6` citation coverage and `safety = 1.0` passes the example gate (`coverage ≥ 0.80` and `safety ≥ 1.0`). Injected expected-source failure yields `4/6` and `safety = 0.0`, so the same gate rejects it. This tests gate behavior against modified fixture expectations, not a deployed candidate or live canary. The source's overall `+3`/upload `−17` percentage-point example illustrates why slice gates precede rollout.
+**Local gate worksheet:** a toy control suite scoring `5/6` citation coverage with `safety = 1.0` passes the example gate (`coverage ≥ 0.80` and `safety ≥ 1.0`). An injected expected-source failure on the safety case would yield `4/6` and `safety = 0.0`, so the same gate rejects it. This is arithmetic for a toy suite and tests gate behavior against modified case expectations, not a deployed candidate or live canary. The source's overall `+3`/upload `−17` percentage-point example illustrates why slice gates precede rollout.
 
 ## Release progressively
 
@@ -35,15 +35,15 @@ The source example describes a model upgrade that raises overall success by 3 po
 
 ## Practice lab
 
-1. Save the unmodified output of `python -m document_intelligence --evaluate` as the control. It reports six fixture cases and citation coverage across five slices; the known retrieval paraphrase miss is part of the control baseline.
-2. Predeclare a critical-slice rule: any `safety` score below `1.0` halts this synthetic candidate. State separately which latency, cost, and error-rate measurements would be required for a live release; the starter emits none.
-3. In a temporary copy of `fixtures/evaluation.json`, change the `safety` case's `expected_source` to a deliberately absent ID. Call `evaluate(path)` on that copy from a small local script or test, leaving the checked-in fixture untouched. This is an injected failing fixture, not a model change.
-4. Compare the control and injected result. Confirm the `safety` slice and aggregate changed, and that the predeclared rule rejects the candidate even if other slices stay green.
-5. Explain how a real rollout would use a stable cohort, observe the same signals, and restore the control. No traffic routing or rollback is exercised by this fixture test.
+1. In your own project, keep a small suite of six offline cases across five slices (one of them `safety`) and save its unmodified output as the control. A known failing case may stay in the control baseline.
+2. Predeclare a critical-slice rule: any `safety` score below `1.0` halts this synthetic candidate. State separately which latency, cost, and error-rate measurements would be required for a live release; an offline suite emits none.
+3. Make a temporary copy of the case file and change the `safety` case's expected source to a deliberately absent ID. Run the suite on that copy from a small script or test, leaving the original case file untouched. This is an injected failing case, not a model change.
+4. Compare the control and injected results. Confirm the `safety` slice and aggregate changed, and that the predeclared rule rejects the candidate even if other slices stay green.
+5. Explain how a real rollout would use a stable cohort, observe the same signals, and restore the control. No traffic routing or rollback is exercised by this offline test.
 
-**Expected local observation:** the unmodified fixture scores `5/6` (about `0.833`) overall, `0.5` for `retrieval`, and `1.0` for `safety` and the other three slices. Replacing only the safety case's expected ID with an absent ID yields `4/6` (about `0.667`) overall, `0.0` for `safety`, and leaves retrieval at `0.5` with the other three slices at `1.0`. This deliberately injects a failed expectation; it does not show that a model or application change caused a real regression.
+**Worked arithmetic for a toy suite:** if five of six cases pass (about `0.833`) and `safety` is `1.0`, the example gate accepts the control. Replacing only the safety case's expected ID with an absent ID would make that case fail, giving `4/6` (about `0.667`) overall and `0.0` for `safety`, so the gate rejects it. Predict these numbers for your own suite before running it, and report what you actually observe. This deliberately injects a failed expectation; it does not show that a model or application change caused a real regression.
 
-**Deliverable:** predeclared local gate, control and injected-fixture outputs, release decision, and a proposed rollout/rollback procedure.
+**Deliverable:** predeclared local gate, control and injected-case outputs, release decision, and a proposed rollout/rollback procedure.
 
 ## Failure review
 
@@ -65,45 +65,13 @@ The source example describes a model upgrade that raises overall success by 3 po
 
 ## Try the simulation
 
-Use the **`production-tabletop`** trace to compare **Gate on aggregate success only**, **Require aggregate and every risk slice to pass**, and **Rollback on any failed risk slice**. Before stepping, predict the action for a 96% aggregate and a 70% risk slice against 90% and 85% thresholds. Advance one check at a time and observe whether traffic is promoted, held, or rolled back. This is a proposed control flow; the local fixture comparison is not a live canary or proof of production safety.
+Use the **`production-tabletop`** trace to compare **Gate on aggregate success only**, **Require aggregate and every risk slice to pass**, and **Rollback on any failed risk slice**. Before stepping, predict the action for a 96% aggregate and a 70% risk slice against 90% and 85% thresholds. Advance one check at a time and observe whether traffic is promoted, held, or rolled back. This is a proposed control flow; the local offline comparison is not a live canary or proof of production safety.
 
 ## Course project — milestone 5 — Reliability
 
-**Task:** Use the `evaluate(path)` seam in `document_intelligence/evaluation.py` for the injected-fixture comparison above. Keep the repository fixture as the control. There is no traffic router, live cohort, or canary deployment here; do not call fixture results a live-user canary.
+**Task:** In your own TypeScript project, add a release gate function that takes an evaluation report (overall pass rate and per-slice pass rates) and returns accept or reject with a reason. Predeclare the rule before you look at results, for example overall coverage at least 0.80 and `safety` at least 1.0. Keep your normal case file as the control. Make an injected copy in which the `safety` case's expected source is a deliberately absent ID, and run both through the suite. Write a Vitest or `node:test` test that asserts the gate accepts the control report, rejects the injected report, names the `safety` slice in the rejection reason, and still rejects when every other slice is perfect. Add one more test that the gate rejects a report with a missing `safety` slice rather than treating it as passing. There is no traffic router, live cohort, or canary deployment here; do not call offline results a live-user canary.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python - <<'PY'
-import json
-import tempfile
-from pathlib import Path
-
-from document_intelligence.evaluation import evaluate
-
-cases = json.loads(Path("fixtures/evaluation.json").read_text(encoding="utf-8"))
-for case in cases:
-    if case["module"] == "safety":
-        case["expected_source"] = "absent-source"
-with tempfile.TemporaryDirectory() as directory:
-    injected = Path(directory) / "injected.json"
-    injected.write_text(json.dumps(cases), encoding="utf-8")
-    control = evaluate()
-    candidate = evaluate(injected)
-    def gate(result):
-        return (result["citation_coverage"] >= 0.80
-                and result["slices"].get("safety", 0.0) >= 1.0)
-    print(json.dumps({
-        "control": {"report": control, "release": "accept" if gate(control) else "reject"},
-        "injected_fixture": {"report": candidate, "release": "accept" if gate(candidate) else "reject"},
-    }, indent=2))
-PY
-```
-
-**Expected result:** Both reports contain six cases. The control has `5/6` citation coverage and `safety: 1.0`, so this illustrative gate accepts it. The injected fixture has `4/6` coverage and `safety: 0.0`, so the gate rejects it. The injected data changes only the expected source; it tests the evaluation gate, not application behavior or a live canary.
-
-**Acceptance check:** Save both outputs, show the critical-slice gate rejects the injected case, and state that live canary evidence needs a deployed cohort and rollback path.
+**Acceptance check:** Save both reports, show that the critical-slice gate rejects the injected case, and state that live canary evidence needs a deployed cohort and a rollback path.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

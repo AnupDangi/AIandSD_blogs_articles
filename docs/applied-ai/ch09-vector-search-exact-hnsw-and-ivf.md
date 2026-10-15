@@ -22,7 +22,7 @@ Nearest-neighbor retrieval at scale is an indexing problem. Approximate indexes 
 
 > **Source figure description retained:** Exact scan compares all vectors; HNSW traverses a proximity graph; IVF partitions vectors and probes selected lists.
 
-**Authored instructional mechanism map — three search paths.** The paths describe index mechanisms; the starter and browser contain no HNSW or IVF implementation.
+**Authored instructional mechanism map — three search paths.** The paths describe index mechanisms; the course and the browser visual contain no HNSW or IVF implementation.
 
 | Search path | Work performed | Inspectable trade-off |
 |---|---|---|
@@ -65,13 +65,14 @@ If the exact top 10 contains ten neighbors and an approximate index returns nine
 
 ## Implementation sketch (pseudocode)
 
-```python
-exact_ids = exact.search(query, k=10)
-approx_ids = ann.search(query, k=10)
-recall_at_k = len(set(exact_ids) & set(approx_ids)) / 10
+```ts
+const exactIds = exact.search(query, { k: 10 });
+const approxIds = ann.search(query, { k: 10 });
+const overlap = approxIds.filter((id) => exactIds.includes(id)).length;
+const recallAtK = overlap / 10;
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below uses only a small in-memory exact search.
 
 ## What to measure
 
@@ -93,24 +94,13 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 - Write an exact top-5 list and an approximate top-5 list for a small toy query.
 - Calculate ANN recall as overlap divided by 5, relative to the exact list.
 - Separately mark which returned items are relevant and calculate relevance recall against those labels.
-- Do not install FAISS or claim the project starter contains HNSW/IVF indexes.
+- Do not install FAISS or claim your toy code contains HNSW or IVF indexes.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Inspect the deterministic lexical and feature-hashed rankings. The vector path is filtered to lexical term overlap and does not implement HNSW, IVF, exhaustive vector search, or ANN recall. Use the hand-calculated ANN-vs-exact exercise only for those concepts.
+**Task:** In your own TypeScript project, add an exact vector search that scores every eligible vector in your small knowledge base and returns the top-k IDs, breaking ties by ID so results are deterministic. Add two small pure functions: `annRecallAtK(exactIds, approxIds)` for overlap with the exact list, and `relevanceRecallAtK(returnedIds, relevantIds)` for overlap with hand-labeled evidence. Write Vitest or `node --test` tests with these assertions. First, exact search on a four or five vector toy set returns the expected ID order. Second, an approximate list that shares nine of ten IDs with the exact list gives `annRecallAtK` equal to 0.9. Third, the same returned list scored against a different hand-labeled evidence set gives a different number from `relevanceRecallAtK`, showing the two measures are separate. Also add a test that applies a metadata filter before ranking and checks that both lists use the same eligible set.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m document_intelligence --trace "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "retrieval_comparison_exposes_scores_and_source_spans" -v
-```
-
-**Expected observation:** The trace exposes candidate order and toy scores for four retrieval stages; every candidate has a span ID and source offsets. The test passes. No ANN index or latency claim is produced.
-
-**Acceptance check:** Define ANN recall against an exact vector top-k baseline and keep it distinct from relevance recall against labeled evidence.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** You define ANN recall against an exact top-k baseline and keep it distinct from relevance recall against labeled evidence. Your notes say the exact search is the baseline you would compare any future HNSW or IVF index to; your project does not implement either, so it makes no latency or ANN recall claim.
 
 ### Recall without notes
 

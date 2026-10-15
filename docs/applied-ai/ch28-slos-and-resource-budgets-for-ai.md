@@ -22,13 +22,13 @@ One request deadline and resource budget flow through each stage. Every operatio
 | Before retry | Remaining time and step/tool/cost allowances | Retry only if it fits every applicable bound |
 | Limit reached | No further eligible work | Stop or return the predefined degraded result with a reason |
 
-**Parallel gates:** the deadline is only one constraint. Every operation must also fit the remaining step, tool-call, token, and simulated cost budgets. An SLO counts good user events over a stated window; a single run budget does not itself prove an SLO. The starter demonstrates bounded attempts/fallback, not shared-deadline enforcement.
+**Parallel gates:** the deadline is only one constraint. Every operation must also fit the remaining step, tool-call, token, and simulated cost budgets. An SLO counts good user events over a stated window; a single run budget does not itself prove an SLO. Bounded attempts and a fallback are a separate mechanism from shared-deadline enforcement, and the course supplies neither.
 
 ## Set the boundary before the incident
 
 An **SLI** is a measured user-facing signal. An **SLO** is a target for that signal over a defined window. A **run budget** limits resources such as elapsed time, cost, tokens, steps, or tool calls. Without explicit limits, a run can remain active while it misses the user’s expectation or consumes unbounded resources.
 
-Define a good event and target from the product journey. In a system that supports a shared deadline, each operation receives only the time remaining, not a fresh full timeout. When a limit is exhausted, terminate safely or choose a known degraded path. Do not use machine utilization alone as a proxy for user success. The course starter does not implement a shared deadline or cost ledger; its retry utility demonstrates only a bounded attempt count and fallback. **Burn rate** is the speed at which a run consumes its error budget — a burn rate above 1 exhausts the budget before the window ends.
+Define a good event and target from the product journey. In a system that supports a shared deadline, each operation receives only the time remaining, not a fresh full timeout. When a limit is exhausted, terminate safely or choose a known degraded path. Do not use machine utilization alone as a proxy for user success. The course supplies no shared deadline or cost ledger; a bounded retry helper limits only the attempt count and selects a fallback. **Burn rate** is the speed at which a run consumes its error budget — a burn rate above 1 exhausts the budget before the window ends.
 
 ## Worked example
 
@@ -38,7 +38,7 @@ Suppose the product objective is “complete a research answer within 20 seconds
 
 1. Define a user-visible good event and an SLO window for a mock workflow.
 2. Add `deadline` and `deadline_remaining` to a run state.
-3. Add `MAX_STEPS` and a hypothetical `MAX_COST` ledger; check both before starting additional work. The local fixture system has no billable model usage, so label cost as simulated.
+3. Add `MAX_STEPS` and a hypothetical `MAX_COST` ledger; check both before starting additional work. A local toy workflow has no billable model usage, so label cost as simulated.
 4. Inject a slow dependency and a budget-exhausting run.
 5. Verify that the workflow stops or degrades with an observable reason and a usable user response.
 
@@ -68,19 +68,9 @@ In the **`production-tabletop`** trace, compare **Run both tools sequentially**,
 
 ## Course project — milestone 5 — Reliability
 
-**Task:** Inspect `resilience.py`; extend a local test with an operation that keeps raising `TimeoutError` and assert the retry-attempt bound and fallback behavior. Then design (but do not claim the starter implements) a shared deadline and simulated cost ledger for one request.
+**Task:** In your own TypeScript project, find the retry helper that wraps your slowest or flakiest operation (write a small one with a fixed attempt limit and a fallback if you have none). Add a Vitest or `node:test` test with a fake operation that keeps throwing a timeout error. Assert that the operation is called exactly the configured number of times, that the fallback result is then returned, and that the result carries an observable reason. Then add a shared deadline and a simulated cost ledger for one request: each stage receives only the time and budget remaining, and the request stops or degrades when either is exhausted. Write a second test with a fake clock where one slow stage uses up most of the deadline, and assert that a later stage is skipped or degraded instead of getting a fresh full timeout.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'retry_' -v
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'transient_retrieval_failure' -v
-```
-
-**Expected result:** Existing resilience tests pass; the added exhaustion case terminates at the configured bound.
-
-**Acceptance check:** Demonstrate finite attempts and the configured fallback, label the deadline/cost ledger as your design extension, and do not claim a live service SLO.
+**Acceptance check:** Your tests show finite attempts and the configured fallback. Label the deadline and cost ledger as your own design extension and the cost as simulated, and do not claim a live service SLO.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

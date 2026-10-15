@@ -22,7 +22,7 @@ Production workloads contain a distribution of task difficulty. Routing can rese
 
 > **Source figure description retained:** Router chooses a candidate model; validation or low-confidence signals can trigger a bounded escalation path, while loops are prevented.
 
-**Authored instructional mechanism map — bounded model cascade.** This is the chapter's proposed router flow; the fixture project performs no provider routing.
+**Authored instructional mechanism map — bounded model cascade.** This is a proposed router flow from this chapter, not an implementation the course supplies.
 
 | Current state | Check or action | Next state |
 |---|---|---|
@@ -66,24 +66,23 @@ If 70% of support questions are simple FAQs, a less costly model may handle thos
 
 ## Implementation sketch (pseudocode)
 
-```python
-candidate = router(task_features)
-result = candidate.run(request)
-if validate(result):
-    return result
+```ts
+const candidate = router(taskFeatures);
+const result = await candidate.run(request);
+if (validate(result)) return result;
 
-# A request already routed to the strongest model has nowhere to escalate.
-if candidate is stronger_model:
-    return explicit_failure("validation_failed_on_strongest_route")
+// A request already routed to the strongest model has nowhere to escalate.
+if (candidate === strongerModel) {
+  return explicitFailure("validation_failed_on_strongest_route");
+}
 
-# At most one escalation to a different model; never route in a loop.
-retry = stronger_model.run(request)
-if validate(retry):
-    return retry
-return explicit_failure("validation_failed_after_escalation")
+// At most one escalation to a different model; never route in a loop.
+const retry = await strongerModel.run(request);
+if (validate(retry)) return retry;
+return explicitFailure("validation_failed_after_escalation");
 ```
 
-This is pseudocode; `router`, `validate`, `stronger_model`, and `explicit_failure` are application-defined. The local course starter does not call a model or implement routing.
+This is pseudocode; `router`, `validate`, `strongerModel`, and `explicitFailure` are application-defined. The course does not supply a router; you design and test one in your own project.
 
 ## What to measure
 
@@ -110,20 +109,9 @@ This is pseudocode; `router`, `validate`, `stronger_model`, and `explicit_failur
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Compare one supported fixture question with one unsupported question. The local starter has no router or provider escalation; this exercise verifies its explicit `not_found` fallback.
+**Task:** In your own TypeScript project, add a bounded fallback around the model boundary. Define two routes, a cheaper one and a stronger one, each backed by a stub that returns a scripted result and counts its calls. Write a function that runs the cheaper route, validates the result against your answer contract, and escalates to the stronger route at most once. It should return the explicit failure codes `validation_failed_on_strongest_route` or `validation_failed_after_escalation` when validation still fails. Write Vitest or `node --test` tests for three cases. First, the cheaper stub returns invalid output and the stronger returns valid output: assert the valid result is returned and the stronger stub was called exactly once. Second, both stubs return invalid output: assert the failure code and that neither stub was called again. Third, a request routed straight to the strongest route fails with the first code and makes no escalation call.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m document_intelligence "What happens when the primary provider times out?"
-python -m document_intelligence "Who won the moon marathon?"
-```
-
-**Expected observation:** The first query is `answered` with citation `ops-01`; the second is `not_found` with an empty citation list. Request IDs vary.
-
-**Acceptance check:** You identify the deterministic fallback boundary and specify that if a future optional provider retry fails, it must return an explicit failure once rather than loop. No provider call is made here.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** You can point to the line that bounds escalation and to the test that would fail if a retry loop were introduced. Your notes say the routes are stubs with synthetic behavior, so the tests show the control flow is bounded, not that routing saves cost or preserves quality. No provider call is needed.
 
 ### Recall without notes
 

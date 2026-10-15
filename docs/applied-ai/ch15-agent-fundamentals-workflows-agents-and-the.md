@@ -12,7 +12,7 @@
 
 ## Before you begin
 
-Chapters 1–14; Python functions and API/tool calls.
+Chapters 1–14; TypeScript functions and API/tool calls.
 
 ## Why this matters
 
@@ -67,18 +67,18 @@ Refund processing with fixed eligibility rules is a workflow. Investigating a co
 
 ## Implementation sketch (pseudocode)
 
-```python
-steps = 0
-while steps < MAX_STEPS:
-    action = model.next_action(state)
-    observation = tools.execute(action)
-    state = update(state, observation)
-    steps += 1
-    if done(state):
-        break
+```ts
+let steps = 0;
+while (steps < MAX_STEPS) {
+  const action = await model.nextAction(state);
+  const observation = await tools.execute(action);
+  state = update(state, observation);
+  steps += 1;
+  if (done(state)) break;
+}
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -97,26 +97,18 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Implement a small offline loop with two fixture-backed tools and a local `choose_action(state)` policy. Make the policy choose its second tool only when the first observation is inconclusive, so the next action depends on what the tool returned.
-- Record each action and observation, stop on success or explicit failure, and enforce `MAX_STEPS=6` for a fixture case that never succeeds.
+- Implement a small offline loop with two fixture-backed tools and a local `chooseAction(state)` policy. Make the policy choose its second tool only when the first observation is inconclusive, so the next action depends on what the tool returned.
+- Record each action and observation, stop on success or explicit failure, and enforce `MAX_STEPS=6` for a case that never succeeds.
 - Run the same cases through a fixed two-tool workflow and compare success, unnecessary calls, and budget exhaustion. The deterministic policy demonstrates control flow without pretending to reproduce an LLM agent.
-- Compare the loop’s state handling with the project’s checkpoint replay test; no provider is needed.
+- Store each completed step under a step ID, then replay the run and check that a completed step returns its saved result instead of repeating its effect; no provider is needed.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Inspect the deterministic `CheckpointStore` and run its replay test. The project has a bounded checkpointed workflow utility, not an autonomous model agent.
+**Task:** In your own TypeScript project, put the application’s multi-step path behind an explicit bounded workflow runner. Give it a fixed list of named stages, a step budget, and a small checkpoint store keyed by stage ID (an in-memory `Map` is enough) so a completed stage is not run twice. Decide in a short note which part of your application is a fixed workflow and which part, if any, would need model-selected actions; keep the model-selected part out of the runner unless you can justify it. Write a Vitest or `node --test` test that runs the workflow, then runs it again with the same stage IDs and asserts that the effect function was called once (a call counter with `strictEqual`) and that the second run returns the saved result. Add a test that a run exceeding the step budget returns an explicit incomplete result instead of looping.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** You identify a case in your application suited to a fixed workflow, and your tests show replay without a repeated effect and an explicit incomplete result when the budget runs out. You do not claim your runner chooses tools or actions with a model unless it does, and a passing replay test does not show that an external write is atomic.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "checkpoint_replays_completed_stage_without_repeating_effect" -v
-```
-
-**Expected observation:** The test passes; replaying `write-1` returns the saved result instead of replacing it with a second result.
-
-**Acceptance check:** You identify a case suited to a fixed workflow and avoid claiming the starter chooses tools or actions with a model.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data and test doubles in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

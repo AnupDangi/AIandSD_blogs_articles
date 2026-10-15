@@ -13,7 +13,7 @@ import "@/components/discovery.css";
 
 export const metadata: Metadata = {
   title: { absolute: "LearnLikeADev: learn technology by building" },
-  description: "Explore visual engineering lessons, test your understanding, and build a document intelligence application with LearnLikeADev.",
+  description: "Explore visual engineering lessons, test your understanding, and build a reliable AI application in TypeScript with LearnLikeADev.",
 };
 
 const learningLoop = [
@@ -81,7 +81,7 @@ export default async function HomePage() {
             <div className="home-course-copy">
               <span className="status-pill">Course in development</span>
               <h2 id="project-heading">One course. A system that grows with you.</h2>
-              <p className="home-course-lead">Build a document intelligence application in Python: retrieve evidence, cite answers, evaluate failures, and recover interrupted work.</p>
+              <p className="home-course-lead">Build a reliable AI application in TypeScript: retrieve evidence, cite answers, evaluate failures, and recover interrupted work.</p>
               <ol className="home-phases">
                 {projectPhases.map((phase) => <li key={phase.title}><h3>{phase.title}</h3><p>{phase.copy}</p></li>)}
               </ol>

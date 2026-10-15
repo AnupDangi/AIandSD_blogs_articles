@@ -32,11 +32,11 @@ Long-lived AI systems need a clear separation between transient context, durable
 | Versioned artifacts | Commit identifier, test output, report/code version | Inspectable output referenced by stable identity |
 | Business source of truth | Current account/order record owned by its service | Re-read when needed; chat summaries do not replace it |
 
-**Resume path:** load explicit state → verify referenced artifact/version → select needed memory → assemble the smallest context → choose pending work. A note saying “worked on auth” does not identify the commit, failing tests, or feature status. The local JSON checkpoint persists completed stage results; it neither coordinates concurrent writers nor atomically commits an external effect.
+**Resume path:** load explicit state → verify referenced artifact/version → select needed memory → assemble the smallest context → choose pending work. A note saying “worked on auth” does not identify the commit, failing tests, or feature status. A local JSON checkpoint file persists completed stage results; it neither coordinates concurrent writers nor atomically commits an external effect.
 
 ## Try the simulation
 
-Open lesson `ai-19`, advance to **Save checkpoint**, then predict what a repeated checkpoint write should do. Select **Replay the checkpoint write** and inspect the outcome. The interrupt control only pauses this mounted view; it does not simulate durable storage or conversational memory. The JSON file and `CheckpointStore` exercise below demonstrate the difference between a displayed checkpoint and persisted state.
+Open lesson `ai-19`, advance to **Save checkpoint**, then predict what a repeated checkpoint write should do. Select **Replay the checkpoint write** and inspect the outcome. The interrupt control only pauses this mounted view; it does not simulate durable storage or conversational memory. The JSON file exercise in the practice lab below demonstrates the difference between a displayed checkpoint and persisted state.
 
 ## Concepts to retain
 
@@ -70,17 +70,17 @@ A coding agent should persist the commit identifier, failing tests, and feature 
 
 ## Implementation sketch (pseudocode)
 
-```python
-run_state = {
-    "objective": objective,
-    "completed_steps": completed_steps,
-    "pending_steps": pending_steps,
-    "last_checkpoint": checkpoint_id,
-    "artifacts": artifact_ids,
-}
+```ts
+const runState = {
+  objective,
+  completedSteps,
+  pendingSteps,
+  lastCheckpoint: checkpointId,
+  artifacts: artifactIds,
+};
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -100,25 +100,17 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
 - Define a JSON `RunState` record with objective, completed steps, pending steps, checkpoint ID, and artifact IDs.
-- Write it to a temporary file with Python’s standard library, reload it, and resume from the recorded stage.
+- Write it to a temporary file with Node’s built-in file APIs, reload it, and resume from the recorded stage.
 - Change a conversational note without changing authoritative state and verify the resumed action still uses the checkpoint.
-- Compare the result with the project’s single-process `CheckpointStore` test; its temporary-file replacement protects a completed file write but does not coordinate concurrent writers or make an external side effect atomic with the checkpoint.
+- Note the limit: writing a temporary file and then renaming it over the checkpoint protects a completed file write, but a single-process checkpoint does not coordinate concurrent writers or make an external side effect atomic with the checkpoint.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Use the checkpoint store as durable execution state, separate from conversational context. Run the replay test and inspect the generated temporary JSON state through the test’s assertions.
+**Task:** In your own TypeScript project, persist the workflow’s durable execution state (objective, completed stages with their results, pending stages, checkpoint ID, artifact IDs) as a JSON file, separate from any conversational context. Write it to a temporary file and rename it into place, and load it on startup so a new process can resume at the first pending stage. Keep reusable memory, if your application has any, in a separate record with provenance and a timestamp, and never let it override authoritative data. Write a Vitest or `node --test` test that uses a temporary directory, runs two stages, builds a fresh store instance from the same file to simulate a restart, and asserts that the completed stage is not run again (a call counter) and that the run resumes at the pending stage. Add a test that changing a free-text conversation note leaves the resumed stage unchanged.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** You can identify which task state must survive restart and distinguish that from reusable memory and from transient prompt context. Your test does not simulate an external write or a crash between that write and the checkpoint, so say plainly that atomicity with an external effect is not shown.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "checkpoint_replays_completed_stage_without_repeating_effect" -v
-```
-
-**Expected observation:** The test passes: the completed `write-1` result is stored in a JSON checkpoint and returned for a repeated stage ID. The test does not simulate an external write or a crash between that write and the checkpoint.
-
-**Acceptance check:** You can identify which task state must survive restart and distinguish that from reusable memory; the current starter persists workflow checkpoints only.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data and a temporary directory in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

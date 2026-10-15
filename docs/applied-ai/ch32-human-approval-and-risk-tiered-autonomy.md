@@ -23,7 +23,7 @@ Each proposed tool action is classified by risk and reversibility. Low-risk acti
 | Arguments change | Destination, action, or payload identity differs | Old approval no longer authorizes execution; deny or request a new review |
 | Execute and record | Operation/result linked to the approved pending step | Persist enough state to avoid losing the decision after restart |
 
-**Follow the toy branch:** approve a public-guide request → change its destination → approval no longer matches. Customer-record export remains a hard denial. Payload digests, expiry, and persisted approval records in this map are design requirements for a future subsystem, not implemented features of the local starter.
+**Follow the toy branch:** approve a public-guide request → change its destination → approval no longer matches. Customer-record export remains a hard denial. Payload digests, expiry, and persisted approval records in this map are design requirements for a future subsystem, not features of the browser toy.
 
 ## Approval should match consequence
 
@@ -40,9 +40,9 @@ Reading logs is low risk. Drafting an email is moderate risk. Sending it externa
 1. Classify four proposed operations—read a public guide, cite an allowed document, send an external email, and export customer records—by impact and reversibility.
 2. In the trust-boundary visual, approve a public-guide request and then change its destination. Record the stale-approval result. Try customer-record export with approval and observe the hard denial.
 3. Design an approval record for a future tool: actor, action, destination, payload digest, policy version, decision, expiry, and pending workflow ID. Explain which fields must be rechecked at execution.
-4. Use `CheckpointStore` to demonstrate that a completed stage survives a new store instance. Write a test specification (inputs, action, expected denial) for a changed payload under an old approval. Keep it as a design artifact until you implement an approval subsystem; adding it as an executable failing test would contradict the currently passing starter suite.
+4. Write a test specification (inputs, action, expected denial) for a changed payload under an old approval, using the toy values from the map above. Keep it as a design artifact until you implement an approval subsystem in your own project.
 
-**Deliverable:** action-risk table, approval record schema, visual observations, checkpoint observation, and a proposed test case for changed arguments and resume. Mark the approval test as unimplemented.
+**Deliverable:** action-risk table, approval record schema, visual observations, and a proposed test case for changed arguments and resume. Mark the approval test as unimplemented.
 
 ## Failure review
 
@@ -67,19 +67,9 @@ Use the **`trust-boundary-sandbox`** visual engine. In **Approval belongs to one
 
 ## Course project — milestone 6 — Trust boundaries
 
-**Task:** Inspect `models.py`, `safety.py`, and `workflow.py`. Run the `test_answer_contract_rejects_a_forged_source` citation-rejection test and the `test_checkpoint_replays_completed_stage_without_repeating_effect` replay test. In your submission, describe a future approval test bound to exact action, destination, and payload identity, including how an old approval would be rejected after a payload change. Label approval behavior proposed unless you implement and test it.
+**Task:** In your own TypeScript project, add an approval check in front of one consequential action (for example a tool call that sends or writes something). Represent the approval as a small record that binds the exact action, destination, and a digest of the payload. Write a Vitest or `node:test` test that grants an approval, then changes the payload (or the destination) and asserts that execution is denied and a new review is requested. Write a second test that asserts the unchanged operation still proceeds. Label approval behavior proposed unless you implement and test it.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'answer_contract' -v
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'checkpoint_' -v
-```
-
-**Expected result:** Evidence-validation and checkpoint-replay tests pass; approval binding remains a proposed extension.
-
-**Acceptance check:** Do not say approval is implemented; state what must be revalidated at execution.
+**Acceptance check:** Do not say approval is implemented unless your test passes against your code. State what must be revalidated at execution: action, destination, payload identity, expiry, and policy version.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

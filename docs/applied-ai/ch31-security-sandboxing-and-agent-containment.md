@@ -12,7 +12,7 @@ Apply least privilege to agent tools, describe the boundaries a sandbox must enf
 
 The agent sits inside filesystem, process, and network boundaries with only task-scoped capabilities. Credentials and unrelated host resources remain outside the reachable boundary.
 
-**Authored instructional mechanism map — capability containment.** This is a proposed sandbox policy. The source-scoping fixture does not exercise operating-system isolation.
+**Authored instructional mechanism map — capability containment.** This is a proposed sandbox policy. A unit test of the policy does not exercise operating-system isolation.
 
 | Boundary | Task-scoped permission | Denied or separately controlled capability |
 |---|---|---|
@@ -37,11 +37,11 @@ Allow the agent to edit files under `/workspace/repository` and run the project 
 ## Practice lab
 
 1. Write a capability manifest for a future agent: permitted project paths and commands, denied credential paths, and allowed network destinations.
-2. Inspect `safety.py` and run the starter's `test_fixture_question_returns_only_cited_allowed_evidence` and `test_answer_contract_rejects_a_forged_source` tests. Record which document IDs the caller authorizes and where those IDs are enforced.
-3. Make an adversarial copy of the `ops-03` document in test memory and append a request to send a sentinel secret. Add an in-memory mock egress sink and assert the proposed policy rejects that payload even when the mock destination is on an allowlist. The checked-in `ops-03` fixture itself contains no attack text.
-4. Mark filesystem/process isolation and real network denial as unverified. The starter has no agent process, container, tool egress, or credentials to exercise; those controls require a separate sandbox harness.
+2. In a small TypeScript sketch (or on paper), list the document or source IDs a caller is authorized to read for one request. Write down where in your code those IDs would be enforced: before retrieval, at the response boundary, or both.
+3. Take a toy document and make an adversarial copy of it in test memory with an appended request to send a sentinel secret. Add an in-memory mock egress sink and assert the proposed policy rejects that payload even when the mock destination is on an allowlist. The original toy document itself contains no attack text.
+4. Mark filesystem/process isolation and real network denial as unverified. A unit test with a mock sink has no agent process, container, tool egress, or credentials to exercise; those controls require a separate sandbox harness.
 
-**Deliverable:** capability manifest, local source-authorization results, mock egress test, and a list of sandbox controls still requiring an isolated runtime.
+**Deliverable:** capability manifest, source-authorization notes, mock egress test, and a list of sandbox controls still requiring an isolated runtime.
 
 ## Failure review
 
@@ -67,19 +67,9 @@ Use the **`trust-boundary-sandbox`** visual engine. The **Containment under comp
 
 ## Course project — milestone 6 — Trust boundaries
 
-**Task:** Build a test-only adversarial copy of fixture `ops-03` by appending an instruction to send a sentinel secret. No network/egress path exists in the starter: add a **mock-only** policy and in-memory allowed-endpoint sink, and assert no secret reaches the sink. Inspect the extractive answer separately: allowed-source citations do not make quoted attack text safe or prove the output is free of sensitive data. This is not real network containment or proof of prompt-injection immunity.
+**Task:** In your own TypeScript project, add a **mock-only** egress policy: a small function that decides whether an outbound payload may go to a destination, plus an in-memory sink that records what it receives. Write a Vitest or `node:test` test that builds a test-only adversarial copy of one of your own source documents by appending an instruction to send a sentinel secret. Assert that the policy returns a denial and that the sink received no payload containing the sentinel, even when the sink's destination is on the allowlist. Write a second test that inspects your application's answer separately: allowed-source citations do not make quoted attack text safe or prove the output is free of sensitive data. Your project has no real network containment, so this is not proof of containment or of prompt-injection immunity.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'fixture_question' -v
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'forged_source' -v
-```
-
-**Expected result:** Existing tests pass; the added mock test records a denied egress decision and no secret payload in the sink. The extractive answer may quote the appended attack text; record that as an output-control gap rather than a safe result.
-
-**Acceptance check:** Fail if the sentinel secret reaches even an allowlisted endpoint without task-specific authorization; label the sink a mock and the answer-output risk unverified.
+**Acceptance check:** Your test fails if the sentinel secret reaches even an allowlisted endpoint without task-specific authorization. Label the sink a mock, and label the answer-output risk unverified if your answer can still quote the appended attack text.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

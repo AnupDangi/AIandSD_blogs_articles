@@ -14,7 +14,7 @@ A durable job moves through `queued`, `running`, `waiting`, `succeeded`, `failed
 
 ### Authored mechanism map: two workers, one revision
 
-This instructional map describes the local guarded-record experiment, not a recovered PDF figure.
+This instructional map describes the guarded-record exercise in this lesson, not a recovered PDF figure.
 
 | Ordered event | Worker snapshot | Stored revision/artifacts | Safe next decision |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Cancellation is also a request to transition, not an instantaneous kill switch. 
 
 Both workers load `job-17` at revision 4 with `extract` complete and `index` pending. A finishes indexing and commits `index=complete, revision=5`. B then attempts to save its older state using `expected_revision=4`; the compare-and-swap rejects it because the stored revision is 5. After restart, a worker reads revision 5 and skips extraction and indexing. In this example, revision 5 remains authoritative; the rejected write is not counted as a successful job attempt.
 
-The starter's `CheckpointStore` writes JSON through a temporary file and atomically replaces the checkpoint, and it replays a completed stage ID. It is a sequential teaching example: it has no revision guard, inter-process lock, database transaction, or durable queue. Atomic file replacement must not be mistaken for safe concurrent updates.
+A checkpoint store that writes JSON through a temporary file, atomically replaces the checkpoint, and replays a completed stage ID is a sequential teaching example: it has no revision guard, inter-process lock, database transaction, or durable queue. Atomic file replacement must not be mistaken for safe concurrent updates.
 
 For the SQLite extension, the state transition can be one guarded statement inside a transaction:
 
@@ -56,24 +56,18 @@ The crash gap matters. If an external indexing API succeeds and the worker crash
 
 ## Practice lab
 
-From `projects/document-intelligence`, run the existing workflow test and inspect what it actually proves:
+Start with a sequential checkpoint store and see what a replay test proves. Completing stage `write-1` twice should return the first stored result, so the second completion does not replace it. That demonstrates same-process sequential replay only. It does not test a crash between an external side effect and the checkpoint write, or two concurrent writers.
 
-```sh
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'checkpoint_' -v
-```
-
-The observable result should be one passing test: completing `write-1` twice returns the first stored result, so the second completion does not replace it. This demonstrates same-process sequential replay only. It does not test a crash between an external side effect and checkpoint write, or two concurrent processes.
-
-Then run `python -m unittest discover -s tests -p 'test_jobs.py' -v`. The synchronized JSON baseline interleaves the two stores in this order:
+Now interleave two writers against a naive read-modify-write store, in this order:
 
 1. Worker A reads its snapshot.
 2. Worker B reads its snapshot.
 3. Worker B writes its stage.
 4. Worker A writes from the earlier snapshot.
 
-The final JSON loses B's completion. The SQLite test starts a separate worker process for B, then rejects A's retained revision-4 snapshot after B commits revision 5. B remains `running`, so the stale-write rejection exercises the revision guard rather than relying on a terminal-state guard. Do not infer concurrent-write safety from atomic file replacement.
+With no guard, the final record loses B's completion. Then use a guarded store that checks the expected revision on every write: after B commits revision 5, A's retained revision-4 snapshot is rejected, and B's completion survives. Keep B in a non-terminal state such as `running`, so the rejection exercises the revision guard rather than a terminal-state guard. Do not infer concurrent-write safety from atomic file replacement.
 
-**Deliverable:** the test, a state-transition diagram, and a short trace linking job ID, worker attempt, revision, and artifact IDs.
+**Deliverable:** the stale-writer test from the course project below, a state-transition diagram, and a short trace linking job ID, worker attempt, revision, and artifact IDs.
 
 In your diagram, include `waiting_for_approval` as a durable pause. Show a cancellation request arriving during `running`: the worker finishes or reconciles any in-flight effect, checks cancellation at the next safe point, then commits `cancelled` or an explicit unresolved state. Record which states are terminal and whether a timed-out lease permits a new worker to act. The diagram should make a duplicate stage visibly impossible only where its idempotency control has been specified.
 
@@ -98,24 +92,21 @@ In your diagram, include `waiting_for_approval` as a durable pause. Show a cance
 
 ## Try the simulation
 
-Use the **`agent-state-machine`** visual engine. Follow the revision-4/5 path: workers A and B read revision 4, A commits revision 5, and B's stale write should be rejected. Select **Attempt stale revision-4 write** and explain why B must reload the current checkpoint before retrying. This is a deterministic state fixture, not a database transaction; the local test below verifies the actual compare-and-swap behavior.
+Use the **`agent-state-machine`** visual engine. Follow the revision-4/5 path: workers A and B read revision 4, A commits revision 5, and B's stale write should be rejected. Select **Attempt stale revision-4 write** and explain why B must reload the current checkpoint before retrying. This is a deterministic state simulation, not a database transaction; the test you write in your own project verifies the actual compare-and-swap behavior.
 
 ## Course project — milestone 7 — Efficiency & recovery
 
-**Efficiency — guarded checkpoint evidence.** Compare the sequential JSON store with `jobs.JobStore`, which saves revision, state, and artifact references together. Before running the demo, predict which write is accepted and what a fresh connection sees. Modify a copied fixture to give B a different artifact ID; confirm A's stale snapshot cannot replace it. Add one task-specific safe point for observing cancellation, and document how you reconcile an in-flight effect before marking the job terminal. The starter's terminal-state guard rejects further writes, but it does not implement a worker queue, cancellation polling, lease, heartbeat, or deadline policy.
+**Efficiency — guarded checkpoint evidence.** In your own TypeScript project, implement a small job store that saves revision, state, and artifact references together. It can be an in-memory map for the drill or SQLite if your project already uses it. Then write the stale-writer drill as a Vitest or `node:test` test using the lesson's toy values:
 
-**Run locally** from the repository root:
+- Create `job-17` at revision 4 with artifacts `[extract]`. Have two callers, A and B, each load that same snapshot.
+- B commits `index` through the store, which should advance the record to revision 5 with artifacts `[extract, index]`. Give B a distinct artifact ID so any overwrite is detectable.
+- A then tries to save its stale revision-4 snapshot with expected revision 4. Assert that A's write is rejected (the store reports that nothing advanced, the in-memory equivalent of a zero-row update), that the stored revision is still 5, and that the stored artifacts are still `[extract, index]` with B's artifact ID intact.
+- Reopen or reload the store as a fresh caller and assert it sees revision 5 with both artifacts, so the revision and artifact references stay coherent together.
+- Add one more assertion: once the record is `cancelled`, any further write is rejected.
 
-```sh
-cd projects/document-intelligence
-python -m document_intelligence.jobs --demo
-python -m unittest discover -s tests -p 'test_jobs.py' -v
-python -m document_intelligence.durability --demo
-```
+Add one task-specific safe point where your worker observes a cancellation request, and document how you reconcile an in-flight effect before marking the job terminal. Your drill does not need, and should not claim to have, a worker queue, cancellation polling, lease, heartbeat, or deadline policy unless you build and test them.
 
-**Expected result:** Four job tests pass, including the negative JSON baseline. The demo reports revision 4 for both snapshots, `advanced: true` for B, `advanced: false` for A, and a reopened revision-5 record containing `[extract, index]`. The crash drill separately reports two effects for an unsafe retry and one for the modeled idempotent effect service.
-
-**Acceptance check:** Save the report and explain the zero-row update. The record's revision and artifact references must remain coherent across a fresh connection, while a terminal record rejects further work. State that this check does not establish exactly-once external effects, implement the complete background-worker lifecycle, or make the original JSON store safe for concurrent workers.
+**Acceptance check:** Explain the rejected stale write (the zero-row or "nothing advanced" result). The record's revision and artifact references must remain coherent across a fresh load, while a terminal record rejects further work. State that this check does not establish exactly-once external effects, implement the complete background-worker lifecycle, or make an unguarded read-modify-write store safe for concurrent workers.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

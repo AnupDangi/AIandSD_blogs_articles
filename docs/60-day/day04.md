@@ -25,7 +25,7 @@ flowchart LR
 4. Explain why multiple heads can learn different relationships
 
 !!! example "DO THIS"
-    Calculate attention for 3 toy tokens with 2-dimensional vectors by hand or in Python.
+    Calculate attention for 3 toy tokens with 2-dimensional vectors by hand or in TypeScript.
 
 !!! question "Mid-senior checkpoint"
     What does changing one key vector do to every query that attends to it?

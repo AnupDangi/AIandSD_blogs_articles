@@ -67,23 +67,15 @@ This follows the source’s description of long-running harnesses using feature 
 
 ## Try the simulation
 
-Advance the **`agent-state-machine`** through **Search docs** and **Commit checkpoint**. Predict what happens when you select **Redeliver the completion event**. The display keeps its position while the component remains mounted; it does not persist a stage ID across a process restart. The local drill below starts replacement Python processes and inspects persisted effects instead.
+Advance the **`agent-state-machine`** through **Search docs** and **Commit checkpoint**. Predict what happens when you select **Redeliver the completion event**. The display keeps its position while the component remains mounted; it does not persist a stage ID across a process restart. The crash drill below asks you to restart a replacement process in your own project and inspect persisted effects instead.
 
 ## Course project — milestone 3 — Workflow
 
-**Task:** Predict how many effects survive a worker crash after the effect commits but before the checkpoint is written. Compare the unsafe and idempotent modes in `durability.py`, then explain why replacing a checkpoint file atomically does not close this window.
+**Task:** In your own TypeScript project, pick one step that has a side effect (for example writing a record, sending a request to a service, or appending to a file) and a checkpoint that is saved after it. Add a stage key that stays stable across restarts and an input fingerprint (a hash of the step's inputs) stored with the effect. Before the step acts, look up the stage key: if an effect with the same key and the same fingerprint already exists, reuse it; if the key exists with a different fingerprint, fail loudly.
 
-**Run locally** from the repository root:
+**Crash drill to implement:** Write a Vitest or `node:test` test that starts a child process (for example with `child_process.fork`) running the step. Make the child exit with a nonzero code after the effect commits but before the checkpoint is written. Then run a replacement process on the same inputs. In an unsafe mode (no stage key lookup), assert that two effect records exist. In the idempotent mode, assert that exactly one effect record exists and that the second run reports it reused the effect. Add two more assertions: a checkpoint that points at a missing completed artifact is rejected, and the same stage key with changed inputs is rejected.
 
-```sh
-cd projects/document-intelligence
-python -m document_intelligence.durability --demo
-python -m unittest discover -s tests -p 'test_durability.py' -v
-```
-
-**Expected result:** Each scenario kills a worker with exit code 75 after committing its modeled effect. Both report an absent checkpoint at the crash. A new process in unsafe mode leaves two effect records; idempotent mode leaves one and reports `reused_effect: true`. The four focused tests also reject a missing completed artifact and changed inputs under the same stage key.
-
-**Acceptance check:** Save the JSON report and identify the `effect_key` and `input_fingerprint` that let the replacement process reconcile the uncertain effect. Explain the duplicate in unsafe mode and why the stable stage key is bound to an input fingerprint. The demo removes its temporary workspace after reporting, so it is a reproducible failure drill rather than a retained artifact store. The SQLite table models an effect service on one host; this drill verifies process-crash recovery, not arbitrary remote exactly-once effects, power-loss durability, or concurrent JSON checkpoint writers. Apply the same reasoning to a service that offers an idempotency key or an operation-status lookup; otherwise escalate the uncertain effect for review.
+**Acceptance check:** Your test shows the absent checkpoint at the crash, the duplicate in unsafe mode, and the single effect in idempotent mode. Explain why replacing a checkpoint file atomically does not close the window between the effect and the checkpoint, and why the stable stage key is bound to an input fingerprint. A local store models an effect service on one host; this drill verifies process-crash recovery only, not arbitrary remote exactly-once effects, power-loss durability, or concurrent checkpoint writers. Apply the same reasoning to a service that offers an idempotency key or an operation-status lookup; otherwise escalate the uncertain effect for review.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

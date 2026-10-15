@@ -8,7 +8,7 @@ export const courses: Course[] = [
     title: "Reliable AI Applications",
     subtitle: "From model call to production",
     description:
-      "Build a document intelligence system that can find evidence, explain its decisions, survive failure, and stay within its operating budget.",
+      "Build a reliable AI application in TypeScript that can find evidence, explain its decisions, survive failure, and stay within its operating budget.",
     level: "Intermediate",
     duration: "60-80 hours",
     status: "in-progress",

@@ -61,7 +61,7 @@ const projectInput = (idempotencyKey: string) => ({
   idempotencyKey,
   courseId: "applied-ai",
   courseVersion: 1,
-  repositoryUrl: "https://github.com/learner/document-intelligence",
+  repositoryUrl: "https://github.com/learner/reliable-ai-app",
   commitSha: "a123456",
   checklist: [1, 2, 3].map((index) => ({ itemId: `${projectId}-item-${index}`, completed: true })),
   reflection: "I tested recovery using deterministic fixtures and recorded the failure evidence.",

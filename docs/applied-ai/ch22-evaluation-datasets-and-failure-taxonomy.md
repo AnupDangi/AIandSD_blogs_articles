@@ -22,7 +22,7 @@ The evaluation loop starts with observed failures, groups them into a taxonomy, 
 | Compare incumbent/candidate | Aggregate and slice-level scores on identical cases | Keep tuning cases distinct from untouched evaluation evidence |
 | Review production behavior | Newly reviewed failures and coverage gaps | Version additions rather than silently changing old labels |
 
-**Slice alarm:** overall `91% → 94%` can coexist with uploaded-document `95% → 78%`; inspect that slice before release. The local six-case fixture instead reports citation coverage, includes one labeled paraphrase miss, and cannot establish broad product accuracy.
+**Slice alarm:** overall `91% → 94%` can coexist with uploaded-document `95% → 78%`; inspect that slice before release. A small hand-built suite of about six cases in your own project would instead report per-case pass or fail, may include one labeled known failure, and cannot establish broad product accuracy.
 
 ## Build from observed behavior
 
@@ -36,11 +36,11 @@ The source example shows overall success improving from 91% to 94% while documen
 
 ## Practice lab
 
-1. Start with the six checked-in cases in `projects/document-intelligence/fixtures/evaluation.json`; record their stable queries, expected source IDs, and module labels, including the known paraphrase failure.
-2. Run the local evaluation command below and verify the baseline six-case citation coverage. This is citation coverage, not answer correctness or model quality.
-3. Copy the manifest into `core.jsonl`, `regressions.jsonl`, and `edge_cases.jsonl` as appropriate, adding stable case IDs and a stated pass criterion. Add one new regression query with its reviewed expected source; keep the original six cases unchanged.
-4. Run the incumbent and a candidate retrieval configuration on the same frozen cases. The fixture intentionally includes one known paraphrase miss; a configuration change may leave it unchanged. Report the observed result honestly rather than editing expected labels to force a delta.
-5. Report both aggregate and slice deltas, including the tiny sample size. Expand toward 100 reviewed real traces when such traces exist; the starter does not supply them.
+1. In your own project, write about six evaluation cases. For each, record a stable ID, the input or query, the expected source or outcome, and a slice label (for example retrieval, safety, or formatting). Include at least one case your system is already known to get wrong.
+2. Run the suite and record the baseline pass rate overall and per slice. If the check is whether the expected source was cited, this is citation coverage, not answer correctness or model quality.
+3. Copy the cases into `core.jsonl`, `regressions.jsonl`, and `edge_cases.jsonl` as appropriate, adding stable case IDs and a stated pass criterion. Add one new regression case with its reviewed expected source; keep the original six cases unchanged.
+4. Run the incumbent and a candidate retrieval configuration on the same frozen cases. Your suite includes at least one known failure; a configuration change may leave it unchanged. Report the observed result honestly rather than editing expected labels to force a delta.
+5. Report both aggregate and slice deltas, including the tiny sample size. Expand toward 100 reviewed real traces when such traces exist; the course does not supply them.
 
 **Deliverable:** a versioned eval manifest, failure taxonomy, and candidate-versus-incumbent report.
 
@@ -64,22 +64,13 @@ The source example shows overall success improving from 91% to 94% while documen
 
 ## Try the simulation
 
-In the **`evaluation-console`**, predict which of its four fixed slices will fail when you raise the acceptance threshold from 0.72 to 0.80, then move the slider and inspect the rows. The console has no `ops-02` case or candidate comparison. In the separate project exercise, `ops-02` belongs to the **retrieval** slice; the project fixture has six cases and its known paraphrase miss makes retrieval coverage 0.5.
+In the **`evaluation-console`**, predict which of its four fixed slices will fail when you raise the acceptance threshold from 0.72 to 0.80, then move the slider and inspect the rows. The console has no `ops-02` case or candidate comparison; build those in your own suite.
 
 ## Course project — milestone 4 — Evaluation
 
-**Task:** Inspect `evaluation.py` and `fixtures/evaluation.json`; map each fixture to its module slice. Describe a fixture change that should reduce citation coverage.
+**Task:** In your own TypeScript project, add an evaluation module and a case file (for example `evals/cases.json`) with about six cases. Give each case a stable ID, an input, an expected source or outcome, and a slice label. Include one case your system is known to get wrong. Write a Vitest or `node:test` test that loads the cases, runs them through your application with its model or retrieval step stubbed or deterministic, and asserts the per-case result and the per-slice pass rate. Then describe a case change that should lower a slice score, change the case, and confirm the assertion on that slice fails.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m document_intelligence --evaluate
-```
-
-**Expected result:** Six fixture cases and five slices are printed; baseline citation coverage is 5/6 (about 0.833), and retrieval slice coverage is 0.5 because of the known paraphrase miss. The other four slices are 1.0. This tiny fixture set does not measure broad product quality.
-
-**Acceptance check:** Record the baseline and identify the affected case/slice without claiming broad quality.
+**Acceptance check:** Record the baseline overall and per-slice pass rates from your own suite, and identify which case and slice account for any failure. Do not claim broad product quality: a handful of cases measures only what those cases check.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

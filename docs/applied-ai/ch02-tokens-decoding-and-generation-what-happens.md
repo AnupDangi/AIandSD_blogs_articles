@@ -12,7 +12,7 @@
 
 ## Before you begin
 
-Chapter 1; basic Python and probability vocabulary.
+Chapter 1; basic TypeScript and probability vocabulary.
 
 ## Why this matters
 
@@ -66,12 +66,12 @@ The lab begins with logits `[2.4, 1.8, 0.7, -0.2]` for the candidates `carefully
 
 ## Implementation sketch (pseudocode)
 
-```python
-logits = [2.0, 1.0, 0.0]
-probabilities = softmax(logits)  # approximately [0.665, 0.245, 0.090]
+```ts
+const logits = [2.0, 1.0, 0.0];
+const probabilities = softmax(logits); // approximately [0.665, 0.245, 0.090]
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below needs no provider or downloaded tokenizer.
 
 ## What to measure
 
@@ -90,28 +90,16 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use the token simulator’s displayed logits; calculate softmax with Python `math.exp` and compare the default probabilities.
-- With a seeded `random.Random`, sample from the displayed toy distribution 20 times and record counts; label this as a toy sampling experiment, not model output.
-- Run the project lexical-term count for `ops-02` and explain why it differs from model token IDs.
+- Use the token simulator’s displayed logits; calculate softmax with `Math.exp` and compare the default probabilities.
+- With a small seeded pseudo-random generator that you write yourself (`Math.random` cannot be seeded), sample from the displayed toy distribution 20 times and record counts; label this as a toy sampling experiment, not model output.
+- Take one short paragraph of your own. Count its characters and its whitespace-separated words, and explain why neither number is a list of model token IDs.
 - No provider or downloaded tokenizer is required.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Inspect `retrieval.tokens` on fixture `ops-02`. Record that this is a lowercase lexical-term heuristic with stop-word removal, not a model tokenizer or an LLM token count. Then inspect `model_boundary.toy_token_estimate`, which uses `ceil(UTF-8 bytes / 4)` solely for a reproducible budget exercise. Predict whether a request one unit over its input, context, output, or total window limit will reach a future provider adapter.
+**Task:** In your own TypeScript project, add a small pure function that estimates the size of a request, for example `estimateTokens(text)`. Label it in code and in your README as a rough budget heuristic (such as UTF-8 bytes divided by 4, rounded up), not a model tokenizer. Use it in the model boundary to reject a request whose input, context, or total size exceeds a configured limit before any provider adapter runs. Write a Vitest or `node --test` test with two cases: a request exactly at the limit is accepted, and a request one unit over is rejected with a typed error. In the second case, assert that a spy or counter on the stub model function was never called.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -c 'from document_intelligence.pipeline import load_documents; from document_intelligence.retrieval import tokens; d=next(d for d in load_documents() if d.id=="ops-02"); print("chars:", len(d.text), "lexical_terms:", len(tokens(d.text)))'
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_data_has_stable_identifiers" -v
-python -m unittest discover -s tests -p "test_course_project.py" -k "model_boundary" -v
-```
-
-**Expected observation:** The fixture prints `chars: 220 lexical_terms: 26`; the stable-ID and three model-boundary tests pass. The boundary rejects each limit breach before an optional adapter would run. The character, lexical-term, and toy-budget counts describe different measures; none predicts a provider tokenizer's output.
-
-**Acceptance check:** Your note distinguishes character length, the starter's lexical terms, the toy budget estimate, and actual model token IDs. State that a live adapter must recalculate with its provider tokenizer and that the starter performs no generation.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** Your note distinguishes character length, word count, your heuristic estimate, and actual model token IDs. It states that a live adapter must recalculate with its provider's tokenizer, and that your stub performs no generation. The boundary test fails if you remove the limit check.
 
 ### Recall without notes
 

@@ -68,16 +68,18 @@ For graded relevance, suppose the first two returned passages have grades `[2, 0
 
 ## Implementation sketch (pseudocode)
 
-```python
-relevant = set(gold_chunk_ids[query_id])
-returned = set(top_k_chunk_ids[query_id])
-if not relevant:
-    # Keep no-evidence queries in a separate abstention evaluation slice.
-    raise ValueError("recall is undefined without a relevant evidence label")
-recall_at_k = len(relevant & returned) / len(relevant)
+```ts
+const relevant = new Set(goldChunkIds[queryId]);
+const returned = new Set(topKChunkIds[queryId]);
+if (relevant.size === 0) {
+  // Keep no-evidence queries in a separate abstention evaluation slice.
+  throw new Error("recall is undefined without a relevant evidence label");
+}
+const hits = [...relevant].filter((id) => returned.has(id)).length;
+const recallAtK = hits / relevant.size;
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -96,28 +98,19 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use the six rows in `fixtures/evaluation.json` as the deterministic project baseline, including its labeled paraphrase failure.
-- In the retrieval visual, compare recall and precision calculated from its three fixed relevant sentences; these are separate toy labels, not the project evaluation set.
+- Write a small labeled set of five to six query-to-evidence rows by hand, and include one paraphrased query that you expect your retriever to miss.
+- In the retrieval visual, compare recall and precision calculated from its three fixed relevant sentences; these are separate toy labels, not your own evaluation set.
 - For query A, label chunks `a` and `b` relevant; put only `a` in its top five at rank 2. Calculate relevance recall@5 as `1/2`. For query B, put its first relevant chunk at rank 1. Calculate MRR over A and B as `(1/2 + 1)/2 = 0.75`.
 - Reproduce the graded `nDCG@2` calculation above, then reverse the two returned passages and calculate how the score changes.
-- Do not describe the fixture’s citation coverage as answer correctness or as a live retrieval benchmark.
+- Do not describe a citation-coverage number from your own labeled set as answer correctness or as a live retrieval benchmark.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Run the checked-in fixture evaluation, inspect its per-case ranked spans, and diagnose the labeled paraphrase failure. The starter fixture has stable case IDs but no published version field; record the file revision if comparing changes. Treat `citation_coverage` as a fixture retrieval metric, not answer correctness or a live benchmark. Calculate MRR separately from a small labeled ranking.
+**Task:** In your own TypeScript project, add a small retrieval evaluation. Create a versioned JSON file of labeled cases, each with a stable case ID, a query, the IDs of the relevant chunks, and a slice label (for example `keyword` or `paraphrase`). Write an evaluation function that runs your retriever on every case and returns recall@k and MRR, overall and per slice, plus the ranked IDs for each case so a failure can be inspected. Write a Vitest or `node --test` test that feeds a tiny hand-made labeled set and fixed ranked lists into the metric functions and asserts the exact values from this chapter (recall@5 of `0.5`, MRR of `0.75`, with `toBeCloseTo` for nDCG). Add one case that you expect to fail, such as a paraphrase, and assert that the report names its expected chunk as missed. Record the label file revision when you compare changes.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your tests reproduce the chapter’s recall, MRR and nDCG arithmetic, and your report shows a per-slice breakdown with the missed case named. Distinguish your coverage metric from answer correctness, the visual’s toy relevance metrics, and ANN recall. A small hand-labeled set is too small for benchmark claims.
 
-```bash
-python -m document_intelligence --evaluate
-python -m unittest discover -s tests -p "test_course_project.py" -k "evaluation_reports_coverage_by_module" -v
-```
-
-**Expected observation:** Six cases produce overall citation coverage `5/6`; the retrieval slice is `0.5`, and the report names the expected source missed by the paraphrase query. Every successful case exposes ranked source spans. The test passes. The separate labeled exercise still gives query A recall@5 = `1/2` and two-query MRR = `0.75`.
-
-**Acceptance check:** Identify the known paraphrase failure, report its retrieval slice, and distinguish fixture citation coverage from answer correctness, the visual’s toy relevance metrics, hand-calculated MRR, and ANN recall.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

@@ -12,7 +12,7 @@
 
 ## Before you begin
 
-Chapters 2–3; vectors, dot products, and basic Python.
+Chapters 2–3; vectors, dot products, and basic TypeScript.
 
 ## Why this matters
 
@@ -66,16 +66,17 @@ For `a=[1,1]` and `b=[2,0]`, cosine similarity is `2/(√2 × 2) ≈ 0.707`. Cos
 
 ## Implementation sketch (pseudocode)
 
-```python
-denominator = norm(a) * norm(b)
-if denominator == 0:
-    raise ValueError("cosine is undefined for a zero vector")
-cosine = dot(a, b) / denominator
-query_vector = embed(query)
-rows = index.search(query_vector, k=10)
+```ts
+const denominator = norm(a) * norm(b);
+if (denominator === 0) {
+  throw new Error("cosine is undefined for a zero vector");
+}
+const cosine = dot(a, b) / denominator;
+const queryVector = await embed(query);
+const rows = index.search(queryVector, { k: 10 });
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below uses a deterministic toy embedder, so no embedding API is needed.
 
 ## What to measure
 
@@ -97,25 +98,14 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 - Use the `retrieval-microscope` visual to change actual sentence grouping, compare lexical and feature-hashed vector ranks, and inspect toy recall/precision from the fixed relevance labels.
 - Calculate cosine similarity by hand for `a=[1,1]` and `b=[2,0]`.
 - Check what happens if either vector is `[0,0]`; reject the undefined cosine rather than silently assigning it a similarity score.
-- Run the project’s feature-hashed vector test and identify why its vectors are deterministic but non-semantic.
+- Build a toy feature-hashed vector for each of the four passages (hash every word into one of a fixed number of buckets and count), rank them against the query by cosine, and explain why these vectors are deterministic but non-semantic.
 - No embedding API or downloaded model is required.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Compare the inspectable lexical and feature-hashed rankings in `retrieval.py`. The vector path computes cosine similarity over deterministic token hashes; it is not learned and cannot recognize synonyms.
+**Task:** In your own TypeScript project, add a `cosineSimilarity(a, b)` function that throws a clear error for a zero vector, and an `Embedder` interface with one method that turns text into a vector. Provide a deterministic toy implementation that hashes words into a fixed number of buckets, and label it non-semantic in code. Rank the passages in your small knowledge base by cosine against a query vector and return their IDs. Write Vitest or `node --test` tests with three assertions. First, the cosine of `[1, 1]` and `[2, 0]` is close to 0.707 (use a tolerance assertion such as `toBeCloseTo` or a manual absolute-difference check). Second, a zero vector makes the function throw. Third, for a query that shares words with one passage, that passage's ID ranks first. Add one more test that uses a paraphrase with no shared words and records, in a comment and an assertion, that the toy embedder cannot be expected to find it.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m document_intelligence --trace "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "feature_hashed_vector_ranking" -v
-```
-
-**Expected observation:** The trace prints rank, score, source span ID, and character offsets for lexical, toy-vector, hybrid, and reranked candidates. The ranking test passes. The fixture does not demonstrate semantic search.
-
-**Acceptance check:** You distinguish learned semantic embeddings from non-semantic feature hashing and explain one paraphrase failure from the evaluation report.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** You distinguish learned semantic embeddings from non-semantic feature hashing, and you can name one paraphrase query in your own knowledge base that the toy embedder misses. A high cosine score is a candidate-retrieval signal, not proof the passage supports an answer.
 
 ### Recall without notes
 

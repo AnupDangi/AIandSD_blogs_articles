@@ -28,16 +28,16 @@ Multiple agents can expand effective context and parallelize independent work, b
 |---|---|---|
 | Orchestrator | Frozen six-case workload and shared output contract | Define bounded scopes before starting workers |
 | Reliability/workflow worker | Reliability and workflow cases | Return `scope`, stable `sources`, `findings`, `limitations` |
-| Retrieval/safety worker | Both retrieval cases and safety | Preserve the known paraphrase miss rather than hide it |
-| Evaluation worker | Evaluation plus intentional safety overlap (`ops-03`) | Mark overlapping evidence and retain its provenance |
+| Retrieval/safety worker | Both retrieval cases and safety | Preserve a known paraphrase miss rather than hide it |
+| Evaluation worker | Evaluation plus an intentionally overlapping safety case | Mark overlapping evidence and retain its provenance |
 | Synthesizer | Validated worker records | Deduplicate source IDs, retain worker/source attribution, identify disagreements |
 | Comparator | Same single-worker and partitioned workload | Measure coverage, unique sources, repeated findings, wall time, and cost where available |
 
-**Two separate experiments:** 1/3/5 threads running identical fixture queries all return `5/6` expected sources. That is a deterministic concurrency baseline. The specialist-record exercise tests partitioning and attribution; more records alone do not imply better quality, and intentional overlap may provide corroboration. Shared mutable writes need ownership or coordination beyond either exercise.
+**Two separate experiments:** running identical deterministic queries at 1, 3 and 5 concurrent workers should return the same covered-source count each time. That is a concurrency baseline, not a quality result. The specialist-record exercise tests partitioning and attribution; more records alone do not imply better quality, and intentional overlap may provide corroboration. Shared mutable writes need ownership or coordination beyond either exercise.
 
 ## Try the simulation
 
-Open lesson `ai-20` and follow worker scope assignment through result collection. Select **Deliver one worker result twice** and inspect the merge outcome. Explain why deduplicating one result does not prove that workers have disjoint scopes or safe shared-state writes. Test the separate thread-count baseline below; it runs identical fixture queries concurrently and does not model specialized agents.
+Open lesson `ai-20` and follow worker scope assignment through result collection. Select **Deliver one worker result twice** and inspect the merge outcome. Explain why deduplicating one result does not prove that workers have disjoint scopes or safe shared-state writes. Test the separate concurrency baseline in the practice lab and project task below; it runs identical queries concurrently and does not model specialized agents.
 
 ## Concepts to retain
 
@@ -67,17 +67,17 @@ A research task can assign separate workers to market, technical, and regulatory
 
 ## Implementation sketch (pseudocode)
 
-```python
-tasks = [
-    {"scope": "market evidence", "sources": [], "findings": [], "limitations": []},
-    {"scope": "technical evidence", "sources": [], "findings": [], "limitations": []},
-    {"scope": "regulatory evidence", "sources": [], "findings": [], "limitations": []},
-]
-# Pseudocode: execute bounded workers, validate each record against this schema,
-# then synthesize while retaining source IDs and measuring duplicated findings.
+```ts
+const tasks = [
+  { scope: "market evidence", sources: [], findings: [], limitations: [] },
+  { scope: "technical evidence", sources: [], findings: [], limitations: [] },
+  { scope: "regulatory evidence", sources: [], findings: [], limitations: [] },
+];
+// Pseudocode: execute bounded workers, validate each record against this schema,
+// then synthesize while retaining source IDs and measuring duplicated findings.
 ```
 
-This is pseudocode; worker execution and synthesis are not implemented by the local course starter. The example shows the output contract to validate, not a runnable multi-agent framework.
+This is pseudocode; worker execution and synthesis are application-defined and are not supplied by the course. The example shows the output contract to validate, not a runnable multi-agent framework.
 
 ## What to measure
 
@@ -97,38 +97,18 @@ This is pseudocode; worker execution and synthesis are not implemented by the lo
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use the six fixed evaluation cases, including the known retrieval paraphrase failure, and define one worker-result schema: `scope`, `sources`, `findings`, and `limitations`.
-- Create a single-worker baseline that handles all six cases, then split them across three hypothetical specialists: reliability + workflow, retrieval + safety, and evaluation. Give the retrieval specialist both retrieval cases; have the evaluation specialist also inspect the safety case (`ops-03`) to create a deliberate overlap. Label these records as a coordination exercise, not LLM results.
+- Write six hand-made evaluation cases (reliability, workflow, two retrieval, evaluation, safety), including one retrieval paraphrase case you expect to be missed, and define one worker-result schema: `scope`, `sources`, `findings`, and `limitations`.
+- Create a single-worker baseline that handles all six cases, then split them across three hypothetical specialists: reliability + workflow, retrieval + safety, and evaluation. Give the retrieval specialist both retrieval cases; have the evaluation specialist also inspect the safety case to create a deliberate overlap. Label these records as a coordination exercise, not LLM results.
 - Synthesize the records and calculate expected-source coverage, unique source IDs, repeated source returns, and whether each finding retains its worker/source attribution. Explain why repeated evidence may be useful corroboration rather than wasted work.
-- Run the project thread-pool command as a separate deterministic concurrency baseline; it measures identical function calls, not specialist quality or model cost.
+- Treat a concurrency run of identical deterministic calls as a separate baseline; it measures identical function calls, not specialist quality or model cost.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Compare one deterministic evaluation workload at different thread counts. This is a concurrency baseline for the same function calls, not a multi-agent system; it measures no model cost or specialist contribution.
+**Task:** In your own TypeScript project, add a small bounded fan-out for one task that has independent parts (for example answering several independent sub-questions, or checking several documents). Define a worker-result type with `scope`, `sources`, `findings` and `limitations`, run the parts concurrently with a small fixed limit (batches of `Promise.all` are enough), and write a synthesizer that merges the records, deduplicates source IDs, and keeps which worker produced each finding. Write a Vitest or `node --test` test with scripted worker functions that asserts a duplicated source ID appears once in the merged sources while both workers remain credited, and a test that a worker record missing a required field is rejected before synthesis. Add a test that the same deterministic workload run with concurrency 1, 3 and 5 yields identical merged output (`deepStrictEqual`). Do not measure timing as a benchmark.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your record shows identical merged coverage at each concurrency level, keeps any known miss visible, and states that this baseline does not measure specialization, duplicate work, attribution quality or coordination quality. Scripted workers are not multi-agent model behavior. Keep any hypothetical specialist comparison separate and label its assumptions.
 
-```bash
-python - <<'PY'
-from concurrent.futures import ThreadPoolExecutor
-import json
-from pathlib import Path
-from document_intelligence.pipeline import DocumentIntelligence, load_documents
-cases = json.loads(Path("fixtures/evaluation.json").read_text())
-app = DocumentIntelligence(load_documents())
-for worker_count in (1, 3, 5):
-    with ThreadPoolExecutor(max_workers=worker_count) as pool:
-        results = list(pool.map(lambda case: app.answer(case["query"]), cases))
-    covered = sum(case["expected_source"] in result.citations for case, result in zip(cases, results))
-    print(f"{worker_count} threads: {covered}/{len(cases)} expected sources returned")
-PY
-```
-
-**Expected observation:** The output is `1 threads: 5/6 expected sources returned`, `3 threads: 5/6 expected sources returned`, and `5 threads: 5/6 expected sources returned`. The paraphrase case remains a miss at every thread count. Timing is intentionally omitted because it is not a controlled benchmark.
-
-**Acceptance check:** Your record reports the same six-case coverage at each thread count, includes the known miss, and states that this baseline does not measure specialization, duplicate work, attribution, or coordination quality. Keep the hypothetical specialist comparison separate and label its assumptions.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data and scripted workers in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

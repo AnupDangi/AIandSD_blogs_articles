@@ -26,7 +26,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     <div className="lesson-breadcrumb"><Link href="/courses">Courses</Link><span>/</span><span>{course.topic}</span></div>
     <div className="track-cover"><span className="eyebrow">Learning path · roadmap</span><h1>{course.title}</h1><p className="track-subtitle">{course.subtitle}</p><p>{course.description}</p><div className="track-meta"><span>{course.duration}</span><span>{course.level}</span></div></div>
     <div className="track-notice"><p>This path is being developed into guided lessons and practical projects. It is not a complete course yet.</p></div>
-    <div className="track-suggestion"><h2>Explore the Applied AI course</h2><p>Start with the open chapter drafts, visual labs, and local document intelligence project.</p><Link className="button-primary" href="/courses/reliable-ai-applications">Explore Reliable AI Applications<ArrowRight /></Link></div>
+    <div className="track-suggestion"><h2>Explore the Applied AI course</h2><p>Start with the open chapter drafts, visual labs, and a TypeScript course project.</p><Link className="button-primary" href="/courses/reliable-ai-applications">Explore Reliable AI Applications<ArrowRight /></Link></div>
   </section>;
 
   const totalLessons = course.modules.reduce((sum, module) => sum + module.lessonIds.length, 0);
@@ -48,7 +48,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
     </div>
     <div className="overview-body">
       <div className="overview-main">
-        <section className="overview-section"><h2>A document intelligence system that earns trust.</h2><p>Build a system that retrieves evidence, answers with citations, measures quality, and recovers when a model or provider fails. Each module adds one capability to the same Python project.</p>
+        <section className="overview-section"><h2>A reliable AI application that earns trust.</h2><p>Build an application that retrieves evidence, answers with citations, measures quality, and recovers when a model or provider fails. Each module adds one capability to the same TypeScript project in your own GitHub repository.</p>
           <div className="overview-project-facts"><span>Deterministic fixtures</span><span>Local tests</span><span>No paid API required</span></div>
           <Link className="final-assessment-link" href="/projects">See all eight project milestones<ArrowRight /></Link>
         </section>
@@ -67,7 +67,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           })}</div>
         </section>
       </div>
-      <aside className="overview-sidebar"><div className="sidebar-card"><h2 className="overview-details-title">A practical learning path</h2><dl><div><dt>Level</dt><dd>{course.level}</dd></div><div><dt>Time</dt><dd>{course.duration}</dd></div><div><dt>Project language</dt><dd>Python 3.12</dd></div><div><dt>Prerequisites</dt><dd>Basic programming & Git</dd></div></dl><Link className="button-primary full-button" href={entry}>Open chapter 01 draft<ArrowRight /></Link><p>Sign in to save reading, assessments, and project submissions across devices.</p><Link className="sidebar-assessment-link" href="/assessments/final-assessment">Final assessment · 30 questions</Link></div><div className="sidebar-card project-card"><h3>Build, test, reflect.</h3><p>Submit your GitHub project and a reflection at each milestone. Submissions are self-reported; they are not verified credentials.</p><Link className="sidebar-assessment-link" href="/projects">Explore the project</Link></div></aside>
+      <aside className="overview-sidebar"><div className="sidebar-card"><h2 className="overview-details-title">A practical learning path</h2><dl><div><dt>Level</dt><dd>{course.level}</dd></div><div><dt>Time</dt><dd>{course.duration}</dd></div><div><dt>Project language</dt><dd>TypeScript (Node.js 22+)</dd></div><div><dt>Prerequisites</dt><dd>Basic programming & Git</dd></div></dl><Link className="button-primary full-button" href={entry}>Open chapter 01 draft<ArrowRight /></Link><p>Sign in to save reading, assessments, and project submissions across devices.</p><Link className="sidebar-assessment-link" href="/assessments/final-assessment">Final assessment · 30 questions</Link></div><div className="sidebar-card project-card"><h3>Build, test, reflect.</h3><p>Submit your GitHub project and a reflection at each milestone. Submissions are self-reported; they are not verified credentials.</p><Link className="sidebar-assessment-link" href="/projects">Explore the project</Link></div></aside>
     </div>
   </section>;
 }

@@ -12,7 +12,7 @@ Trace one AI run across model, retrieval, and tool operations; use span timings 
 
 One parent trace represents the user run. Child spans represent retrieval, model calls, and tools; their durations and linked identifiers let the reader follow the request and find the slow or failed operation.
 
-**Authored instructional mechanism map — one sequential latency waterfall.** The durations use the source's example; the table is not a trace captured from the starter.
+**Authored instructional mechanism map — one sequential latency waterfall.** The durations use the source's example; the table is not a trace captured from a real system.
 
 | Parent/child span | Example start → end | Duration | Investigation use |
 |---|---|---|---|
@@ -21,7 +21,7 @@ One parent trace represents the user run. Child spans represent retrieval, model
 | Child: tool call (duration includes the wait on the dependency) | `0.3 s → 10.3 s` | `10.0 s` | Dominant span; investigate dependency wait first |
 | Child: model work | `10.3 s → 14.0 s` | `3.7 s` | Remaining example work after tool wait |
 
-**Read from top to bottom:** request ID links the children to their parent; safe status/error attributes explain each span's outcome. This authored sequential arrangement sums to 14 seconds. Real spans may overlap, so summing child durations can overcount wall time. The deterministic starter has no actual model/tool spans; mark those not executed until instrumentation exists.
+**Read from top to bottom:** request ID links the children to their parent; safe status/error attributes explain each span's outcome. This authored sequential arrangement sums to 14 seconds. Real spans may overlap, so summing child durations can overcount wall time. A deterministic toy workflow with no real model or tool calls has no such spans; mark those not executed until instrumentation exists.
 
 ## Reconstruct a run
 
@@ -35,10 +35,10 @@ The source example is a 14-second answer with 300 ms retrieval, 10 seconds waiti
 
 ## Practice lab
 
-Start with the supplied local RAG workflow. It exposes a request ID, answer status, and citations but no tracing library. Build a trace worksheet using Python's `time.perf_counter()` or a small standard-library span recorder; adding OpenTelemetry is an optional follow-on:
+Start with the workflow in your own TypeScript project, or a small local retrieval-and-answer function if you have none yet. Assume it exposes a request ID, answer status, and citations but no tracing library. Build a trace worksheet using Node's `performance.now()` or a small hand-written span recorder; adding OpenTelemetry is an optional follow-on:
 
-1. Run one fixture query and record its request ID, status, citations, and elapsed time.
-2. Identify which desired spans are absent. The starter has no model or tool call; label those spans **not executed** instead of inventing timings.
+1. Run one fixed test query and record its request ID, status, citations, and elapsed time.
+2. Identify which desired spans are absent. If your workflow makes no model or tool call, label those spans **not executed** instead of inventing timings.
 3. Add a local retrieval span around a controlled query and a synthetic slow function as a separate child span; record elapsed time and safe attributes without logging unrestricted prompts or secrets.
 4. Trigger a transient retrieval timeout and follow its error or fallback status in a second trace worksheet.
 5. Compare the span timings with total elapsed time and explain any uninstrumented gap. Document a sampling rule that retains failure evidence.
@@ -65,22 +65,13 @@ Start with the supplied local RAG workflow. It exposes a request ID, answer stat
 
 ## Try the simulation
 
-Use the **`evaluation-console`** and select **Retrieval span missing**. Compare the required span list with the recorded spans, then choose **Uncorrelated spans**: all six spans are present, but they carry two different trace IDs, so their shared request cannot be reconstructed. These are authored examples, not live telemetry; the local task still requires you to design safe trace attributes.
+Use the **`evaluation-console`** and select **Retrieval span missing**. Compare the required span list with the recorded spans, then choose **Uncorrelated spans**: all six spans are present, but they carry two different trace IDs, so their shared request cannot be reconstructed. These are authored examples, not live telemetry; the exercise below still requires you to design safe trace attributes.
 
 ## Course project — milestone 4 — Evaluation
 
-**Task:** Run one fixture query and sketch a trace with query, allowed IDs, retrieved evidence, result, and elapsed time. The starter exposes result data but has no distributed tracing or span instrumentation.
+**Task:** In your own TypeScript project, add a small span recorder (a function that starts a span with a name, parent, and start time, and ends it with a duration and a status). Wrap one request so it produces a parent span for the request and a child span for each real step, for example retrieval. Record safe attributes only: query length rather than the query text, allowed source IDs, retrieved evidence IDs, result status, and elapsed time. Steps your project does not perform stay marked **not executed** with no timing. Write a Vitest or `node:test` test that runs one request with a fake clock and asserts that every child span carries the parent's trace ID, that child durations are non-negative, and that the failed-retrieval path ends its span with an error status. Add a second assertion that no span attribute contains the raw prompt text.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m document_intelligence "Why report evaluation by slice?"
-```
-
-**Expected result:** CLI returns a request ID and citation; the sketch labels fields as observed or proposed.
-
-**Acceptance check:** Each trace field has an owner and is marked observed or requiring instrumentation.
+**Acceptance check:** Each trace field has an owner and is marked observed (your recorder emits it) or requiring instrumentation (not yet emitted). The recorder is a local teaching tool; it is not a distributed tracing system.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

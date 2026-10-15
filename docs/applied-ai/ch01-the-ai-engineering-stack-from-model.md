@@ -32,7 +32,7 @@ An AI product is a system, not a model. The model is one probabilistic component
 | 4. Validate citation IDs | Resolve each cited source ID to a retrieved passage | Withhold the answer if a citation falls outside the retrieved set |
 | Across stages 1–4 | Correlate quality, elapsed time, failure category, and resource use | Record safe trace attributes; do not make the model the state owner |
 
-**Follow the failure path:** if step 3 returns malformed JSON, step 4 rejects the candidate. It does not undo the identity check in step 1 or make a second unrestricted tool call. In the local project, the optional fixture adapter copies a passage deterministically; no real model or order service is called.
+**Follow the failure path:** if step 3 returns malformed JSON, step 4 rejects the candidate. It does not undo the identity check in step 1 or make a second unrestricted tool call. In your own project, a deterministic stub can stand in for the model at step 3; no real model or order service is needed to practice this boundary.
 
 ## Try the simulation
 
@@ -66,13 +66,13 @@ A support assistant receives a question, retrieves account policy, calls an orde
 
 ## Implementation sketch (pseudocode)
 
-```python
-result = component(input, policy=policy)
-validate(result)
-record_trace(input, result, latency_ms, cost)
+```ts
+const result = component(input, { policy });
+validate(result);
+recordTrace(input, result, latencyMs, cost);
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below can use a deterministic stub in place of a real model.
 
 ## What to measure
 
@@ -92,29 +92,16 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Trace the checked-in fixture request through `pipeline.py`, `models.py`, and `safety.py`.
-- Draw the deterministic boundary around retrieval, answer extraction, and citation validation.
-- Run the chapter’s project check and record one failure condition the test suite covers.
+- Pick one request in the lesson's support-assistant example and write down, stage by stage, what each stage receives and what it returns.
+- Draw the deterministic boundary around retrieval, answer extraction, and citation validation, and mark which side the model sits on.
+- Write one failure condition for each stage (identity fails, no evidence, citation outside the retrieved set) and the status your application should report.
 - Keep any live-provider call as a separately labeled optional extension; it is not needed for this lab.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Run one fixture question through retrieval, the typed request and budget check, the deterministic adapter, structured-output parsing, and source-span validation. Trace the path through `document_intelligence/model_workflow.py`, `model_boundary.py`, `models.py`, and `pipeline.py`.
+**Task:** In your own TypeScript project, put the model call behind one typed function, for example `generateAnswer(request): Promise<Answer>`. The request type should carry the question, the allowed source IDs, and a token or character budget. Add a stub implementation that returns a canned answer so the rest of the application runs without an API key. Then write a Vitest or `node --test` test that passes a request with a source ID outside the allowed set and asserts the boundary rejects it with a typed error instead of returning the answer. Write a second test that asserts an over-budget request is rejected before the model function is called.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_question_returns_only_cited_allowed_evidence" -v
-python -m document_intelligence "How can the previous index roll back?"
-python -m document_intelligence --fixture-model "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_model_cli" -v
-```
-
-**Expected observation:** Both CLI modes report `status: answered` and citation `ops-02`. The fixture-adapter mode reports the toy input/context estimate, copies its evidence excerpt verbatim, and exposes the source offsets; the request ID is intentionally different each run.
-
-**Acceptance check:** Your trace identifies where documents are loaded, filtered, searched, budgeted, adapted, parsed, and validated. Explain that the fixture adapter is deterministic passage copying, not a language model, and that schema/citation checks do not prove semantic support for a generated paraphrase.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** Your project has one place where the request is built, budgeted, sent, parsed, and validated, and a reader can find it in under a minute. Both tests fail if you remove the corresponding check. Explain that the stub is deterministic canned output, not a language model, and that a schema or citation check does not prove semantic support for a generated paraphrase.
 
 ### Recall without notes
 

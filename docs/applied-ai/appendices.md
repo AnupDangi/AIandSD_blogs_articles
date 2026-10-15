@@ -6,27 +6,17 @@ This appendix preserves the project briefs, formulas, glossary, release checklis
 
 These are alternative portfolio projects from the source material. They are project ideas, not additional required chapters or promised course deliverables. For each project, build one subsystem at a time and establish a measurable baseline before expanding it.
 
-### 1. Document Intelligence and RAG Engine
-
-**Objective:** Build a source-aware technical-document assistant that answers with inspectable evidence.
-
-**Suggested stack:** Python/FastAPI, PostgreSQL with pgvector, BM25/Elasticsearch or Tantivy, object storage, and OpenTelemetry.
-
-**Milestones:** ingest PDFs and HTML with page/source metadata; measure lexical and vector retrieval baselines; add hybrid retrieval and reranking; return claim-level citations; build retrieval and answer eval suites; add permissions, reindexing, and stale-source handling.
-
-**Failure exercises:** duplicate a source, mismatch a citation, trigger runaway retrieval, time out the provider, and provide conflicting evidence. Record the user-visible effect, trace evidence, recovery path, and design change.
-
-### 2. Autonomous Coding Agent
+### 1. Autonomous Coding Agent
 
 **Objective:** Build a repository agent that can inspect code, edit files, run tests, and make bounded progress across sessions.
 
-**Suggested stack:** Python or TypeScript runtime, Git, container sandbox, test runner, SQLite/Postgres run state, and OpenTelemetry.
+**Suggested stack:** Node.js with a TypeScript runtime, Git, container sandbox, test runner, SQLite/Postgres run state, and OpenTelemetry.
 
 **Milestones:** expose narrow file/search/test tools; add task ledger and checkpoints; require tests before completion; add a bounded repair loop; sandbox filesystem and network; convert failed tasks into regressions.
 
 **Failure exercises:** terminate between checkpoint and status update, provide malicious repository instructions, exhaust the repair budget, and fail the test runner. Preserve the minimum bar: no silent data loss, unbounded retry loop, unapproved side effect, or untraceable failure.
 
-### 3. Deep Research Agent
+### 2. Deep Research Agent
 
 **Objective:** Discover sources, assign parallel investigations, and produce an evidence-bearing synthesis that can resume after interruption.
 
@@ -36,7 +26,7 @@ These are alternative portfolio projects from the source material. They are proj
 
 **Failure exercises:** duplicate a source, introduce citation mismatch, trigger runaway search, time out a provider, and make workers disagree. Record the user-visible effect, telemetry, recovery, and whether the design needs to change.
 
-### 4. AI Customer Support Platform
+### 3. AI Customer Support Platform
 
 **Objective:** Route simple questions, use account tools safely, and escalate uncertain or consequential cases to people.
 
@@ -46,7 +36,7 @@ These are alternative portfolio projects from the source material. They are proj
 
 **Failure exercises:** wrong-account access, duplicate refund, stale policy, tool outage, and unsafe automatic action. Every side effect needs idempotency or approval; every failure should be visible in a trace or operational event.
 
-### 5. AI SRE / Incident Response Agent
+### 4. AI SRE / Incident Response Agent
 
 **Objective:** Correlate metrics, logs, traces, and deployment events to produce evidence-backed incident hypotheses.
 

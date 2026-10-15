@@ -26,7 +26,7 @@ The lesson illustration shows a source split into passages while section context
 
 Open lesson `ai-10` and compare **Maximum chunk size** one sentence with two sentences. Its four-sentence toy scenario covers a storage limit, the heading that scopes that limit, a sentence-only split, and source offsets. The query is “chunk heading context source boundary.” Before each change, predict which neighboring sentences will share a passage and how many passages can appear in top-k. Inspect the ranked text and toy recall; do not treat a change in this fixture as evidence of general retrieval improvement.
 
-The visual groups fixed sentences by count; it does not preserve document headings, apply overlap, or generate contextual descriptions. Use the project chunker below to inspect source IDs, then propose metadata you would add for a real document collection.
+The visual groups fixed sentences by count; it does not preserve document headings, apply overlap, or generate contextual descriptions. Use your own chunker from the course project below to inspect source IDs, then propose metadata you would add for a real document collection.
 
 ## Concepts to retain
 
@@ -56,16 +56,16 @@ A paragraph containing “this value is valid for 30 days” may be ambiguous wi
 
 ## Implementation sketch (pseudocode)
 
-```python
-chunk = {
-    "text": section_text,
-    "source_id": document_id,
-    "page": page_number,
-    "section": heading,
-}
+```ts
+const chunk = {
+  text: sectionText,
+  sourceId: documentId,
+  page: pageNumber,
+  section: heading,
+};
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below uses only a small hand-written document.
 
 ## What to measure
 
@@ -84,27 +84,16 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Run the project chunker on fixture `ops-02` and inspect its two sentence-based passages.
-- Change `sentences_per_chunk` in a local experiment and compare boundaries and word counts.
-- Keep each passage’s `document_id` and use `span_id`, `start_char`, and `end_char` to map a chunk back to its exact fixture text.
-- Do not call a contextualization model; use a short hand-written context note only if you clearly label it as fixture data.
+- Write a short document of four or five sentences (the lesson's four-sentence scenario works) and split it into passages of two sentences each.
+- Change the sentences-per-passage setting in a local experiment and compare boundaries and word counts.
+- Give each passage a `sourceId`, `startChar`, and `endChar`, and use them to map a chunk back to its exact text in the source string.
+- Do not call a contextualization model; use a short hand-written context note only if you clearly label it as sample data.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Inspect sentence chunking and verify that every passage carries stable character offsets into its source document. The offsets are fixture character positions, not PDF page coordinates or token counts.
+**Task:** In your own TypeScript project, write a chunker for your knowledge base that splits each document by a stated rule (for example, two sentences per passage) and returns passages with `sourceId`, `startChar`, `endChar`, and the section heading when your documents have one. Write a Vitest or `node --test` test that runs the chunker on a short sample document and asserts that `source.slice(startChar, endChar)` equals each passage's text exactly. Add a second test that asserts every passage keeps its `sourceId`, and a third that changes the sentences-per-passage setting and asserts the passage count changes in the way you predicted. Make your answer citations use the `sourceId` with the offsets, so a citation can be checked against the original text.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m document_intelligence --trace "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_question_returns_only_cited_allowed_evidence" -v
-```
-
-**Expected observation:** Trace rows identify source spans such as `ops-02:<start>-<end>`. The answer test confirms that slicing the original text by each returned offset reproduces the cited span.
-
-**Acceptance check:** State the two-sentence chunk boundary rule and distinguish character offsets from page locations and provider token counts.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** State your chunk boundary rule and distinguish character offsets in your own text from page locations and provider token counts. The offset test shows citations point at real source text. It does not show that the chunking helps retrieval, which needs a labeled query set and a baseline comparison.
 
 ### Recall without notes
 

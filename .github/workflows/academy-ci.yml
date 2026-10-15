@@ -70,8 +70,3 @@ jobs:
       - run: npm run public-assets:check
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python -m unittest discover -s tests -v
-        working-directory: projects/document-intelligence

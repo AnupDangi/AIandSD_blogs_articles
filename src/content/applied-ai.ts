@@ -165,7 +165,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-02-lab",
         "title": "Run the experiment",
-        "summary": "Sample the toy distribution and compare character length with the starter's lexical-term count.",
+        "summary": "Sample the toy distribution and compare character length with a lexical term count you compute for your own sample text.",
         "visual": "attention",
         "activity": "lab-ai-02",
         "resources": [
@@ -263,7 +263,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-03-lab",
         "title": "Run the experiment",
-        "summary": "Calculate a three-token attention row by hand and test the starter's separate answer-contract boundary.",
+        "summary": "Calculate a three-token attention row by hand and test a separate answer-contract boundary in your own project.",
         "visual": "attention",
         "activity": "lab-ai-03",
         "resources": [
@@ -360,7 +360,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-04-lab",
         "title": "Run the experiment",
-        "summary": "Compare the visual's KV-cache arithmetic with the starter's retrieval top-k setting without treating them as the same quantity or as measured serving behavior.",
+        "summary": "Compare the visual's KV-cache arithmetic with your retrieval top-k setting without treating them as the same quantity or as measured serving behavior.",
         "visual": "inference-scheduler",
         "activity": "lab-ai-04",
         "resources": [
@@ -543,7 +543,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-06-lab",
         "title": "Run the experiment",
-        "summary": "Run the starter's six-case citation-coverage baseline (coverage 5/6 with one known paraphrase failure); do not call it a live prompt regression.",
+        "summary": "Build a small citation-coverage baseline on fixed cases and record its known paraphrase failures; do not call it a live prompt regression.",
         "visual": "request-workbench",
         "activity": "lab-ai-06",
         "resources": [
@@ -634,7 +634,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-07-lab",
         "title": "Run the experiment",
-        "summary": "Toggle malformed output and specify a bounded escalation policy; verify the starter's explicit not-found result separately.",
+        "summary": "Toggle malformed output and specify a bounded escalation policy; test your explicit not-found result separately.",
         "visual": "request-workbench",
         "activity": "lab-ai-07",
         "resources": [
@@ -820,7 +820,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-09-lab",
         "title": "Run the experiment",
-        "summary": "Inspect the starter's lexical-gated feature-hashed ranking and state why it has no HNSW/IVF index.",
+        "summary": "Compare exact search over a small corpus with an HNSW or IVF index and state when each is appropriate.",
         "visual": "retrieval-microscope",
         "activity": "lab-ai-09",
         "resources": [
@@ -918,7 +918,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-10-lab",
         "title": "Run the experiment",
-        "summary": "Run the starter's sentence chunker and trace both passages back to the same document ID.",
+        "summary": "Split a short document into sentence chunks and trace both passages back to the same document ID.",
         "visual": "retrieval-microscope",
         "activity": "lab-ai-10",
         "resources": [
@@ -1010,7 +1010,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-11-lab",
         "title": "Run the experiment",
-        "summary": "Trace the starter's hybrid_search and identify the distinct contribution of its non-semantic vector path.",
+        "summary": "Compare lexical, vector and hybrid ranking on a small set and identify the distinct contribution of the non-semantic path.",
         "visual": "retrieval-microscope",
         "activity": "lab-ai-11",
         "resources": [
@@ -1101,7 +1101,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-12-lab",
         "title": "Run the experiment",
-        "summary": "Run the starter reranker test and trace citations through Answer.validate.",
+        "summary": "Test a reranker on fixed cases and trace citations through answer validation.",
         "visual": "retrieval-microscope",
         "activity": "lab-ai-12",
         "resources": [
@@ -1194,7 +1194,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-13-lab",
         "title": "Run the experiment",
-        "summary": "Trace allowed_document_ids before search and citation validation afterward in the starter.",
+        "summary": "Apply an allowed-document filter before search and validate citations afterward.",
         "visual": "retrieval-microscope",
         "activity": "lab-ai-13",
         "resources": [
@@ -1833,7 +1833,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-20-lab",
         "title": "Run the experiment",
-        "summary": "Draft bounded worker scopes and compare them with the starter’s separate thread-count baseline.",
+        "summary": "Draft bounded worker scopes and compare them with a separate thread-count baseline.",
         "visual": "agent-state-machine",
         "activity": "lab-ai-20",
         "resources": [
@@ -2839,7 +2839,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-31-lab",
         "title": "Run the experiment",
-        "summary": "Design a mock egress test for untrusted text and run the starter's source-authorization tests; no agent executes document instructions here.",
+        "summary": "Design a mock egress test for untrusted text and a source-authorization test; no agent executes document instructions here.",
         "visual": "trust-boundary-sandbox",
         "activity": "lab-ai-31",
         "resources": [
@@ -3368,7 +3368,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-37-tradeoffs",
         "title": "Measure the trade-offs",
-        "summary": "Inspect toy policy denials and the starter's allowed-source tests; record prompt-injection risks those checks do not cover.",
+        "summary": "Inspect toy policy denials and write allowed-source tests; record prompt-injection risks those checks do not cover.",
         "visual": "trust-boundary-sandbox",
         "activity": "compare-ai-37",
         "resources": [
@@ -3986,11 +3986,11 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-03",
     "assessmentId": "ai-03-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which artifact demonstrates the attention lesson without claiming the document-answer starter runs a transformer?",
+    "prompt": "Project transfer · Which artifact demonstrates the attention lesson without claiming your application's retrieval and answer code runs a transformer?",
     "choices": [
       {
         "id": "a",
-        "text": "Accurate citations from a query that depends on earlier document text, offered as evidence that the starter’s Q/K/V attention applies causal masking without inspecting its attention trace."
+        "text": "Accurate citations from a query that depends on earlier document text, offered as evidence that the application applies causal masking without inspecting any attention trace."
       },
       {
         "id": "c",
@@ -3998,7 +3998,7 @@ export const questions: PublicQuestion[] = [
       },
       {
         "id": "b",
-        "text": "An annotated toy Q/K/V calculation showing scaling, mask-before-softmax, normalized visible weights, and the weighted value result, alongside the starter’s separate typed-boundary test."
+        "text": "An annotated toy Q/K/V calculation showing scaling, mask-before-softmax, normalized visible weights, and the weighted value result, alongside a separate test of the application's typed request and response boundary."
       }
     ]
   },
@@ -4091,7 +4091,7 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-04",
     "assessmentId": "ai-04-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which deliverable makes the inference-scheduling objective reviewable while clearly labeling the project starter’s limits?",
+    "prompt": "Project transfer · Which deliverable makes the inference-scheduling objective reviewable while clearly labeling your project's limits?",
     "choices": [
       {
         "id": "b",
@@ -4099,7 +4099,7 @@ export const questions: PublicQuestion[] = [
       },
       {
         "id": "a",
-        "text": "A worked KV-bytes-per-token calculation and a three-setting toy scheduler table of throughput, queue delay, and memory, explicitly separate from the offline document-answer CLI."
+        "text": "A worked KV-bytes-per-token calculation and a three-setting toy scheduler table of throughput, queue delay, and memory, explicitly separate from the application's own request path."
       },
       {
         "id": "c",
@@ -4301,7 +4301,7 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-06",
     "assessmentId": "ai-06-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which artifact demonstrates versioned prompt evaluation while respecting the offline starter’s scope?",
+    "prompt": "Project transfer · Which artifact demonstrates versioned prompt evaluation while respecting the limits of an offline project?",
     "choices": [
       {
         "id": "a",
@@ -4309,7 +4309,7 @@ export const questions: PublicQuestion[] = [
       },
       {
         "id": "b",
-        "text": "Treat the offline starter’s fixture output as equivalent to live prompt regression evidence, since both exercise the response contract under a version label."
+        "text": "Treat an offline fixture's output as equivalent to live prompt regression evidence, since both exercise the response contract under a version label."
       },
       {
         "id": "c",
@@ -7346,7 +7346,7 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-35",
     "assessmentId": "ai-35-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which artifact distinguishes prompt caching from the starter’s TTL cache?",
+    "prompt": "Project transfer · Which artifact distinguishes prompt caching from your project's own TTL cache?",
     "choices": [
       {
         "id": "a",

@@ -8,7 +8,7 @@ import "@/components/library-discovery.css";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Build a document intelligence application across eight self-reported milestones.",
+  description: "Build a reliable AI application in TypeScript across eight self-reported milestones.",
 };
 
 export default function ProjectsPage() {
@@ -18,10 +18,10 @@ export default function ProjectsPage() {
     <header className="library-hero project-library-hero">
       <div className="lesson-breadcrumb"><Link href="/courses">Courses</Link><span>/</span><span>Projects</span></div>
       <h1>Build a system, one step at a time.</h1>
-      <p>Carry one document intelligence application through the Applied AI course. Each milestone adds a capability you can test, explain, and submit.</p>
+      <p>Carry one reliable AI application through the Applied AI course, in your own GitHub repository. Each milestone adds a capability you can test, explain, and submit.</p>
     </header>
     <article className="project-brief">
-      <div><span className="status-pill">{course.status === "in-progress" ? "Course in development" : "Available"}</span><h2>Document intelligence with evidence</h2><p>Answer questions against a document set, cite the evidence, measure answer quality, and recover from failures.</p><div className="library-summary"><span>{projectMilestones.length} milestones</span><span>Python 3.12</span><span>Local fixtures and tests</span></div><Link className="button-primary" href={`/courses/${course.slug}`}>View the project learning path</Link></div>
+      <div><span className="status-pill">{course.status === "in-progress" ? "Course in development" : "Available"}</span><h2>A reliable AI application with evidence</h2><p>Answer questions from sources you choose, cite the evidence, measure answer quality, and recover from failures.</p><div className="library-summary"><span>{projectMilestones.length} milestones</span><span>TypeScript</span><span>Your own repository and tests</span></div><Link className="button-primary" href={`/courses/${course.slug}`}>View the project learning path</Link></div>
       <aside><h3>Work locally. Keep your evidence.</h3><p>Fixture-based activities work without a paid model API. Submit a GitHub repository and reflection when you are ready.</p><a href="#project-submission">Go to milestone submission</a></aside>
     </article>
     <section className="project-milestone-section" aria-labelledby="project-milestones-heading">

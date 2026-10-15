@@ -170,7 +170,7 @@ const submissionPayload = {
   idempotencyKey: "milestone-1-attempt-001",
   courseId: "applied-ai",
   courseVersion: 1,
-  repositoryUrl: "https://github.com/learner/document-intelligence",
+  repositoryUrl: "https://github.com/learner/reliable-ai-app",
   checklist: firstMilestoneChecklist,
   reflection: "I added a typed model call and checked its output against the fixture.",
 };
@@ -293,7 +293,7 @@ describe("learner ownership route contracts", () => {
     testState.userId = "user-a";
     const original = {
       ...submissionPayload,
-      repositoryUrl: "https://github.com/learner/document-intelligence/",
+      repositoryUrl: "https://github.com/learner/reliable-ai-app/",
       commitSha: "ABCDEF1234567",
       checklist: [firstMilestoneChecklist[2], firstMilestoneChecklist[0], firstMilestoneChecklist[1]],
     };
@@ -306,7 +306,7 @@ describe("learner ownership route contracts", () => {
     const replay = await postSubmission(
       sameOriginRequest(`/api/projects/${projectId}/submissions`, {
         ...original,
-        repositoryUrl: "https://github.com/learner/document-intelligence",
+        repositoryUrl: "https://github.com/learner/reliable-ai-app",
         commitSha: "abcdef1234567",
         checklist: [...original.checklist].reverse(),
       }),

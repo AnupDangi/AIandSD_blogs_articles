@@ -12,7 +12,7 @@ Create a human-labeled reference set, measure judge errors beyond overall accura
 
 Human-labeled examples form the reference set. The judge labels the same examples; disagreements are counted as false positives and false negatives, then inspected by slice before the judge is trusted for monitoring.
 
-**Authored instructional mechanism map — calibrate against reviewed labels.** “Positive” here means the grader flags a hallucination; it is not a label supplied by the six-case retrieval fixture.
+**Authored instructional mechanism map — calibrate against reviewed labels.** “Positive” here means the grader flags a hallucination; it is not a label supplied by a retrieval test case.
 
 | Human reference | Judge says hallucination | Judge says no hallucination |
 |---|---|---|
@@ -35,11 +35,11 @@ The source example describes a hallucination detector with 95% accuracy but 61% 
 
 ## Practice lab
 
-1. Run the six checked-in fixture questions and save their current answers and citations. Define one narrow binary grading question, such as whether each answer's cited span supports its main claim. Six cases are a practice set, not a reliable estimate of judge performance. The fixture's `expected_source` is a retrieval target, not a human quality label; the known paraphrase miss is useful for discussing an error, not a pre-labeled judge result.
+1. In your own project, pick six representative questions or tasks, run them, and save the current answers and citations. Define one narrow binary grading question, such as whether each answer's cited span supports its main claim. Six cases are a practice set, not a reliable estimate of judge performance. An `expected_source` field in an eval case is a retrieval target, not a human quality label; a known failing case is useful for discussing an error, not a pre-labeled judge result.
 2. Have two reviewers label the six outputs independently using the same rubric, without showing them `expected_source`. Preserve both labels for each case. If a second reviewer is unavailable, record that limitation and leave inter-reviewer agreement unmeasured rather than inventing a second label.
 3. When two label sets exist, measure raw reviewer agreement (matches / 6) before adjudication and identify every disagreement.
 4. Resolve disagreements and retain the adjudicated label and reason.
-5. The starter has no judge implementation or stored judge labels. For an arithmetic exercise, make an explicitly mock set of six judge decisions after adjudication, or run a separately configured judge without exposing labels to it. Keep mock and live results distinct.
+5. The course supplies no judge implementation or stored judge labels. For an arithmetic exercise, make an explicitly mock set of six judge decisions after adjudication, or run a separately configured judge without exposing labels to it. Keep mock and live results distinct.
 6. If you have adjudicated reference labels and judge decisions, compute confusion counts, precision, recall, and false-negative rate; inspect the cases in each error group. With no second reviewer or judge decisions, report the missing evidence instead of a calibration metric.
 7. State what additional sample size, slice coverage, and review would be needed before a judge could be used for monitoring. Do not authorize a judge from this six-case exercise alone.
 
@@ -65,22 +65,13 @@ The source example describes a hallucination detector with 95% accuracy but 61% 
 
 ## Try the simulation
 
-Use the **`evaluation-console`** to change the judge confidence threshold and compare each prediction with its fixed reviewer label. Watch false passes and false rejects trade places as you raise the floor. The six cases are synthetic; raw agreement here is not a substitute for independent reviewers and adjudication in the local task below.
+Use the **`evaluation-console`** to change the judge confidence threshold and compare each prediction with its fixed reviewer label. Watch false passes and false rejects trade places as you raise the floor. The six cases are synthetic; raw agreement here is not a substitute for independent reviewers and adjudication in the exercise below.
 
 ## Course project — milestone 4 — Evaluation
 
-**Task:** Use the six cases in `fixtures/evaluation.json` to prepare a calibration exercise. Collect the actual outputs, have two reviewers label each against one rubric before sharing answers, report raw agreement (matches / 6), list disagreements, then adjudicate. If only one reviewer is available, preserve that label set and mark agreement and adjudication pending. The CLI's citation-coverage report is not a judge-calibration report.
+**Task:** In your own TypeScript project, prepare a calibration exercise on six cases. Add a small module that writes the six actual outputs (answer plus citations) to a review sheet file, with one column each for reviewer A and reviewer B. Have two reviewers label each output against one rubric before sharing answers, report raw agreement (matches / 6), list disagreements, then adjudicate. If only one reviewer is available, preserve that label set and mark agreement and adjudication pending. Write a Vitest or `node:test` test for the agreement function: assert that identical label sets give 6/6, that one flipped label gives 5/6, and that it throws or returns pending when a label set is missing. A second test should assert that the confusion counts, precision, and recall computed from a small hand-made list of reference and judge labels equal values you worked out by hand.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m document_intelligence --evaluate
-```
-
-**Expected result:** CLI prints `cases: 6`, aggregate citation coverage of `5/6`, and five module slices; the retrieval slice is `0.5` because the paraphrase case has no hit. Read `fixtures/evaluation.json` and run each query separately to collect the six outputs for your review sheet. The CLI does not produce reviewer labels, agreement, or judge predictions.
-
-**Acceptance check:** Preserve any original reviewer labels and the agreement calculation when two reviewers participate; do not claim judge validation or statistical reliability from six cases.
+**Acceptance check:** Preserve any original reviewer labels and the agreement calculation when two reviewers participate. A citation-coverage or pass-rate report from your eval suite is not a judge-calibration report. Do not claim judge validation or statistical reliability from six cases.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

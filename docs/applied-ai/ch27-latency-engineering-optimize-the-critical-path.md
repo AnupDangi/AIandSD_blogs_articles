@@ -35,12 +35,12 @@ Retrieval takes 0.4 seconds. Tool A takes 2 seconds and tool B takes 3 seconds, 
 
 ## Practice lab
 
-1. Start with the 50 local fixture queries in the project probe below and record p50/p95; they contain no hosted model, queue, or network latency.
-2. Time retrieval and answer assembly separately with local `perf_counter()` spans and compare their sum with measured total time. Label any gap and report the local timeout count.
-3. Use the worked example’s two independent tools to calculate sequential versus parallel critical-path estimates. The starter has no such tools, so treat this as an analytical comparison unless you implement a controlled local pair.
+1. In your own TypeScript project, run one fixed test query about 50 times against local or stubbed components and record p50/p95 (use the nearest-rank method and say so); this measures no hosted model, queue, or network latency.
+2. Time retrieval and answer assembly separately with local `performance.now()` spans and compare their sum with measured total time. Label any gap and report the local timeout count.
+3. Use the worked example’s two independent tools to calculate sequential versus parallel critical-path estimates. If your project has no such tools, treat this as an analytical comparison unless you implement a controlled local pair.
 4. If you implement that pair, keep a sequential control, run both over the same inputs, and compare end-to-end p95 and task success rather than just the tool spans.
 
-**Deliverable:** a measured local timing table, a waterfall that labels measured spans separately from the analytical worked example, and a release rule that includes task quality. A code change and before/after comparison are optional extensions; the starter does not provide a latency optimization to benchmark.
+**Deliverable:** a measured local timing table, a waterfall that labels measured spans separately from the analytical worked example, and a release rule that includes task quality. A code change and before/after comparison are optional extensions; the course supplies no latency optimization to benchmark.
 
 ## Failure review
 
@@ -62,38 +62,15 @@ Retrieval takes 0.4 seconds. Tool A takes 2 seconds and tool B takes 3 seconds, 
 
 ## Try the simulation
 
-In the **`production-tabletop`** latency waterfall, compare the sequential baseline with the parallel candidate. The starting schedule uses the chapter's independent-tool assumption; switch on **Tool B depends on Tool A** and confirm the candidate no longer claims a speedup. Treat both timelines as analytical pre-generation estimates. Use the local timing probe below for observed fixture latency and keep its measurements separate from this example.
+In the **`production-tabletop`** latency waterfall, compare the sequential baseline with the parallel candidate. The starting schedule uses the chapter's independent-tool assumption; switch on **Tool B depends on Tool A** and confirm the candidate no longer claims a speedup. Treat both timelines as analytical pre-generation estimates. Use your own timing exercise below for observed local latency and keep its measurements separate from this example.
 
 ## Course project — milestone 5 — Reliability
 
-**Task:** Measure local fixture-query latency, not provider or network latency. The numbers vary by machine.
+**Task:** Measure local latency in your own TypeScript project, not provider or network latency. Add a small timing helper that runs one fixed query N times (for example 50) with `performance.now()`, sorts the samples, and returns p50 and p95 by the nearest-rank method. Separately time retrieval and answer assembly spans and compare their sum with the total. The numbers vary by machine.
 
-**Run locally** from the repository root:
+**Tests to write:** In Vitest or `node:test`, assert the percentile function against a small hand-made sample list (for example, that p50 of a known sorted list returns the expected element and p95 returns the nearest-rank element). Add a test that the fixed query returns the expected answer status and cites the expected source, so a faster run cannot hide a wrong answer. Do not assert on absolute milliseconds, since they depend on the machine.
 
-```sh
-cd projects/document-intelligence
-python - <<'PY'
-import time
-import math
-from document_intelligence import DocumentIntelligence, load_documents
-app = DocumentIntelligence(load_documents())
-samples = []
-for _ in range(50):
-    start = time.perf_counter()
-    answer = app.answer("How can the previous index roll back?")
-    assert answer.status == "answered", answer.status
-    assert any(span.document_id == "ops-02" for span in answer.source_spans), answer.source_spans
-    samples.append((time.perf_counter() - start) * 1000)
-samples.sort()
-nearest_rank = lambda percentile: samples[math.ceil(percentile * len(samples)) - 1]
-print(f"runs={len(samples)} p50_ms={nearest_rank(.50):.3f} p95_ms={nearest_rank(.95):.3f}")
-PY
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'fixture_question' -v
-```
-
-**Expected result:** Tests pass; the probe prints 50 local runs with machine-dependent p50/p95, not service SLO evidence.
-
-**Acceptance check:** Label the measured local path and do not extrapolate to deployed-model latency.
+**Acceptance check:** Label the measured local path, report p50/p95 as machine-dependent, and do not present them as service SLO evidence or extrapolate to deployed-model latency.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

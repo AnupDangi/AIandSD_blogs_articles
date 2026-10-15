@@ -33,11 +33,11 @@ Agent reliability often depends more on tool interface quality than on adding mo
 | Return result | Concise status, operation ID, typed error category | Classify transient/permanent errors; expose no unrelated rows |
 | Retry/replay | Same operation identity where the operation supports idempotency | Avoid repeating a side effect solely because its response was lost |
 
-**Boundary:** model-proposed arguments → typed validation + trusted identity + authorization → operation → bounded result. An operation ID helps correlation but only prevents duplicate effects when the handler enforces its semantics. `CheckpointStore` replay illustrates stored-stage behavior; it does not implement this profile tool or an atomic external write.
+**Boundary:** model-proposed arguments → typed validation + trusted identity + authorization → operation → bounded result. An operation ID helps correlation but only prevents duplicate effects when the handler enforces its semantics. Replaying a stored stage result, as in the milestone 3 workflow task, illustrates the idea; it does not implement this profile tool or an atomic external write.
 
 ## Try the simulation
 
-Open lesson `ai-16` and advance the **agent-state-machine** to “Check evidence.” Predict what the state banner will say when you select **Replay the tool result**. Inspect the outcome and explain why the idempotency key must bind to the original operation. The visual does not execute a tool or validate arguments; use the `CheckpointStore` test below to inspect actual stage-ID replay.
+Open lesson `ai-16` and advance the **agent-state-machine** to “Check evidence.” Predict what the state banner will say when you select **Replay the tool result**. Inspect the outcome and explain why the idempotency key must bind to the original operation. The visual does not execute a tool or validate arguments; use a duplicate-operation-ID test in your own code, as in the lab below, to inspect actual replay behavior.
 
 ## Concepts to retain
 
@@ -67,18 +67,17 @@ A `manage_user` tool with 25 optional fields is harder to reason about than `rea
 
 ## Implementation sketch (pseudocode)
 
-```python
-class UpdateProfileArgs(BaseModel):
-    display_name: str
+```ts
+type UpdateProfileArgs = { displayName: string };
 
-# The handler derives the target user ID from authenticated context,
-# not from a model-supplied argument. It returns an operation ID and
-# a typed error category.
+// The handler derives the target user ID from authenticated context,
+// not from a model-supplied argument. It returns an operation ID and
+// a typed error category.
 ```
 
 For this self-service profile tool, the authenticated user's identity determines the target. A separate administrative operation would need its own narrow contract and explicit authorization policy.
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -97,26 +96,18 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Define one narrow local tool contract with a `dataclass`, typed fields, and explicit error results. Derive the acting identity from a trusted local context rather than a caller-provided field.
+- Define one narrow local tool contract with a TypeScript type, typed fields, and explicit error results. Derive the acting identity from a trusted local context rather than a caller-provided field.
 - Split a broad illustrative operation into read-only and state-changing functions.
 - Add a test case for a malformed argument and a duplicate operation ID.
-- Use only local functions; the starter does not expose model-callable tools.
+- Use only local functions; no model-callable tool or paid provider is needed.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Connect narrow interfaces to the project’s typed `Answer` contract and source allowlist test. The starter exposes Python functions, not model-callable tools.
+**Task:** In your own TypeScript project, define each action your application can take (for example search the knowledge base, fetch a record, or write a note) as a narrow typed function with a clear name, validated arguments, a concise result and a classified error. Keep read-only and state-changing actions separate, and derive the acting identity from trusted context, never from an argument. Validate arguments at runtime with whatever schema approach you already use, and keep the same source allowlist check from your retrieval work on any action that returns evidence. Write a Vitest or `node --test` test that a malformed argument returns a typed error without running the effect, a test that a target ID supplied by the caller is ignored or rejected, and a test that repeating the same operation ID for a state-changing action does not repeat its effect.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your tool boundary names inputs, output, side effect and identity source explicitly, and the tests pass. Schema validation shows the shape is right, not that the action is authorized or sensible. If you have not connected a model to these functions, say so rather than calling them an agent tool registry.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "answer_contract" -v
-```
-
-**Expected observation:** The contract test passes and a citation outside the allowed set raises `ValueError`.
-
-**Acceptance check:** Your proposed tool boundary names inputs, output, side effect, and identity source explicitly, while noting that the current project has no agent tool registry or model tool calls.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data and test doubles in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

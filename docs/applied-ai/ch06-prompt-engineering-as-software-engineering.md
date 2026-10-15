@@ -66,13 +66,13 @@ A wording change can improve one slice while harming another.
 
 ## Implementation sketch (pseudocode)
 
-```python
-prompt_version = "ticket-classifier-v3"
-result = classify(prompt=prompt, example_set=examples, ticket=ticket)
-record_eval(prompt_version, ticket.slice, result.label)
+```ts
+const promptVersion = "ticket-classifier-v3";
+const result = await classify({ prompt, examples, ticket });
+recordEval(promptVersion, ticket.slice, result.label);
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below can use predetermined predictions in place of a model.
 
 ## What to measure
 
@@ -93,25 +93,14 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 - Create 40 fixed input/label rows and divide them into two meaningful slices.
 - Enter two columns of predetermined predictions as local fixture data; do not call a model.
-- Calculate overall and per-slice accuracy with Python’s standard library and inspect a case where the aggregate hides a regression.
+- Calculate overall and per-slice accuracy with plain TypeScript (`reduce` and a `Map` keyed by slice) and inspect a case where the aggregate hides a regression.
 - Record prompt versions as labels for the fixture comparison, not as evidence of live model behavior.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Use the checked-in evaluation fixtures as a deterministic baseline. Do not describe this as a prompt regression test: the starter does not call a model or version prompts.
+**Task:** In your own TypeScript project, move prompt construction into one function that returns the prompt text, and export a version string such as `answer-prompt-v1`. Keep policy instructions, the user question, and retrieved passages in separate, labeled parts, with retrieved passages marked as data. Write a Vitest or `node --test` test that passes a passage containing an instruction-like sentence and asserts it appears only inside the data part and never in the instruction part. Then add a small labeled evaluation set (a handful of cases, each with a `slice` tag) and a function that computes overall and per-slice pass rates from predetermined predictions. Write a test with two prediction sets where the overall rate rises but one slice falls, and assert that your report exposes the falling slice.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -c 'from document_intelligence.evaluation import evaluate; print(evaluate())'
-python -m unittest discover -s tests -p "test_course_project.py" -k "evaluation_reports_coverage_by_module" -v
-```
-
-**Expected observation:** The report has six cases across five module slices. Its fixture citation coverage is `5/6`: reliability, safety, workflow, and evaluation score `1.0`, while retrieval scores `0.5` because the labeled paraphrase case misses `ops-02`. The evaluation test passes. These values describe this small local fixture set only.
-
-**Acceptance check:** Your notes label the scores as fixture-baseline results, not general model quality or production performance.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** Your notes label the scores as results on your small local case set, not general model quality or production performance. Do not call this a prompt regression test unless the predictions come from running each prompt version against a model; with predetermined predictions it only checks your reporting logic. Delimiters help readability but do not enforce authorization.
 
 ### Recall without notes
 

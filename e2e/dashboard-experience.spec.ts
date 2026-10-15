@@ -57,7 +57,7 @@ test("returning learner resumes the saved section and keeps versions and self-re
       { id: "attempt-1", assessmentVersion: 2, status: "submitted", scorePercent: 80, passed: true, startedAt: "2026-10-10T00:00:00Z", submittedAt: "2026-10-10T01:00:00Z", assessment: { id: "assessment-1", key: "ai-01-formative", title: "Foundations knowledge check" } },
       { id: "attempt-2", assessmentVersion: 2, status: "submitted", scorePercent: 100, passed: true, startedAt: "2026-10-10T02:00:00Z", submittedAt: "2026-10-10T03:00:00Z", assessment: { id: "assessment-1", key: "ai-01-formative", title: "Foundations knowledge check" } },
     ],
-    submissions: [{ id: "submission-1", projectId: "ai-milestone-1", repositoryUrl: "https://github.com/learner/document-intelligence", commitSha: "ab1234567890", submittedAt: "2026-10-10T01:00:00Z", status: "submitted—self-reported", courseVersion: { courseId: "applied-ai", version: 3 } }],
+    submissions: [{ id: "submission-1", projectId: "ai-milestone-1", repositoryUrl: "https://github.com/learner/reliable-ai-app", commitSha: "ab1234567890", submittedAt: "2026-10-10T01:00:00Z", status: "submitted—self-reported", courseVersion: { courseId: "applied-ai", version: 3 } }],
     weakTopics: [{ topicId: "ai-01", misses: 2 }],
   }));
   await page.goto("/dashboard");
@@ -68,7 +68,7 @@ test("returning learner resumes the saved section and keeps versions and self-re
   await expect(page.getByText(/Self-reported submissions\. Repository contents and tests have not been verified/)).toBeVisible();
   await expect(page.getByText(/Course version 3/)).toBeVisible();
   await expect(page.locator(".lh-history-item").filter({ hasText: "Foundations knowledge check" }).first()).toContainText("Version 2");
-  await expect(page.getByRole("link", { name: /Open repository/ })).toHaveAttribute("href", "https://github.com/learner/document-intelligence");
+  await expect(page.getByRole("link", { name: /Open repository/ })).toHaveAttribute("href", "https://github.com/learner/reliable-ai-app");
   await expect(page.locator(".lh-review-queue a")).toHaveAttribute("href", `/learn/${firstLessonSlug}`);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   const accessibility = await new AxeBuilder({ page }).include(".learning-home").withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();

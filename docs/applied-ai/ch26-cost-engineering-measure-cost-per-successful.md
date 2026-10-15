@@ -21,7 +21,7 @@ Model calls, retries, tools, and infrastructure contribute to total run cost. Di
 | Expected cost/success | `$0.04 / 0.70 ≈ $0.057` | `$0.06 / 0.95 ≈ $0.063` | How much total spend supports one successful task? |
 | Decision context | Lower cost/success here | Higher success rate here | Product value and risk still determine whether the difference is worthwhile |
 
-**Ledger path:** originating task → all model calls + retries + tools + attributed infrastructure → total spend → divide by successful tasks. A failed run remains in the spend numerator. Compare optional components with controlled ablations on the same cases; the local starter has no billed provider usage.
+**Ledger path:** originating task → all model calls + retries + tools + attributed infrastructure → total spend → divide by successful tasks. A failed run remains in the spend numerator. Compare optional components with controlled ablations on the same cases; a toy workflow with no real provider calls has no billed provider usage.
 
 ## Measure value, not just tokens
 
@@ -35,10 +35,10 @@ System A costs $0.04 per run and succeeds 70% of the time: $0.04 / 0.70 ≈ $0.0
 
 ## Practice lab
 
-1. Run the six checked-in evaluation cases and record observed citation coverage by slice. This set cannot estimate broad product success.
-2. Create a clearly labeled hypothetical cost ledger for the six runs, including one failed attempt and one retry. Calculate total spend, cost/run, and cost per passing fixture case; these are toy charges, not provider billing.
+1. Take about six evaluation cases from your own project (or six toy cases if you have none yet) and record the observed pass or fail result by slice. This set cannot estimate broad product success.
+2. Create a clearly labeled hypothetical cost ledger for the six runs, including one failed attempt and one retry. Calculate total spend, cost/run, and cost per passing case; these are toy charges, not provider billing.
 3. Compare two candidate ledgers with different pass counts and costs over the same six cases. If you later add a real provider, replace the toy charges with measured billed usage and expand to a representative benchmark.
-4. Build a Pareto table for fixture pass rate, local latency, and hypothetical spend. Do not claim an optional verifier was removed from the starter: it has none.
+4. Build a Pareto table for case pass rate, local latency, and hypothetical spend. Do not claim an optional component was removed unless you actually removed it and re-ran the same cases.
 
 **Deliverable:** a reproducible toy cost report and a conditional decision about whether a proposed optional component would earn its cost. State what measured billing and outcome evidence a real decision would require.
 
@@ -62,22 +62,13 @@ System A costs $0.04 per run and succeeds 70% of the time: $0.04 / 0.70 ≈ $0.0
 
 ## Try the simulation
 
-Use the **`evaluation-console`** to compare the small, balanced, and reasoning route profiles. Record total fixture cost, successful tasks, and cost per success for each. Values are invented accounting examples, not provider prices; the task below still requires you to mark the starter’s actual billing as unavailable.
+Use the **`evaluation-console`** to compare the small, balanced, and reasoning route profiles. Record total cost, successful tasks, and cost per success for each. Values are invented accounting examples, not provider prices; the exercise below still requires you to mark any billing you have not measured as unavailable.
 
 ## Course project — milestone 4 — Evaluation
 
-**Task:** Inventory what `evaluation.py` measures. The starter has no model calls, token accounting, or billing; report local fixture outcomes and mark spend unavailable, not zero.
+**Task:** In your own TypeScript project, add a cost ledger module. Each run gets a record with the originating task ID, the list of model calls, retries, and tool calls (each with a unit count and a toy unit price you label as hypothetical), and a pass or fail flag. Failed runs and retries stay in the ledger. Write a Vitest or `node:test` test with a hand-made ledger of six runs, including one failed attempt and one retry. Assert that total spend, cost per run, and cost per success equal the values you computed by hand, that a failed run raises total spend without raising the success count, and that a run with no recorded price reports spend as unavailable rather than zero.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m document_intelligence --evaluate
-```
-
-**Expected result:** The CLI prints six local case results and citation coverage across five module slices. The baseline is 5/6 overall, with 0.5 retrieval coverage because the fixture includes a known paraphrase failure. It reports neither token usage nor currency; read `fixtures/evaluation.json` for case definitions.
-
-**Acceptance check:** Separate observed fixture outcome from unmeasured provider cost.
+**Acceptance check:** Your report separates observed outcomes (pass or fail per case) from unmeasured provider cost, and it labels every price as hypothetical until you replace it with measured billed usage.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

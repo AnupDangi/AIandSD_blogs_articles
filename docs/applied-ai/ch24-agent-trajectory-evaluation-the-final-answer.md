@@ -14,15 +14,15 @@ Evaluate two outputs from a run separately: the environment’s final state and 
 
 ### Authored mechanism map — outcome and path are separate
 
-This table maps the local, model-free index-release fixtures to the two graders. It is an authored teaching aid, not a recovered figure from the source PDF.
+This table maps authored, model-free index-release scenarios to the two graders. It is an authored teaching aid, not a recovered figure from the source PDF.
 
-| Evidence flow | Grader question | Local evidence |
+| Evidence flow | Grader question | Evidence to inspect |
 |---|---|---|
-| Initial index state → recorded tool arguments → deterministic tool replay → actual final state | Is the target index active **and** ready? | `final_state.active_index` and `final_state.indexes[target_index]` |
-| Replayed tool calls → derived observations → path rules | Were tools allowed, arguments valid, checks ordered, side effects unique, and steps bounded? | `trace`, `violations`, and `side_effect_counts` |
+| Initial index state → recorded tool arguments → deterministic tool replay → actual final state | Is the target index active **and** ready? | The environment's active index and the target index's readiness flag |
+| Replayed tool calls → derived observations → path rules | Were tools allowed, arguments valid, checks ordered, side effects unique, and steps bounded? | The recorded trace, any rule violations, and per-action side-effect counts |
 | Final answer text or a claimed tool observation | Does prose establish either result? | Neither is used for grading |
 
-| Authored fixture | Outcome | Path | What separates them |
+| Authored scenario | Outcome | Path | What separates them |
 |---|---|---|---|
 | `valid-release` | Pass | Pass | Inspect → build → verify → activate → inspect |
 | `unsafe-no-verification` | Pass | Fail | The environment accepts activation, but the path skips its safety check |
@@ -41,13 +41,13 @@ A booking agent may return “reservation confirmed” after a failed write. Gra
 
 ## Practice lab
 
-1. Run the 20 authored mock tasks in `fixtures/trajectories.json`. Each has an initial environment, target index, allowed tools, step budget, and exactly one recorded run.
-2. Inspect each replayed tool call, arguments, derived observation, side-effect count, and final state. A fixture’s claimed success text or claimed observation must not change the score.
-3. Compare `outcome_pass` with `trajectory_pass`. The outcome checks the active, ready index; the path checks inspection before mutation, successful verification before activation, final inspection, allowed tools and arguments, target boundaries, duplicate effects, and the step budget.
-4. Modify `unsafe-no-verification` to verify before activation and observe its path result change. Then remove readiness in `valid-release` and stop after failed verification: the path can remain valid while the objective fails. Keep task IDs unique when adding scenarios.
+1. Write mock tasks as data in your own TypeScript project, starting with the four scenarios in the table above and growing toward about 20. Each task has an initial environment, target index, allowed tools, step budget, and exactly one recorded run.
+2. Replay each recorded run into a small in-memory environment. Inspect each replayed tool call, arguments, derived observation, side-effect count, and final state. A task’s claimed success text or claimed observation must not change the score.
+3. Compare an outcome pass flag with a trajectory pass flag for every task. The outcome checks the active, ready index; the path checks inspection before mutation, successful verification before activation, final inspection, allowed tools and arguments, target boundaries, duplicate effects, and the step budget.
+4. Modify your `unsafe-no-verification` task to verify before activation and observe its path result change. Then remove readiness in `valid-release` and stop after failed verification: the path can remain valid while the objective fails. Keep task IDs unique when adding scenarios.
 5. For pass@1, run each task once and report the fraction of task runs that pass. Repeating a deterministic mock will produce the same result unless you explicitly inject variation. With a stochastic model, three independent runs per task can reveal variation; report their per-run rate separately from the fraction with at least one success (pass@3).
 
-**Deliverable:** your changed trace fixtures, the two rubrics, and a report of outcome and trajectory errors, including the sample denominator.
+**Deliverable:** your changed trace data, the two rubrics, and a report of outcome and trajectory errors, including the sample denominator.
 
 **Model-free limits:** these are prerecorded actions replayed into an in-memory reference environment. No agent decides what to do, no external index is deployed, and latency, token cost, and stochastic model reliability are not measured. The toy environment deliberately permits unverified activation so the grader can demonstrate unsafe success; its replay executor is not a production permission boundary.
 
@@ -71,25 +71,22 @@ A booking agent may return “reservation confirmed” after a failed write. Gra
 
 ## Try the simulation
 
-Use the **`evaluation-console`** and select **Correct answer via forbidden source**. Predict the decision if only the final answer were graded, then compare it with the action-path result. The fixture should be rejected even though its final text passes. Also inspect **Safe abstention**: an acceptable path does not turn an unanswered task into a successful final outcome.
+Use the **`evaluation-console`** and select **Correct answer via forbidden source**. Predict the decision if only the final answer were graded, then compare it with the action-path result. The scenario should be rejected even though its final text passes. Also inspect **Safe abstention**: an acceptable path does not turn an unanswered task into a successful final outcome.
 
 ## Course project — milestone 4 — Evaluation
 
-**Task:** Run the standalone deterministic trajectory evaluator, inspect the two rubrics, then add one failing scenario relevant to your document-intelligence release. The replay executor derives observations and final environment state; it never scores the final response text. **pass@1** here means the fraction of distinct fixture tasks passing both rubrics with exactly one recorded run per task. It is a fixture-suite score, not an estimate of model performance. Repeated stochastic runs estimate variability, while any success among three is pass@3, not pass@1.
+**Task:** In your own TypeScript project, add a deterministic trajectory evaluator for one tool-using flow of your application (the index-release toy above is a fine stand-in if your app has no side-effecting tools). Write two separate graders. The outcome grader reads only the final environment state. The trajectory grader reads the replayed tool calls and checks allowed tools, valid arguments, verification before mutation, duplicate side effects, and the step budget. The replay executor derives observations and final state itself; it never scores the final response text. Add one failing scenario that is relevant to your own application. Define **pass@1** here as the fraction of distinct tasks passing both graders with exactly one recorded run per task. It is a suite score, not an estimate of model performance. Repeated stochastic runs estimate variability, and any success among three is pass@3, not pass@1.
 
-**Run locally** from the repository root:
+**Drill to implement:** Write Vitest or `node:test` tests with these assertions.
+- Unsafe success: a run that activates without verification passes the outcome grader and fails the trajectory grader.
+- Safe failure: a run whose verification finds an unready index and stops passes the trajectory grader and fails the outcome grader.
+- Forgery: changing the claimed answer text or a claimed tool observation in the recorded run leaves both grades unchanged.
+- Rebuild: after a successful rebuild, activation without fresh verification is flagged.
+- Denominator: a task list with a repeated task ID is rejected, and the reported sample count equals the number of distinct tasks.
 
-```sh
-cd projects/document-intelligence
-python -m document_intelligence.trajectory
-python -m unittest discover -s tests -p 'test_trajectory.py' -v
-```
+**Task data contract to define:** names the allowed tools may take (for the toy: `inspect`, `build`, `verify`, `activate`, `delete`); arguments that must contain exactly one nonempty `index_id`; fault injection fields such as `build_failures` and `unready_indexes` that make failures deterministic; reads that may repeat while repeated successful mutations of the same action and index count as duplicate side effects; and actions past the step budget that are reported as recorded but never executed.
 
-**Expected result:** the JSON report records `sample_count: 20`, `runs_per_task: 1`, `outcome_passes: 13`, `trajectory_passes: 10`, `passes: 6`, and `pass_at_1: 0.3`. The deliberately failing fixtures explain why these counts differ. Each result contains the derived trace, final state, rule violations, recorded/executed steps, and side-effect counts. All trajectory behavior tests pass.
-
-**Fixture contract:** `allowed_tools` contains names from `inspect`, `build`, `verify`, `activate`, and `delete`; arguments contain exactly one nonempty `index_id`. `build_failures` and `unready_indexes` inject deterministic faults. Every successful build invalidates earlier verification. Reads may repeat, but repeated successful mutations of the same action and index count as duplicate side effects. Actions after `max_steps` are reported as recorded but never executed. You can pass an alternative JSON task list with `--fixtures path/to/your-trajectories.json`; repeated task IDs are rejected to protect the pass@1 denominator.
-
-**Acceptance check:** demonstrate both unsafe success and safe failure; prove that forging answer text or tool observations cannot change either grade, and that a rebuild requires fresh verification. Keep the sample count visible and do not report best-of-three as pass@1.
+**Acceptance check:** Your tests demonstrate both unsafe success and safe failure, prove that forging answer text or tool observations cannot change either grade, and show that a rebuild requires fresh verification. Keep the sample count visible in any report and do not report best-of-three as pass@1.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

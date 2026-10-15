@@ -58,12 +58,12 @@ For an illustrative 32-layer model with 8 KV heads, head dimension 128, and FP16
 
 ## Implementation sketch (pseudocode)
 
-```python
-kv_bytes_per_token = 2 * layers * kv_heads * head_dim * bytes_per_value
-sequence_bytes = kv_bytes_per_token * sequence_tokens
+```ts
+const kvBytesPerToken = 2 * layers * kvHeads * headDim * bytesPerValue;
+const sequenceBytes = kvBytesPerToken * sequenceTokens;
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below needs no GPU or serving engine.
 
 ## What to measure
 
@@ -84,25 +84,14 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 - Use the `inference-scheduler` simulation to vary batch size and concurrency, then toggle shared-prefix reuse.
 - Change tokens per sequence and active sequence count to reproduce the KV-cache estimate. Record the toy queue-delay and relative-throughput outputs separately; they are not measured performance.
-- Explain that these are toy scheduler estimates; the project CLI does not run an inference server or measure GPU memory.
-- Do not install a serving engine or claim the fixture project reproduces production scheduling.
+- Explain that these are toy scheduler estimates; the simulation does not run an inference server or measure GPU memory.
+- Do not install a serving engine or claim the simulation reproduces production scheduling.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Inspect `DocumentIntelligence.top_k` in `pipeline.py` and run the fixture query. Treat `top_k` as a retrieval-result limit; this starter has no GPU, KV cache, inference scheduler, queue, or serving benchmark.
+**Task:** In your own TypeScript project, keep two limits in separate, clearly named config fields: a retrieval-result limit such as `topK` (how many passages you pass to the model) and a client-side cap on in-flight model calls such as `maxConcurrentModelCalls`. Wrap the model boundary function in a small limiter that queues calls beyond the cap. Write a Vitest or `node --test` test that fires several calls at the stub model with a cap of 2, has the stub track how many calls are active at once, and asserts that the highest count it saw never exceeds 2 and that every call still resolves. Add a second assertion that changing `topK` does not change the cap.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_question_returns_only_cited_allowed_evidence" -v
-python -m document_intelligence "How can the previous index roll back?"
-```
-
-**Expected observation:** The test passes and the CLI cites `ops-02`. No scheduler latency or GPU-memory metric is produced.
-
-**Acceptance check:** Your milestone note distinguishes retrieval `top_k` from inference concurrency and identifies the scheduler simulation as a separate toy model.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** Your milestone note distinguishes retrieval `topK` from request concurrency, and says that your limiter protects your own application and provider quota, not the server's GPU memory or scheduler. It identifies the lesson's scheduler simulation as a separate toy model. The test measures only your stub, so it makes no claim about real latency or throughput.
 
 ### Recall without notes
 

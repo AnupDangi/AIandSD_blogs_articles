@@ -22,7 +22,7 @@ Planning is valuable when tasks have dependencies, uncertainty, or parallel bran
 
 > **Source figure description retained:** Goal and constraints → tentative plan → action/observation loop → compare with expected progress → replan or stop.
 
-**Authored instructional mechanism map — observation-driven replanning.** This follows the chapter's three-step offline planning exercise, not a model planner in the starter.
+**Authored instructional mechanism map — observation-driven replanning.** This follows the chapter's three-step offline planning exercise, not a model planner the course supplies.
 
 | State | Inspectable artifact | Transition |
 |---|---|---|
@@ -66,25 +66,28 @@ A research task can split source discovery into independent branches and merge f
 
 ## Implementation sketch (pseudocode)
 
-```python
-state = {"goal": goal, "plan": initial_plan(goal), "completed": [], "observations": []}
-outcome = build_result(state)
-for _ in range(max_steps):
-    step = choose_next_step(state)
-    if step is None:
-        break
-    observation = execute(step)
-    state = update_state(state, step, observation)
-    if goal_satisfied(state) or explicit_failure(state):
-        outcome = build_result(state)
-        break
-    if invalidates_plan(state):
-        state["plan"] = replan(state, max_steps=max_steps)
-else:
-    outcome = build_result(state, incomplete=True)
+```ts
+let state = { goal, plan: initialPlan(goal), completed: [], observations: [] };
+let outcome = buildResult(state);
+let finished = false;
+for (let i = 0; i < maxSteps; i++) {
+  const step = chooseNextStep(state);
+  if (step === null) { finished = true; break; }
+  const observation = await execute(step);
+  state = updateState(state, step, observation);
+  if (goalSatisfied(state) || explicitFailure(state)) {
+    outcome = buildResult(state);
+    finished = true;
+    break;
+  }
+  if (invalidatesPlan(state)) {
+    state = { ...state, plan: replan(state, { maxSteps }) };
+  }
+}
+if (!finished) outcome = buildResult(state, { incomplete: true });
 ```
 
-This is pseudocode; `choose_next_step`, `execute`, `update_state`, and `replan` are application-defined. The state carries the current plan, and the loop returns a stated incomplete outcome when the step budget runs out before success or explicit failure. The local course starter does not implement a planner.
+This is pseudocode; `chooseNextStep`, `execute`, `updateState`, and `replan` are application-defined. The state carries the current plan, and the loop returns a stated incomplete outcome when the step budget runs out before success or explicit failure. The course does not supply a planner.
 
 ## What to measure
 
@@ -103,26 +106,18 @@ This is pseudocode; `choose_next_step`, `execute`, `update_state`, and `replan` 
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Represent a three-step plan as local dictionaries with typed-looking required fields.
+- Represent a three-step plan as local objects with typed required fields (an ID, prerequisites, and an expected observation).
 - Execute steps against fixed observations and update state after each observation.
 - Inject one failed observation; replan once, then stop at success, explicit failure, or the step budget.
-- Compare the exercise with `CheckpointStore`; do not call a model planner.
+- Do not call a model planner; the plan and replan functions are plain local code.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Use the checkpoint test to compare a fixed stage sequence with a ReAct-style plan. The starter implements replay-safe checkpoints, not planning or replanning.
+**Task:** In your own TypeScript project, compare a fixed stage sequence with a small observation-driven plan for one task in your application. Represent the plan as typed step objects with IDs, prerequisites and expected observations, and run it through a loop with a maximum step count. When a step returns a failed or contradictory observation, call a plain local `replan` function once, keeping the original total step bound. Write a Vitest or `node --test` test using scripted observations that asserts the exact sequence of executed step IDs after one injected failure, and a test with an observation script that never succeeds, asserting that the result is an explicit incomplete outcome after exactly the maximum number of steps. Add a short note on whether this task needs a plan at all or is better as the fixed sequence from the previous chapter.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your state sketch updates state after each observation, has a maximum-step bound, and terminates on success, explicit failure, or budget exhaustion. Scripted observations test the control flow only; they do not show that a model would plan well.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "checkpoint_replays_completed_stage_without_repeating_effect" -v
-```
-
-**Expected observation:** The test passes and confirms a repeated stage ID returns the previously stored result rather than replacing it. It does not execute an external side effect or exercise a planner.
-
-**Acceptance check:** Your state sketch updates state after each observation, has a maximum-step bound, and terminates on success, explicit failure, or budget exhaustion.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data and test doubles in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

@@ -32,7 +32,7 @@ Context is a finite working set. Loading every tool schema, old message, and raw
 | Filter evidence/tool results | Relevant passages or a code-produced summary with source IDs | Raw large tables and unrelated document bodies |
 | Reserve headroom | Allowance for next observations and final output | Do not fill the window to its limit before tools return |
 
-**Budget gate:** task + policy + selected state + tools + evidence + reserved allowance must fit the model's actual context limit. If it does not, retrieve less or compact deliberately before calling the model. Preserve IDs and pending-action details needed to resume; the starter's lexical counts are a proxy, not model token counts.
+**Budget gate:** task + policy + selected state + tools + evidence + reserved allowance must fit the model's actual context limit. If it does not, retrieve less or compact deliberately before calling the model. Preserve IDs and pending-action details needed to resume; simple word or character counts are a proxy, not model token counts.
 
 ## Try the simulation
 
@@ -66,14 +66,14 @@ At 250 tokens per tool schema, loading 400 tools costs about 100,000 tokens befo
 
 ## Implementation sketch (pseudocode)
 
-```python
-available_tools = discover_tools(task, catalog)
-rows = database.query(filters)
-summary = summarize_rows_in_code(rows)
-context = assemble(task, state, available_tools, summary, reserve=budget)
+```ts
+const availableTools = discoverTools(task, catalog);
+const rows = await database.query(filters);
+const summary = summarizeRowsInCode(rows);
+const context = assemble(task, state, availableTools, summary, { reserve: budget });
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -92,27 +92,18 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use the project fixture’s local text to compare character count and lexical-term count.
-- Make a small list of hypothetical tool descriptions and count their words with the existing tokenizer heuristic.
+- Take a short paragraph of local text and compare its character count with its word count (split on whitespace).
+- Make a small list of hypothetical tool descriptions and count their words with that same simple heuristic.
 - Choose a subset by task relevance and estimate the relative context reduction using those word counts only.
 - Label this as a rough lexical proxy, not a model tokenizer or implemented context compaction.
 
 ## Course project — milestone 3: Workflow
 
-**Task:** Inspect the scope-filter path in `pipeline.py` and the fixture source IDs. The project does not have a token-window manager, tool discovery, or context-compaction implementation.
+**Task:** In your own TypeScript project, write a context-assembly function that builds the model input from separate categories: task, policy, durable state (IDs and pending actions), selected evidence with source IDs, and a reserved allowance for the answer. Give each category a budget measured with a simple word or character count, and say in a comment that it is a proxy, not a model token count. When the total exceeds the budget, drop the lowest-ranked evidence first and never drop the source IDs or pending-action details of what remains. Write a Vitest or `node --test` test with hand-made inputs that asserts the assembled context stays under the budget with the reserve intact, and another that asserts the kept evidence still carries its source IDs. Add a test that a large raw tool result is filtered or summarized in code before assembly, asserting the raw rows do not appear in the output.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your context-budget note separates durable source IDs and state from transient prompt context, and states that your counts are a lexical proxy. Do not claim your code performs model-context compaction or tool discovery unless you implemented them.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_question_returns_only_cited_allowed_evidence" -v
-python -m document_intelligence "Can a retrieved document change tool permissions?"
-```
-
-**Expected observation:** The test passes; the CLI cites allowed fixture sources (`ops-03` and `ops-02`). Request IDs vary.
-
-**Acceptance check:** Your context-budget note separates durable source IDs from transient prompt context and does not claim this local extractive pipeline performs model-context compaction.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

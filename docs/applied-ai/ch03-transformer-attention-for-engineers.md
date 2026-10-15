@@ -24,7 +24,7 @@ The lesson illustration pairs a selected token with the positions it can use und
 
 ## Try the simulation
 
-Open lesson `ai-03` and select token index 2, **placed**, in the attention visual. Predict which later token positions must have zero weight when **Causal mask** is on. Turn the mask off and on, then compare the displayed weights, their sum, and the weighted value vector. The fixed Q/K/V values are for arithmetic practice; the starter does not run a transformer.
+Open lesson `ai-03` and select token index 2, **placed**, in the attention visual. Predict which later token positions must have zero weight when **Causal mask** is on. Turn the mask off and on, then compare the displayed weights, their sum, and the weighted value vector. The fixed Q/K/V values are for arithmetic practice; the simulation does not run a transformer.
 
 ## Concepts to retain
 
@@ -55,14 +55,14 @@ For one query and two visible keys, scores `[2, 0]` yield softmax weights about 
 
 ## Implementation sketch (pseudocode)
 
-```python
-scores = (Q @ K.T) / sqrt(d_k)
-scores = apply_causal_mask(scores)  # blocked future positions become -infinity
-weights = softmax(scores, axis=-1)
-output = weights @ V
+```ts
+let scores = matmul(Q, transpose(K)).map((row) => row.map((x) => x / Math.sqrt(dK)));
+scores = applyCausalMask(scores); // blocked future positions become -Infinity
+const weights = scores.map(softmax); // softmax over each row
+const output = matmul(weights, V);
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; `matmul`, `transpose`, and `softmax` are helpers you would write for the lab.
 
 ## What to measure
 
@@ -81,26 +81,16 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Represent three query/key/value vectors as Python lists and compute scaled dot-product attention using `math.sqrt` and loops.
+- Represent three query/key/value vectors as plain `number[][]` arrays and compute scaled dot-product attention using `Math.sqrt` and loops.
 - Apply a causal mask before softmax so a position cannot attend to a future position.
 - Print the weights and verify each unmasked row sums to approximately 1 while masked future positions have weight 0.
-- No NumPy or trained model is required; label the result as a toy attention calculation.
+- No numeric library or trained model is required; label the result as a toy attention calculation.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Compare the attention lesson’s toy causal mask with the project boundary: the starter does not run a transformer. Verify instead that its typed answer contract rejects a source the request did not allow.
+**Task:** Compare the attention lesson’s toy causal mask with the boundary in your own TypeScript project: attention is learned and happens inside the model, while your boundary is deterministic code. In your project, define the typed answer contract (for example `Answer` with a `text` field and a `citations` array of source IDs) and a `validateAnswer(answer, allowedSourceIds)` function that throws a typed error when a citation is not in the allowed set. Write a Vitest or `node --test` test that builds an answer citing a source ID the request did not allow and asserts that `validateAnswer` throws that error. Add a second test where every citation is allowed and assert it returns the answer unchanged.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "answer_contract_rejects_a_forged_source" -v
-```
-
-**Expected observation:** The test passes because `Answer.validate` raises `ValueError` for the forged citation.
-
-**Acceptance check:** You can explain that the attention simulation is a toy model and that project correctness here comes from deterministic validation, not learned attention.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** You can explain that the attention simulation is a toy model and that correctness in your project here comes from deterministic validation, not learned attention. The forged-citation test fails if you remove the allowed-set check, and a passing validator still does not show that the cited source supports the text.
 
 ### Recall without notes
 

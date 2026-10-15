@@ -37,6 +37,6 @@ Study rule per chapter: *Why? How? What fails? What trade-off? What would I buil
 
 ## Project Track (5)
 
-1. Document intelligence + RAG engine (cited answers) · 2. Autonomous coding agent · 3. Deep-research agent · 4. Customer-support platform (route/tools/escalate) · 5. SRE/incident-response agent.
+1. Autonomous coding agent · 2. Deep-research agent · 3. Customer-support platform (route/tools/escalate) · 4. SRE/incident-response agent.
 
 Appendices: A equations · B release checklist · C source index (~40 links) · D glossary + 9 master recall Qs.

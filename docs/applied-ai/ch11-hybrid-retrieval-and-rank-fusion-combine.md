@@ -63,13 +63,13 @@ A product code may be found exactly by lexical search while a paraphrased questi
 
 ## Implementation sketch (pseudocode)
 
-```python
-lexical = bm25.search(query, k=20)
-dense = vector_index.search(embed(query), k=20)
-fused = reciprocal_rank_fusion([lexical, dense])
+```ts
+const lexical = bm25.search(query, { k: 20 });
+const dense = vectorIndex.search(embed(query), { k: 20 });
+const fused = reciprocalRankFusion([lexical, dense]);
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -90,25 +90,17 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 - Use the worked rank lists for A and B to calculate reciprocal-rank fusion with `c=60`.
 - Check the arithmetic by summing `1/(c+rank)` for each result list.
-- Run the project’s hybrid-fusion test and inspect how its lexical and feature-hashed vector rankings are combined.
-- The starter’s local feature hashing is deliberately non-semantic; the lesson’s worked ranks remain a separate arithmetic example.
+- Write the two worked rank lists as arrays of chunk IDs and compute the fused totals for A and B by hand. Check them against the worked example.
+- Add a third candidate C that appears only in the dense list at rank 2, and work out where it lands. Remember that a candidate absent from one list gets no contribution from that list.
+- Feature hashing in the lesson simulation is deliberately non-semantic; the lesson’s worked ranks remain a separate arithmetic example.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Trace `hybrid_search` through `reciprocal_rank_fusion` in `retrieval.py`. Explain how the project combines lexical results with deterministic feature-hashed vector results, and why that vector path is not a substitute for learned embeddings.
+**Task:** In your own TypeScript project, add a second retrieval path next to your first one (for example keyword overlap plus a simple deterministic vector or hashed-term path over your small knowledge base) and fuse the two ranked lists with reciprocal-rank fusion using `c = 60`. Group candidates by stable chunk ID so a chunk found by both paths becomes one fused candidate. Write a Vitest or `node --test` test that feeds two small hand-made rank lists into your fusion function and asserts the exact fused order and the summed scores (compare with a tolerance, such as `toBeCloseTo`), plus a test that a chunk present in both lists appears once in the output. Keep the vector path labeled as a toy if it is not a learned embedding.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** You can calculate the chapter’s RRF example by hand and your tests assert the same arithmetic on your own function. Your notes state that a toy or hashed vector path is non-semantic and that a handful of test queries is too small for quality claims.
 
-```bash
-python -m document_intelligence --trace "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "hybrid_fusion_and_reranking" -v
-```
-
-**Expected observation:** The trace prints lexical, toy-vector, hybrid, and reranked passages with ranks and scores; the hybrid score is the RRF sum for that passage, rounded to five decimals. `test_hybrid_fusion_and_reranking_preserve_passage_citations` passes. The trace displays candidate rankings rather than a final answer; run the CLI without `--trace` to inspect cited extractive evidence.
-
-**Acceptance check:** You can calculate the chapter’s RRF example and identify the project’s local hybrid path, while stating that its hashed vectors are non-semantic and its fixture set is too small for quality claims.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

@@ -12,7 +12,7 @@
 
 ## Before you begin
 
-Chapters 1–2; basic Python types or JSON.
+Chapters 1–2; basic TypeScript types or JSON.
 
 ## Why this matters
 
@@ -32,7 +32,7 @@ Applications are easier to test and compose when model outputs follow a constrai
 | Check arithmetic | All amounts are numeric | Compare subtotal plus tax with total under the application's stated currency/rounding rules |
 | Accept for application use | Candidate passes the required gates | Pass the validated record to deterministic code; this still does not prove the source invoice was read correctly |
 
-**Failure branch:** a rejected record returns an explicit error or a bounded correction request. It never loops indefinitely or enters trusted application code just because it is valid JSON. The course fixture uses answer/citation contracts rather than this illustrative invoice schema.
+**Failure branch:** a rejected record returns an explicit error or a bounded correction request. It never loops indefinitely or enters trusted application code just because it is valid JSON. Your own project will more likely use an answer/citation contract than this illustrative invoice schema.
 
 ## Try the simulation
 
@@ -67,18 +67,19 @@ An invoice extractor returns typed customer, currency, subtotal, tax, and total 
 
 ## Implementation sketch (pseudocode)
 
-```python
-class Invoice(BaseModel):
-    customer: str
-    currency: str
-    subtotal: Decimal
-    tax: Decimal
-    total: Decimal
+```ts
+type Invoice = {
+  customer: string;
+  currency: string;
+  subtotal: number;
+  tax: number;
+  total: number;
+};
 
-# Domain checks follow parsing/schema validation.
+// Domain checks follow parsing and schema validation.
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not a runnable command. Placeholder APIs or model operations are conceptual; the project path below can run offline with a stub in place of a model.
 
 ## What to measure
 
@@ -97,27 +98,16 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use Python `dataclasses` and `json` to define a small local ticket record with required fields — the same typed-record pattern as the invoice example above, with support-request fields instead of invoice totals.
-- Parse one valid fixture and reject a missing required field with a clear error.
+- Use a TypeScript `type` and `JSON.parse` to define a small local ticket record with required fields: the same typed-record pattern as the invoice example above, with support-request fields instead of invoice totals.
+- Parse one valid sample string and reject a missing required field with a clear error.
 - Add one separate domain check and show that a correctly typed but invalid value can still fail it.
-- Keep the exercise offline; Pydantic and a model API are optional extensions, not requirements.
+- Keep the exercise offline; a schema library such as Zod and a model API are optional extensions, not requirements.
 
 ## Course project — milestone 1: Model boundary
 
-**Task:** Inspect `ModelRequest`, `Answer`, and `model_boundary.parse_structured_answer`. Run the malformed-output fixture test, then change a local copy of the fixture result to include an unknown citation or mismatched request ID. Explain which structural and source-scoping checks are enforced and which semantic claims are not checked by a schema.
+**Task:** In your own TypeScript project, define the typed contract for the model's answer, for example `status` (an enum such as `answered` or `not_found`), `answer`, and a `citations` array of source IDs. Write a strict parse function that takes the raw model string and returns the typed value or throws a typed error (for example `ModelBoundaryError` with a `reason`). It should reject malformed JSON, wrong field types, extra fields, and citations outside the request's allowed source IDs. Write Vitest or `node --test` tests that feed the parser one valid string and one rejected string per rule, asserting the error type and reason in each case. Add one test where the status is `not_found` but citations are present, and assert it is rejected as contradictory.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
-
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "answer_contract" -v
-python -m unittest discover -s tests -p "test_course_project.py" -k "model_boundary_accepts_typed_answer_and_rejects_malformed_output" -v
-```
-
-**Expected observation:** Both tests pass. The strict parser rejects malformed JSON, wrong field types, extra fields, a mismatched request ID, and citations outside this request. It returns a `ModelAnswerCandidate`, not a grounded application `Answer`: the candidate has no inspectable spans. Application `Answer` objects marked `answered` require source spans that map to every citation; the candidate must pass a separate grounding step before it can become one.
-
-**Acceptance check:** Your evidence includes one accepted fixture and at least one typed `ModelBoundaryError` from a rejected result. Distinguish allowed citation/status invariants from factual truth; the starter does not claim schema validation proves a statement is true or that a model generated the fixture.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+**Acceptance check:** Your evidence includes one accepted input and at least one typed error from each rejected input. Distinguish the contract's invariants (shape, allowed citations, status consistency) from factual truth: a schema or citation check does not prove a statement is true or that the cited source supports it. If you keep a stub in place of a real model, say so.
 
 ### Recall without notes
 

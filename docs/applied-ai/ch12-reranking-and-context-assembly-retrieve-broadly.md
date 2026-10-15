@@ -36,7 +36,7 @@ Initial retrieval is designed to find candidates efficiently. A reranker can spe
 
 ## Try the simulation
 
-Open lesson `ai-12`; its active visual engine is `retrieval-microscope`. Set **Maximum chunk size** to one sentence, inspect the lexical/vector rank disagreement, and predict whether **Hybrid + coverage/order rerank** will change the fused order. Switch between **Reciprocal-rank fusion** and the reranker: scores change, but this fixed fixture still preserves the fused order. The project test below supplies a separate case where adjacency changes it. Feature hashing is non-semantic, the reranker is a transparent heuristic rather than a cross-encoder, and top-k limits displayed passages rather than a token or latency budget.
+Open lesson `ai-12`; its active visual engine is `retrieval-microscope`. Set **Maximum chunk size** to one sentence, inspect the lexical/vector rank disagreement, and predict whether **Hybrid + coverage/order rerank** will change the fused order. Switch between **Reciprocal-rank fusion** and the reranker: scores change, but this fixed fixture still preserves the fused order. The project task below asks you to build a separate case where adjacency changes it. Feature hashing is non-semantic, the reranker is a transparent heuristic rather than a cross-encoder, and top-k limits displayed passages rather than a token or latency budget.
 
 ## Concepts to retain
 
@@ -66,13 +66,13 @@ A dense retriever returns several plausible passages. A cross-encoder scores eac
 
 ## Implementation sketch (pseudocode)
 
-```python
-candidates = retriever.search(query, k=50)
-ranked = reranker.rank(query, candidates)
-context = assemble(ranked[:max_passages], token_budget=budget)
+```ts
+const candidates = retriever.search(query, { k: 50 });
+const ranked = reranker.rank(query, candidates);
+const context = assemble(ranked.slice(0, maxPassages), { tokenBudget: budget });
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -91,27 +91,18 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Inspect the project’s hybrid candidates and run the deterministic heuristic reranker test.
-- Compare query-term coverage and adjacency scores with the pre-rerank order.
-- Set a small context-count limit and inspect which citation IDs survive selection.
-- The project reranker is a transparent heuristic; there is no learned cross-encoder or token-budget API.
+- In the lesson simulation, compare the fused order with the reranked order for the fixed query and note which passages change score.
+- On paper, write five candidate passages with query-term coverage and adjacency scores, and reorder them by a combined score. Check that the order changes only when adjacency or coverage differs.
+- Set a small context-count limit (for example 2) and list which citation IDs survive selection.
+- The simulation reranker is a transparent heuristic; there is no learned cross-encoder or token-budget API.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Inspect lexical, toy-vector, hybrid, and reranked results, then trace source-span validation in `Answer.validate` (`document_intelligence/models.py`); `safety.py` only builds the spans. The reranker uses query-term coverage and adjacency; it is not a learned cross-encoder or token-budgeted context assembler.
+**Task:** In your own TypeScript project, add a small reranking step after candidate retrieval. Use a transparent heuristic such as query-term coverage plus a bonus for adjacent chunks from the same source, and keep it separate from the retriever so the candidate pool and the reranked list can be inspected on their own. Then add a context-selection step that keeps only a fixed number of passages and carries each passage’s source ID and location through. Write a Vitest or `node --test` test with a hand-built candidate list where the heuristic must change the order, asserting the exact reranked order. Add a second test asserting that every selected passage still has its source ID and location, and a third asserting that a passage missing from the candidate pool never appears after reranking.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your tests show that reranking only reorders the pool it is given, and that source metadata survives selection. You describe the heuristic as a heuristic, not as a learned cross-encoder, and you do not claim it fits a model token budget unless you count tokens with the model’s own tokenizer.
 
-```bash
-python -m document_intelligence --trace "How can the previous index roll back?"
-python -m unittest discover -s tests -p "test_course_project.py" -k "reranker_changes_order" -v
-```
-
-**Expected observation:** The trace exposes candidate ranks and scores, and the reranker test passes. The CLI reports fixture character offsets, not model context-token counts.
-
-**Acceptance check:** Distinguish candidate retrieval from heuristic reranking, explain why the candidate pool limits reranking, and do not describe the heuristic as a learned cross-encoder.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

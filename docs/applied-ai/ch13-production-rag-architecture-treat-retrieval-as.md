@@ -22,7 +22,7 @@ A production RAG system must own ingestion, access control, freshness, retrieval
 
 > **Source figure description retained:** Ingestion plane: parse → chunk → embed → index with versions. Query plane: authorize → retrieve → rerank → assemble → generate cited response; monitoring and reindexing span both.
 
-**Authored instructional mechanism map — ingestion and query planes.** This design map expands the source description without claiming the fixture has a production identity service or index.
+**Authored instructional mechanism map — ingestion and query planes.** This design map expands the source description without claiming the course supplies a production identity service or index.
 
 | Plane/stage | Information retained | Failure branch |
 |---|---|---|
@@ -57,7 +57,7 @@ Permissions and freshness must survive every retrieval step.
 
 1. Version documents and embeddings.
 2. Keep source IDs and page locations with each chunk.
-3. Derive the allowed source IDs from the request’s trusted identity and filter before retrieval; validate returned citations against that same set. Preserve stable source IDs through chunking. The fixture starter accepts an explicit allowed-ID set and retains document IDs plus exact character offsets. It has no PDF page coordinates or production identity service.
+3. Derive the allowed source IDs from the request’s trusted identity and filter before retrieval; validate returned citations against that same set. Preserve stable source IDs through chunking. A small learner project can accept an explicit allowed-ID set and keep document IDs plus exact character offsets, but that is a boundary demonstration, not a production identity service or page-level provenance.
 4. Evaluate retrieval independently of generation.
 5. Support reindex/backfill and stale-index detection.
 
@@ -67,14 +67,14 @@ A policy document changes today but the vector index updates tomorrow. If retrie
 
 ## Implementation sketch (pseudocode)
 
-```python
-document_version = source.version
-chunks = parse_and_chunk(source)
-index.upsert(chunks, metadata={"version": document_version})
-# Query path applies authorization before context assembly.
+```ts
+const documentVersion = source.version;
+const chunks = parseAndChunk(source);
+index.upsert(chunks, { metadata: { version: documentVersion } });
+// Query path applies authorization before context assembly.
 ```
 
-This is an illustrative pseudocode sketch, not a runnable command from the course starter. Placeholder APIs or model operations are conceptual; the required project path below uses only deterministic local fixtures and the Python standard library.
+This is an illustrative pseudocode sketch, not runnable code. Placeholder APIs or model operations are conceptual; the course project below can use small deterministic local data and no paid provider.
 
 ## What to measure
 
@@ -94,27 +94,18 @@ This is an illustrative pseudocode sketch, not a runnable command from the cours
 
 **Goal:** Produce a small artifact that demonstrates the chapter’s core idea using local fixtures or toy values. No paid provider is required.
 
-- Use the checked-in `ops-03` evidence-policy record as untrusted document text.
-- Trace `allowed_document_ids` filtering and the final citation validation in the starter.
-- Run the scoped-citation and forged-citation tests in the project section.
-- Record the limit: fixture IDs demonstrate a boundary, not production authentication or page-level provenance.
+- Write three tiny documents on paper (for example `public-1`, `public-2`, `private-1`) and treat one of them as untrusted document text.
+- Pick an allowed-ID set of two and mark which candidates survive filtering before retrieval.
+- Invent a cited answer that names `private-1` and mark where citation validation against the same allowed set must reject it.
+- Record the limit: IDs in a toy set demonstrate a boundary, not production authentication or page-level provenance.
 
 ## Course project — milestone 2: Retrieval
 
-**Task:** Trace how `allowed_document_ids` is applied before search in `pipeline.py`, then how `Answer.validate` in `document_intelligence/models.py` validates the citation set (`safety.py` builds the spans it checks). Inspect the cited `span_id`, `start_char`, and `end_char` values. These locate text within the JSON fixture document; they do not provide PDF page coordinates or authenticate a user.
+**Task:** In your own TypeScript project, make the retrieval path take an explicit set of allowed document IDs and filter candidates by that set before ranking. Keep a stable document ID plus start and end character offsets on every chunk. Then validate the final citations against the same allowed set, so an answer that cites a document outside the set is rejected. Write Vitest or `node --test` tests with a few small in-memory documents: one asserting that a scoped query returns only chunks from allowed documents (`toEqual` on the returned document IDs), and one asserting that a forged citation to a disallowed ID makes your validator fail (`toThrow` or an equivalent rejected result). Treat the document text as untrusted data in these tests, for example by including a document that contains an instruction-like sentence and asserting it is returned only as quoted evidence.
 
-**Run these commands from `projects/document-intelligence/` (Python 3.12):**
+**Acceptance check:** Your data-flow note shows allowed-ID filtering before retrieval, citation checking against the same set afterward, and what character offsets do and do not give you. Distinguish an explicit allowed-ID argument from production identity, and character offsets from page-level provenance. Passing these tests does not show that a citation semantically supports its claim.
 
-```bash
-python -m unittest discover -s tests -p "test_course_project.py" -k "fixture_question_returns_only_cited_allowed_evidence" -v
-python -m unittest discover -s tests -p "test_course_project.py" -k "answer_contract_rejects_a_forged_source" -v
-```
-
-**Expected observation:** Both scope tests pass: a scoped answer cites only `ops-03`, and a forged `private-doc` source is rejected.
-
-**Acceptance check:** Your data-flow note shows allowed-ID filtering before retrieval, document-ID citation checking afterward, and the scope of fixture character offsets. Distinguish the explicit allowed-ID argument from production identity and character offsets from page-level provenance.
-
-This check uses the checked-in deterministic fixtures; it does not require an API key or claim model-generated quality.
+Use small deterministic local data in your tests. No API key is required, and this check does not claim model-generated quality.
 
 ### Recall without notes
 

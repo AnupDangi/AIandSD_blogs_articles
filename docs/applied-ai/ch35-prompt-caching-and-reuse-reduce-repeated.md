@@ -59,31 +59,11 @@ Measure first-request latency, p50/p95 latency, input/output token categories, c
 
 ## Practice lab
 
-The starter’s `TTLCache` is an **application-side in-process cache**, not provider prompt caching. From `projects/document-intelligence`, run the focused deterministic test:
+An **application-side in-process cache** (a small map in your own code, with a capacity and a time-to-live) is not provider prompt caching. Trace a capacity-one cache by hand with these operations: put `first`, get `first`, put `second`, get `first`, get `second`. The first get is a hit. Putting `second` evicts `first` to stay within capacity. The second get of `first` is then a miss, and the get of `second` is a hit. The expected counters are `hits=2 misses=1`.
 
-```sh
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'cache_bounds' -v
-```
+If you build such a cache in TypeScript, a Vitest or `node:test` test can assert exactly this sequence: the hit and miss counters, and that `first` is gone after the second put. Use a long TTL in that test, so it demonstrates capacity eviction and counters, not expiration or provider cache behavior. In your notes, calculate the abstract 20-request example with the write charge, list two other costs the toy model omits, and write a release rule with a quality floor plus a cost-per-success or latency target.
 
-Find `test_cache_bounds_size_and_counts_hits_and_misses` in the output, then read its assertions and `document_intelligence/cache.py`. Trace the test’s operations: insert `first`, read it, insert `second` into a capacity-one cache, read the evicted `first`, then read `second`. The test runner prints a passing test name, not the counter values. To observe the counters directly, run:
-
-```sh
-python - <<'PY'
-from document_intelligence.cache import TTLCache
-
-cache = TTLCache[str](capacity=1, ttl_seconds=10)
-cache.put("first", "one")
-cache.get("first")
-cache.put("second", "two")
-cache.get("first")
-cache.get("second")
-print(f"hits={cache.hits} misses={cache.misses}")
-PY
-```
-
-**Expected observation:** the test passes, and the separate counter command prints `hits=2 misses=1`; `first` has been evicted to keep the cache within capacity. The test uses a long TTL, so it demonstrates capacity eviction and counters, not expiration or provider cache behavior. In your notes, calculate the abstract 20-request example with the write charge, list two other costs the toy model omits, and write a release rule with a quality floor plus a cost-per-success or latency target.
-
-Then draw two request layouts: `stable instructions → stable examples → retrieved context → user question` and `request timestamp → stable instructions → retrieved context → user question`. Predict which layout has a reusable prefix. Explain why moving the timestamp later changes matching but **does not** justify moving private retrieved content into a shared cache key. Submit your arithmetic and layout as evidence; do not label the local `TTLCache` counters as provider billing data.
+Then draw two request layouts: `stable instructions → stable examples → retrieved context → user question` and `request timestamp → stable instructions → retrieved context → user question`. Predict which layout has a reusable prefix. Explain why moving the timestamp later changes matching but **does not** justify moving private retrieved content into a shared cache key. Submit your arithmetic and layout as evidence; do not label application cache counters as provider billing data.
 
 ## Failure review
 
@@ -93,7 +73,7 @@ A changed timestamp, reordered tool list, or rewritten history can make a suppos
 
 - Which exact bytes or tokens make up the stable prefix in your request builder?
 - What costs and quality checks are missing from the toy break-even calculation?
-- Which assertion and counter output demonstrate the local TTL cache’s behavior, and what do they not demonstrate?
+- Which assertion and counter values demonstrate an application TTL cache's behavior, and what do they not demonstrate?
 
 ## Sources
 
@@ -105,16 +85,7 @@ Use the **`request-workbench`** visual engine. Before interacting, predict which
 
 ## Course project — milestone 7 — Efficiency & recovery
 
-**Efficiency evidence task:** Run the cache test above and add a short note to your milestone report distinguishing application caching from provider-side prompt caching. Include the observed hit/miss counts, the capacity eviction, and a quality-gated break-even calculation for a repeated request workload. Do not claim provider cache hits: the starter makes no provider calls.
-
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'cache_bounds' -v
-```
-
-**Expected result:** The cache test passes; the separate counter command above prints `hits=2 misses=1`. The complete starter test suite also passes.
+**Efficiency evidence task:** In your own TypeScript project, add a small bounded application cache (capacity, TTL, hit and miss counters) in front of one repeatable, deterministic step such as retrieval or a pure lookup. Key it so one user's private context can never be served to another. Write a Vitest or `node:test` test that asserts the hit and miss counters and the capacity eviction for a short sequence of puts and gets. Add a short note to your milestone report distinguishing application caching from provider-side prompt caching. Include the hit/miss counts your test asserts, the capacity eviction, and a quality-gated break-even calculation for a repeated request workload. Do not claim provider cache hits: an application cache makes no provider calls.
 
 **Acceptance check:** Your report names the cache layer actually tested, explains one omitted cost in the toy estimate, and states a quality condition that would block release.
 

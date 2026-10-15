@@ -12,7 +12,7 @@ Classify errors before retrying, bound retries by count and deadline, and design
 
 A degradation ladder moves from normal behavior to lower-feature modes as errors or budgets require. Each transition is explicit, tested, observable, and bounded by the same user-facing quality contract.
 
-**Authored instructional mechanism map — classify, bound, degrade.** The rungs are a proposed policy, not provider switching implemented by the starter.
+**Authored instructional mechanism map — classify, bound, degrade.** The rungs are a proposed policy, not an implementation the course supplies.
 
 | Decision/rung | Eligible path | Observable outcome |
 |---|---|---|
@@ -22,7 +22,7 @@ A degradation ladder moves from normal behavior to lower-feature modes as errors
 | `DEGRADED` | Skip optional reranking only if that path meets the minimum quality gate | Label the lower-feature response and trace path |
 | `MINIMAL` | Required work cannot finish within the contract | Return clear unavailable/partial behavior defined in advance; invent no supporting evidence |
 
-**Chapter counterexample:** a reranker taking `4 s` instead of `0.3 s` can consume a `12 s` objective with repeated attempts. Three four-second calls alone leave no time for other work. Treat this as an analytical risk, not a measured starter outage. A lower-feature path must be evaluated before it becomes a fallback; the local helper's pre-attempt check cannot interrupt an already-running call.
+**Chapter counterexample:** a reranker taking `4 s` instead of `0.3 s` can consume a `12 s` objective with repeated attempts. Three four-second calls alone leave no time for other work. Treat this as an analytical risk, not a measured outage. A lower-feature path must be evaluated before it becomes a fallback; a pre-attempt deadline check in a simple retry helper cannot interrupt an already-running call.
 
 ## Retry deliberately
 
@@ -36,11 +36,11 @@ If a reranker slows from 300 ms to 4 seconds and the interactive objective is 12
 
 ## Practice lab
 
-1. Run the starter's retry tests and record the attempt count for a timeout followed by success, repeated connection failure, and `ValueError`.
-2. Inspect `resilience.py` and `pipeline.py`; explain how their two-attempt limit and pre-attempt deadline check differ from a production end-to-end retry budget. The helper cannot interrupt an operation that runs past its deadline.
-3. Inspect the existing `ValueError` test and check that it propagates after one call. Keep the transient-failure test's `unavailable` result and empty citations.
-4. Sketch a three-rung `NORMAL` / `DEGRADED` / `MINIMAL` policy. Mark optional reranking and provider fallback as proposed; this starter does not switch providers or measure live p95 latency.
-5. Define how a future test would compare useful-response rate and p95 under the same fixture distribution and shared deadline.
+1. Write a small retry helper with a two-attempt limit and a pre-attempt deadline check, and wrap fake operations with it. For a timeout followed by success, repeated connection failure, and a validation error (a permanent error), predict the attempt count first, then record the count your test observes.
+2. Explain how a two-attempt limit and pre-attempt deadline check differ from a production end-to-end retry budget. A helper like this cannot interrupt an operation that runs past its deadline.
+3. Check that the validation error propagates after one call. For the repeated transient failure, check that the helper returns an `unavailable` result with empty citations.
+4. Sketch a three-rung `NORMAL` / `DEGRADED` / `MINIMAL` policy. Mark optional reranking and provider fallback as proposed; the sketch does not switch providers or measure live p95 latency.
+5. Define how a future test would compare useful-response rate and p95 under the same set of test inputs and shared deadline.
 
 **Deliverable:** an error classification table with observed local call counts, a proposed degradation policy, and a plan for measuring it.
 
@@ -64,23 +64,13 @@ If a reranker slows from 300 ms to 4 seconds and the interactive objective is 12
 
 ## Try the simulation
 
-Use the **`production-tabletop`** trace to compare **Retry without an attempt deadline**, **One bounded attempt, then serve the cached response**, and **One short retry, then cached response**. Predict what arrives before the 900 ms deadline, then advance each path one transition at a time. Check the elapsed times and whether the returned cache preserves its evidence metadata. The fixed timings are illustrative; the local task tests bounded attempts and permanent-error behavior.
+Use the **`production-tabletop`** trace to compare **Retry without an attempt deadline**, **One bounded attempt, then serve the cached response**, and **One short retry, then cached response**. Predict what arrives before the 900 ms deadline, then advance each path one transition at a time. Check the elapsed times and whether the returned cache preserves its evidence metadata. The fixed timings are illustrative; the exercise below tests bounded attempts and permanent-error behavior.
 
 ## Course project — milestone 5 — Reliability
 
-**Task:** Inspect `resilience.py`. It accepts an operation and bounded attempts but does not classify provider-specific errors or interrupt an in-flight call. The existing `ValueError` test demonstrates a permanent failure after one call; extend the failure-drill report with its observed result, then describe how a production caller would classify transient errors and enforce a real call timeout.
+**Task:** In your own TypeScript project, add or review the retry helper around one dependency call (for example retrieval or a model request). Give it an error classifier that marks timeouts, rate limits, and service-unavailable errors as transient and validation errors as permanent, a fixed attempt bound, and a pre-attempt deadline check. Write Vitest or `node:test` tests with fake operations. Assert that a permanent error is thrown after exactly one call. Assert that an operation that always times out stops at the attempt bound and returns the `unavailable` result with empty citations. Assert that a timeout followed by success returns the success and records two attempts. Then describe in prose how a production caller would enforce a real call timeout, for example by passing an `AbortSignal` to the request, since the helper itself cannot interrupt an in-flight call.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'retry_' -v
-python -m unittest discover -s tests -p 'test_course_project.py' -k 'transient_retrieval_failure' -v
-```
-
-**Expected result:** Tests pass; the existing permanent-failure test records one call and the transient-failure tests record at most two attempts.
-
-**Acceptance check:** Record terminal outcome and attempt count; do not claim provider fallback unless separately built and tested.
+**Acceptance check:** Record the terminal outcome and attempt count for each test case. Do not claim provider fallback unless you separately build and test it.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*

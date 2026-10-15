@@ -14,13 +14,13 @@ A launch review gathers evidence across product quality, runtime, security, oper
 
 **Authored instructional mechanism map — evidence to release decision.** This is a decision workflow; checking a box never supplies the missing production evidence.
 
-| Gate | Evidence currently illustrated by the starter | Decision implication |
+| Gate | Evidence in the sample review | Decision implication |
 |---|---|---|
 | Define contract first | Product-specific thresholds and critical slices | Freeze the gate before reviewing candidate results |
 | Inspect fixture quality | Six cases; `5/6` citation coverage; retrieval slice `0.5` | Record the known miss; do not extrapolate to held-out customer accuracy |
 | Inspect access boundary | No hosted identity/tenant fixture | Hold a multi-tenant launch until two-user evidence exists |
 | Inspect recovery | Injected local retrieval timeout | Demonstrated locally; repeat against the deployed dependency |
-| Inspect rollback | No deployment rehearsal in the starter | Name an owner/trigger and rehearse before rollout |
+| Inspect rollback | No deployment rehearsal in the sample | Name an owner/trigger and rehearse before rollout |
 | Decide and monitor | Dated claim/evidence/status/owner table | Release, hold, or roll back according to the predeclared gates |
 
 **Counterexample path:** candidate fixture coverage improves to `6/6`, but a two-user check exposes an unauthorized document → access gate fails → hold release despite the stronger aggregate. This hypothetical decision demonstrates why quality cannot override an authorization failure. Production readiness requires evidence from the complete deployed user journey, not only green local tests.
@@ -39,31 +39,24 @@ Use a small evidence table, then write the decision in one sentence. An illustra
 
 | Claim | Evidence now | Status | Release consequence |
 |---|---|---|---|
-| Allowed-source citations in six fixtures | `python -m document_intelligence --evaluate` | Demonstrated locally, with one miss | Retain the miss as a retrieval gap. |
-| Two users cannot cross-read documents | No identity or tenant fixture in the starter | Unverified | Hold a multi-tenant launch. |
+| Allowed-source citations in six fixtures | The sample team's fixture evaluation run | Demonstrated locally, with one miss | Retain the miss as a retrieval gap. |
+| Two users cannot cross-read documents | No identity or tenant fixture in the sample | Unverified | Hold a multi-tenant launch. |
 | Retrieval outage has a visible failure result | Injected `TimeoutError` test | Demonstrated locally | Repeat against the deployed dependency. |
 | Rollback can restore a working version | No deployment rehearsal | Unverified | Hold rollout until the operator rehearses it. |
 
-The sample decision is **hold a multi-tenant production launch**. A team could still use the starter as a private teaching baseline. Set the gate before collecting results, name the owner and deadline for each gap, and attach a link to the actual evidence rather than an unchecked box. A release decision should also identify the rollback owner, a measurable trigger, and a tested action. For example, a canary could stop if the fraction of requests returning `unavailable` exceeds a justified threshold on sufficient traffic; that threshold is a product choice, not a number supplied by this chapter.
+The sample decision is **hold a multi-tenant production launch**. A team could still use the sample as a private teaching baseline. Set the gate before collecting results, name the owner and deadline for each gap, and attach a link to the actual evidence rather than an unchecked box. A release decision should also identify the rollback owner, a measurable trigger, and a tested action. For example, a canary could stop if the fraction of requests returning `unavailable` exceeds a justified threshold on sufficient traffic; that threshold is a product choice, not a number supplied by this chapter.
 
 ## Worked example: a known fixture failure is not launch evidence
 
-The document-intelligence starter currently evaluates six deterministic fixture questions. Its output reports citation coverage `5/6` (about `0.8333`), a retrieval slice of `0.5`, and the other four slices at `1.0`. The known failure is a paraphrase query that the explicitly non-semantic toy retriever cannot bridge. These figures report whether each checked-in expected source appeared in the answer citations. They do not show that 100 held-out customer questions will meet a 95% threshold, that a hosted provider recovers from outage, or that production authorization is correct. A plausible release decision is therefore “fixture baseline recorded; retrieval gap and production readiness unresolved,” pending a justified retrieval change and separate outage, access-control, scale, and rollback evidence.
+Suppose a sample project's evaluation runs six deterministic fixture questions. Its output reports citation coverage `5/6` (about `0.8333`), a retrieval slice of `0.5`, and the other four slices at `1.0`. The known failure is a paraphrase query that the explicitly non-semantic toy retriever cannot bridge. These figures report whether each expected source appeared in the answer citations. They do not show that 100 held-out customer questions will meet a 95% threshold, that a hosted provider recovers from outage, or that production authorization is correct. A plausible release decision is therefore “fixture baseline recorded; retrieval gap and production readiness unresolved,” pending a justified retrieval change and separate outage, access-control, scale, and rollback evidence.
 
 ## Practice lab
 
-From `projects/document-intelligence`, run the deterministic checks and capture their output:
+Take the sample review above as your template and apply it to your own TypeScript project. Run your project's own test suite and its evaluation (if it has one) and capture the output. Inspect any known failures and the failed cases themselves rather than treating the aggregate as an all-green gate. Treat the result as local fixture evidence only.
 
-```sh
-python -m unittest discover -s tests -v
-python -m document_intelligence --evaluate
-```
+Create a readiness record with columns for claim, evidence link or command, status (`demonstrated locally`, `proposed`, or `unverified`), owner, and release consequence. Add one injected failure from your existing tests, identify the returned status and citations, and state whether the evidence says anything about a deployed service. Do not mark authentication, telemetry, real traffic, or rollback as demonstrated by local commands.
 
-The observable result should be a passing local test suite and a JSON evaluation summary with `cases: 6`, `citation_coverage: 0.8333333333333334`, `retrieval: 0.5`, and the `evaluation`, `reliability`, `safety`, and `workflow` slices each at `1.0`. Inspect `known_failures` and the failed case's `ranked_spans` rather than treating the aggregate as an all-green gate. Treat this as fixture evidence only.
-
-Create a readiness record with columns for claim, evidence link or command, status (`demonstrated locally`, `proposed`, or `unverified`), owner, and release consequence. Add one injected failure from the existing tests, identify the returned status and citations, and state whether the evidence says anything about a deployed service. Do not mark authentication, telemetry, real traffic, or rollback as demonstrated by these local commands.
-
-Add a counterexample to your record: imagine the next candidate improves citation coverage to `6/6` on these fixtures but makes an unauthorized document readable in a two-user test. Write which gate blocks launch and why the higher aggregate score cannot override it. Then specify what evidence would move that gate from unverified to demonstrated. This tests the decision rule, not merely the ability to collect metrics.
+Add a counterexample to your record: imagine the next candidate improves citation coverage to `6/6` on the sample fixtures but makes an unauthorized document readable in a two-user test. Write which gate blocks launch and why the higher aggregate score cannot override it. Then specify what evidence would move that gate from unverified to demonstrated. This tests the decision rule, not merely the ability to collect metrics.
 
 **Deliverable:** a dated readiness record, one successful and one failure trace, named owners for gaps, a release decision, and a rollback trigger.
 
@@ -88,23 +81,13 @@ Add a counterexample to your record: imagine the next candidate improves citatio
 
 ## Try the simulation
 
-Use the **`production-tabletop`** trace to compare **Launch when aggregate dashboard is green**, **Require named ownership and a practiced rollback**, and **Accept missing controls with a documented exception**. Predict the launch decision, then advance one evidence check at a time. The fixture has green metrics but no named responder, rollback drill, or valid risk owner/expiry, so its outcome should remain a hold. Hosted identity, telemetry, provider behavior, and rollback remain unverified; the local starter remains the source for project checks.
+Use the **`production-tabletop`** trace to compare **Launch when aggregate dashboard is green**, **Require named ownership and a practiced rollback**, and **Accept missing controls with a documented exception**. Predict the launch decision, then advance one evidence check at a time. The scenario has green metrics but no named responder, rollback drill, or valid risk owner/expiry, so its outcome should remain a hold. Hosted identity, telemetry, provider behavior, and rollback remain unverified; your own project remains the source for project checks.
 
 ## Course project — milestone 8 — Production readiness
 
-**Production review.** Run the suite and evaluation, then classify every launch claim as demonstrated locally, proposed, or unverified. Include the success criterion, critical slices, authorization boundary, dependency failure behavior, operational owner, and rollback trigger. The starter has no production deployment, auth, telemetry, external provider, or real traffic; record each as unverified unless you attach separate external evidence.
+**Production review.** In your own TypeScript project, add a readiness check as a test and a record. Write a Vitest or `node:test` test that loads your readiness record (a small JSON or TypeScript data file with one entry per claim) and asserts that every entry has a status of `demonstrated locally`, `proposed`, or `unverified`, a named owner, and a release consequence, and that no entry for authentication, telemetry, real traffic, or rollback is marked `demonstrated locally` without an attached external evidence link. Then classify every launch claim for your project. Include the success criterion, critical slices, authorization boundary, dependency failure behavior, operational owner, and rollback trigger. If your project has no production deployment, auth, telemetry, external provider, or real traffic, record each as unverified unless you attach separate external evidence.
 
-**Run locally** from the repository root:
-
-```sh
-cd projects/document-intelligence
-python -m unittest discover -s tests -v
-python -m document_intelligence --evaluate
-```
-
-**Expected result:** tests pass and six fixture cases print, including a retrieval paraphrase miss; the readiness record keeps fixture evidence separate from proposed and unverified production capabilities.
-
-**Acceptance check:** no external runtime capability is called verified without external evidence; include named gap owners, a release decision, and a measurable rollback trigger; retain the teaching-baseline label.
+**Acceptance check:** no external runtime capability is called verified without external evidence; include named gap owners, a release decision, and a measurable rollback trigger; keep local test evidence separate from proposed and unverified production capabilities, and keep the teaching-baseline label.
 
 ---
 *Source: `Practical_AI_Engineering_Anup_Dangi.pdf`. [Suggest a correction](https://github.com/AnupDangi/learnlikeadev/issues/new)*
