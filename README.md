@@ -119,10 +119,10 @@ certs/              Supabase public root certificate
 
 ## Deploying to Vercel
 
-1. Create the Vercel project from this repository. The build command is `npm run build`.
+1. Create the Vercel project from this repository. `vercel.json` sets `npm ci`, `npm run build` and the `syd1` function region. The Prisma client is generated on install (`postinstall`), so the build also works if the build command is left on its default.
 2. Set the environment variables above in Vercel. Set `NEXT_PUBLIC_APP_URL` to the production origin for the Production environment, and do not attach production credentials to Preview deployments.
 3. In Supabase, add the production URL to the redirect URLs.
-4. Keep function regions near your database (a Supabase project in Sydney pairs with Vercel's `syd1`).
+4. Function regions: `vercel.json` pins `syd1` to sit near the Sydney Supabase project. Change it if your database is elsewhere.
 5. The `Deploy to Vercel` GitHub Actions workflow is manual (`workflow_dispatch`) and needs the repository secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`. Nothing deploys on push.
 
 CI (`Academy CI`) runs content validation, unit tests, type checking, lint, a production build, the browser tests and the database tests on every push and pull request.
