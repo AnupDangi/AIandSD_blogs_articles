@@ -258,21 +258,27 @@ export function AssessmentRunner({ assessmentId, courseId, courseVersion, resume
   }
 
   const title = assessmentTitle(assessmentId);
+  const guestGate = state === "unauthorized" && serverQuestions.length === 0;
   const sourceLesson = lessons.find((lesson) => lesson.assessmentIds.includes(assessmentId) && assessmentId === `${lesson.id}-formative`);
   const nextPath = `/assessments/${encodeURIComponent(assessmentId)}${resumeAttemptId ? `?attemptId=${encodeURIComponent(resumeAttemptId)}` : courseVersion ? `?version=${courseVersion}` : ""}`;
   const signInHref = `/sign-in?next=${encodeURIComponent(nextPath)}`;
   return <section className="assessment-page">
     <div className="lesson-breadcrumb"><Link href="/courses">Courses</Link><span>/</span><Link href="/courses/reliable-ai-applications">Reliable AI Applications</Link>{sourceLesson && <><span>/</span><Link href={`/learn/${sourceLesson.slug}`}>{sourceLesson.title}</Link></>}<span>/</span><span>Assessment</span></div>
-    <header className="assessment-header"><span className="eyebrow">{sourceLesson ? "LESSON KNOWLEDGE CHECK" : "KNOWLEDGE CHECK"} · PASSING SCORE {PASS_PERCENT}%</span><h1>{title}</h1><p>Choose one response for each question. Sign in to save your attempt. Your score and topics to revisit appear after submission; individual answer keys stay private.</p></header>
-    <div className="assessment-status" role={state === "unavailable" || state === "unauthorized" || draftSaveState === "error" ? "alert" : "status"} aria-live="polite">
+    <header className="assessment-header"><span className="eyebrow">{sourceLesson ? "LESSON KNOWLEDGE CHECK" : "KNOWLEDGE CHECK"} · PASSING SCORE {PASS_PERCENT}%</span><h1>{title}</h1>{!guestGate && <p>Choose one response for each question. Your score and topics to revisit appear after submission; individual answer keys stay private.</p>}</header>
+    {guestGate && <section className="guest-gate assessment-gate" aria-labelledby="assessment-gate-title">
+      <h2 id="assessment-gate-title">Sign up to take this knowledge check</h2>
+      <p>The check is graded on the server and saved to your account. You need {PASS_PERCENT}% to pass, and the lessons to revisit appear after you submit. Reading the lessons and using the labs stays open to everyone.</p>
+      <div className="guest-gate-actions"><Link className="button-primary" href={signInHref}>Sign up or sign in <span aria-hidden="true">→</span></Link>{sourceLesson && <Link className="button-secondary" href={`/learn/${sourceLesson.slug}`}>Back to the lesson</Link>}</div>
+    </section>}
+    {!guestGate && <div className="assessment-status" role={state === "unavailable" || state === "unauthorized" || draftSaveState === "error" ? "alert" : "status"} aria-live="polite">
       {(state === "starting" || state === "submitting") && <span className="assessment-spinner" aria-hidden="true"></span>}{message}
-      {state === "unauthorized" && <Link href={signInHref}>Sign in to continue <span>↗</span></Link>}
+      {state === "unauthorized" && <Link href={signInHref}>Sign in again <span aria-hidden="true">→</span></Link>}
       {(state === "unavailable" || (draftSaveState === "error" && result === null)) && <button type="button" onClick={retry}>{draftSaveState === "error" && result === null ? "Retry saving" : "Retry"}</button>}
       {state === "already-submitted" && <button type="button" onClick={newAttempt}>Start a new attempt</button>}
       {state === "in-progress" && draftSaveState === "saving" && <span role="status">Saving your answers…</span>}
       {state === "in-progress" && draftSaveState === "saved" && numberAnswered > 0 && <span role="status">Answers saved to your account.</span>}
       {state === "in-progress" && draftSaveState === "error" && <span>Your latest answer has not been saved yet.</span>}
-    </div>
+    </div>}
     {state === "in-progress" || state === "submitting" ? <>
       {serverQuestions.length === 0 ? <div className="assessment-unavailable">The saved question snapshot is unavailable.</div> : <>
         <div className="assessment-progress"><span>{numberAnswered} of {serverQuestions.length} answered</span><div><i style={{ width: `${serverQuestions.length ? numberAnswered / serverQuestions.length * 100 : 0}%` }}></i></div><span>Attempt in progress</span></div>

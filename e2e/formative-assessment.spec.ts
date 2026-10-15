@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 const lessonPath = "/learn/ai-systems-are-products-not-model-calls";
 const assessmentPath = "/assessments/ai-01-formative";
 
-test("lesson predictions lead to a saved check with honest guest sign-in", async ({ page }) => {
+test("guests can preview predictions but cannot answer or submit, and are prompted to sign up", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.route("**/api/assessments/ai-01-formative/attempts", (route) => route.fulfill({
     status: 401,
@@ -13,13 +13,49 @@ test("lesson predictions lead to a saved check with honest guest sign-in", async
   }));
   await page.goto(lessonPath);
   await page.getByRole("button", { name: "Practice", exact: true }).click();
-  const checkLink = page.getByRole("link", { name: /Take the 5-question saved knowledge check/ });
-  await expect(checkLink).toHaveAttribute("href", assessmentPath);
-  await checkLink.click();
+
+  // The questions are visible, but nothing can be answered or recorded without an account.
+  await expect(page.getByRole("heading", { name: "Pause and predict" })).toBeVisible();
+  await expect(page.locator(".answer-options button").first()).toBeDisabled();
+  await expect(page.getByRole("button", { name: /Record prediction/ })).toHaveCount(0);
+  const gate = page.getByRole("region", { name: "Sign up to answer" });
+  await expect(gate).toBeVisible();
+  await expect(gate.getByRole("link", { name: /Sign up or sign in/ })).toHaveAttribute("href", `/sign-in?next=${encodeURIComponent(lessonPath)}`);
+  await expect(page.getByText("Predictions stay on this device and are not graded.")).toHaveCount(0);
+  const checkLink = page.getByRole("link", { name: /Sign up to take the saved knowledge check/ });
+  await expect(checkLink).toHaveAttribute("href", `/sign-in?next=${encodeURIComponent(assessmentPath)}`);
+
+  // Opening the check directly shows a sign-up gate: no questions and no submit button.
+  await page.goto(assessmentPath);
   await expect(page.getByRole("heading", { level: 1, name: "AI systems are products, not model calls knowledge check" })).toBeVisible();
-  await expect(page.getByText("Sign in to start and save an assessment attempt.")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Sign in to continue/ })).toHaveAttribute("href", `/sign-in?next=${encodeURIComponent(assessmentPath)}`);
+  const assessmentGate = page.getByRole("region", { name: "Sign up to take this knowledge check" });
+  await expect(assessmentGate).toBeVisible();
+  await expect(assessmentGate.getByRole("link", { name: /Sign up or sign in/ })).toHaveAttribute("href", `/sign-in?next=${encodeURIComponent(assessmentPath)}`);
+  await expect(assessmentGate.getByRole("link", { name: "Back to the lesson" })).toHaveAttribute("href", lessonPath);
   await expect(page.locator(".assessment-question")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Submit answers/ })).toHaveCount(0);
+  await expect(page.getByText("Choose one response for each question.")).toHaveCount(0);
+});
+
+test("signed-in learners can record a prediction and reach the saved check", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route("**/api/me/learning", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ progress: [], attempts: [], submissions: [] }),
+  }));
+  await page.route("**/api/progress", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ saved: true }) }));
+  await page.route("**/api/me/bookmarks**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ bookmarks: [] }) }));
+  await page.goto(lessonPath);
+  await page.getByRole("button", { name: "Practice", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Sign up to answer" })).toHaveCount(0);
+  const record = page.getByRole("button", { name: /Record prediction/ });
+  await expect(record).toBeDisabled();
+  await page.locator(".answer-options button").first().click();
+  await expect(record).toBeEnabled();
+  await record.click();
+  await expect(page.getByText("This local prediction is not graded.")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Take the 5-question saved knowledge check/ })).toHaveAttribute("href", assessmentPath);
 });
 
 test("signed-in assessment UI saves chosen IDs before server grading and shows feedback", async ({ page }) => {

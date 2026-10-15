@@ -1005,3 +1005,47 @@
   align-items: center;
   gap: 14px 24px;
 }
+
+/* Sign-up gate shown to guests where an answer would be saved or graded. */
+.guest-gate {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: var(--surface-soft);
+}
+
+.guest-gate h2,
+.guest-gate h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+}
+
+.guest-gate p {
+  max-width: 62ch;
+  margin: 0;
+  color: var(--muted);
+}
+
+.guest-gate .button-primary {
+  justify-self: start;
+}
+
+.guest-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.assessment-gate {
+  margin: 20px 0;
+}
+
+.answer-options button:disabled:not(.answer-selected) {
+  cursor: not-allowed;
+  opacity: .72;
+}

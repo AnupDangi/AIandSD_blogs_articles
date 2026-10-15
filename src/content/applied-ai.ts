@@ -36,7 +36,7 @@ export const lessons: Lesson[] = [
       {
         "id": "ai-01-model",
         "title": "Build the mental model",
-        "summary": "Map the fixture request through loading, retrieval, answer extraction, and citation validation.",
+        "summary": "Follow one support request through loading, retrieval, answer generation, and citation validation.",
         "visual": "request-workbench",
         "activity": "predict-ai-01",
         "resources": [
@@ -3776,7 +3776,7 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-01",
     "assessmentId": "ai-01-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which review artifact shows that the document-answer service keeps model behavior inside an accountable application boundary?",
+    "prompt": "Project transfer · Which review artifact shows that your application keeps model behavior inside an accountable application boundary?",
     "choices": [
       {
         "id": "a",
@@ -3784,7 +3784,7 @@ export const questions: PublicQuestion[] = [
       },
       {
         "id": "c",
-        "text": "A fixture request trace linking the trusted caller, scoped retrieval, typed result, citation validation, and recorded failure or success."
+        "text": "A request trace linking the trusted caller, scoped retrieval, typed result, citation validation, and recorded failure or success."
       },
       {
         "id": "b",
@@ -4196,7 +4196,7 @@ export const questions: PublicQuestion[] = [
     "lessonId": "ai-05",
     "assessmentId": "ai-05-formative",
     "kind": "formative",
-    "prompt": "Project transfer · Which evidence demonstrates a typed result boundary in the document-answer service?",
+    "prompt": "Project transfer · Which evidence demonstrates a typed result boundary in your application?",
     "choices": [
       {
         "id": "b",
