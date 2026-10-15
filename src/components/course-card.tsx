@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Course } from "@/content/types";
+import { CalendarDots, Cloud, TreeStructure } from "@/components/icons";
 import "./discovery.css";
 
 export function CourseCard({ course, featured = false }: { course: Course; featured?: boolean }) {
@@ -10,7 +11,7 @@ export function CourseCard({ course, featured = false }: { course: Course; featu
   const lessonCount = course.modules.reduce((count, module) => count + module.lessonIds.length, 0);
   return (
     <article className={`discovery-course-card ${featured ? "discovery-course-featured" : "discovery-course-track"}`}>
-      {isAI ? <div className="discovery-course-image"><Image src="/academy-learning-studio.webp" width={1448} height={1086} sizes="(max-width: 760px) 100vw, 40vw" alt="Conceptual learning workbench with connected teal panels and an open notebook." /></div> : <div className={`discovery-track-symbol discovery-track-symbol-${course.id}`} aria-hidden="true"><span /><span /><span /></div>}
+      {isAI ? <div className="discovery-course-image"><Image src="/academy-learning-studio.webp" width={1448} height={1086} sizes="(max-width: 760px) 100vw, 40vw" alt="Conceptual learning workbench with connected teal panels and an open notebook." /></div> : <div className="discovery-track-symbol" aria-hidden="true">{course.id === "cloud" ? <Cloud /> : course.id === "sprint" ? <CalendarDots /> : <TreeStructure />}</div>}
       <div className="discovery-course-content">
         <div className="discovery-course-top"><span className="discovery-course-topic">{course.topic}</span><span className="discovery-course-status">{statusLabel}</span></div>
         <h3><Link href={overviewHref}>{course.title}</Link></h3>

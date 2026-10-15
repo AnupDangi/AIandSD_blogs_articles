@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { courses, lessons } from "@/content/catalog";
 import { topics } from "@/content/topics";
 import { VisualEngineGallery } from "@/components/visual-engine";
 import { TopicDirectory } from "@/components/topic-directory";
 import "@/components/library-discovery.css";
+
+export const metadata: Metadata = {
+  title: "Topics",
+  description: "Find the lesson, visual lab, and sources for an AI engineering concept.",
+};
 
 export default function TopicsPage() {
   const currentCourse = courses.find((course) => course.id === "applied-ai")!;

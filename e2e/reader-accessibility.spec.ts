@@ -43,8 +43,18 @@ test("reader controls work by keyboard and lesson text reflows at a test-only 20
   await expect.poll(() => readerParagraph.evaluate((element) => getComputedStyle(element).fontSize)).toBe("22px");
 
   await expect(page.getByRole("group", { name: "Reading font" })).toHaveCount(0);
-  const readingFont = await page.locator("article.lesson-reading").evaluate((element) => getComputedStyle(element).fontFamily);
-  expect(readingFont).toContain("IBM Plex Sans");
+  // IBM Plex Sans is self-hosted through next/font/local and exposed as --font-ibm-plex-sans;
+  // the lesson reader must resolve to that face, not the interface font.
+  const fonts = await page.locator("article.lesson-reading").evaluate((element) => ({
+    reading: getComputedStyle(element).fontFamily,
+    plex: getComputedStyle(document.documentElement).getPropertyValue("--font-ibm-plex-sans"),
+    ui: getComputedStyle(document.documentElement).getPropertyValue("--font-geist"),
+  }));
+  const firstFamily = (stack: string) => stack.split(",")[0].trim().replace(/['"]/g, "");
+  expect(firstFamily(fonts.plex)).not.toBe("");
+  expect(firstFamily(fonts.reading)).toBe(firstFamily(fonts.plex));
+  expect(firstFamily(fonts.reading)).not.toBe(firstFamily(fonts.ui));
+  expect(await page.evaluate(async (family) => { await document.fonts.ready; return document.fonts.check(`18px "${family}"`); }, firstFamily(fonts.plex))).toBe(true);
 
   // Simulate a 200% text-size preference in the test stylesheet. This checks
   // reflow; it does not emulate operating-system text scaling or browser zoom.

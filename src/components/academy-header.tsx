@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/server/supabase";
 import { BrandMark } from "@/components/brand-mark";
+import { List } from "@/components/icons";
 import { AcademyNavigation } from "./academy-navigation";
 import { ThemePreference } from "./theme-preference";
 
@@ -18,12 +19,14 @@ export async function AcademyHeader() {
           <BrandMark priority /><span>learnlikeadev<span className="brand-period">.</span></span>
         </Link>
         <AcademyNavigation />
-        <ThemePreference />
-        <Link className="header-action" href={accountHref}><span>{accountLabel}</span></Link>
-        <details className="mobile-menu">
-          <summary aria-label="Open navigation">Menu</summary>
-          <AcademyNavigation mobile />
-        </details>
+        <div className="header-tools">
+          <ThemePreference />
+          <Link className="header-action" href={accountHref}>{accountLabel}</Link>
+          <details className="mobile-menu">
+            <summary aria-label="Open navigation"><List /><span>Menu</span></summary>
+            <AcademyNavigation mobile />
+          </details>
+        </div>
       </div>
     </header>
   );

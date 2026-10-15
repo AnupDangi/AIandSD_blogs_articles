@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "@/components/icons";
 import { courses, lessons } from "@/content/catalog";
 import { VideoPlayer } from "@/components/video-player";
 import resourceManifest from "../../../../curriculum/resources.json";
@@ -6,6 +8,11 @@ import "@/components/library-discovery.css";
 
 type ResourcePageProps = { searchParams: Promise<{ q?: string | string[]; format?: string | string[]; lesson?: string | string[]; module?: string | string[]; course?: string | string[] }> };
 const first = (value: string | string[] | undefined) => Array.isArray(value) ? value[0] ?? "" : value ?? "";
+
+export const metadata: Metadata = {
+  title: "Study resources",
+  description: "Curated readings, papers, code, and videos linked to the Applied AI lessons.",
+};
 
 export default async function ResourcesPage({ searchParams }: ResourcePageProps) {
   const params = await searchParams;
@@ -54,7 +61,7 @@ export default async function ResourcesPage({ searchParams }: ResourcePageProps)
         <p>{item.purpose}</p>
         <details className="source-study-details"><summary>What to study and related lessons</summary><p>{item.relevantSection}</p><div className="resource-lessons">{item.lessonIds.map((id) => { const lesson = lessons.find((candidate) => candidate.id === id); return lesson ? <Link key={id} href={`/learn/${lesson.slug}`}>{lesson.title}</Link> : null; })}</div><small>{item.verificationStatus === "link-verified" ? `Link checked ${item.verifiedOn}` : "Link check pending"}</small></details>
       </div>
-      <a className="source-open" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title} at ${item.provider}`}>Open source <span aria-hidden="true">↗</span></a>
+      <a className="source-open" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${item.title} at ${item.provider}`}>Open source<ArrowUpRight /></a>
     </article>)}</div> : <div className="library-empty"><h2>No sources match these filters.</h2><p>Try a broader concept or choose another format or lesson.</p><Link href="/resources">Show all sources</Link></div>}
     <p className="resource-verification">Link checks confirm that a source resolves and matches its assigned topic. Lesson claims still require editorial review. Video timestamps and durations appear only when verified.</p>
   </section>;

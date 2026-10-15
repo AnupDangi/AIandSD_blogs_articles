@@ -73,7 +73,7 @@ test("theme preference synchronizes both the control and page colors across tabs
   await page.getByRole("combobox", { name: "Color theme" }).selectOption("dark");
   await expect(second.locator("html")).toHaveAttribute("data-theme","dark");
   await expect(second.getByRole("combobox", { name: "Color theme" })).toHaveValue("dark");
-  await expect(second.locator(".academy-shell")).toHaveCSS("background-color","rgb(20, 34, 31)");
+  await expect(second.locator(".academy-shell")).toHaveCSS("background-color","rgb(15, 23, 26)");
   await second.getByRole("combobox", { name: "Color theme" }).selectOption("light");
   await expect(page.locator("html")).toHaveAttribute("data-theme","light");
   await expect(page.getByRole("combobox", { name: "Color theme" })).toHaveValue("light");

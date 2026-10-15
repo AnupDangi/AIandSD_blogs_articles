@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { searchContent } from "@/content/search";
 import "@/components/library-discovery.css";
 
 type SearchPageProps = { searchParams: Promise<{ q?: string | string[] }> };
+
+export const metadata: Metadata = {
+  title: "Search",
+  description: "Search lessons, topics, projects, and sources across the academy.",
+};
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;

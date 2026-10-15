@@ -1,37 +1,211 @@
+/*
+  LearnLikeADev foundation.
+  One neutral family (cool, ink-tinted greys), one accent (teal), amber reserved for
+  data highlights inside labs. Two radii: controls 8px, panels 14px. Every value used by
+  components is a token here; components never hard-code theme colors.
+*/
 :root {
   color-scheme: light;
-  --paper: #f7f7f2;
-  --ink: #18262d;
-  --muted: #627177;
+
+  --paper: #f5f7f6;
+  --surface: #fcfdfc;
+  --surface-soft: #ebf0ee;
+  --line: #d3dcda;
+  --line-strong: #7b8d8b;
+  --ink: #15232a;
+  --muted: #4f5f66;
+
   --teal: #0f766e;
   --teal-dark: #0b5e58;
+  --teal-soft: #dcede9;
+  --button-ink: #fcfdfc;
+
+  --amber: #9a4709;
   --code: #17212b;
-  --line: #d8dedd;
-  --amber: #b45309;
-  --surface: #fffefa;
+  --danger: #a3261f;
+  --danger-soft: #fbecea;
+
+  /* Aliases kept for lab and lesson stylesheets. */
+  --white: var(--surface);
+  --soft: var(--surface-soft);
+
+  /* Geist for interface and marketing; IBM Plex for the lesson reader and code. */
+  --ui: var(--font-geist), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --sans: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --display: var(--font-newsreader), Georgia, serif;
+  --display: var(--ui);
+
+  --radius-control: 8px;
+  --radius-panel: 14px;
+
+  --shadow-panel: 0 1px 2px rgb(21 35 42 / .05), 0 18px 40px -18px rgb(21 35 42 / .16);
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+  --page-width: 1240px;
+  --gutter: 40px;
+
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--sans);
+  font-family: var(--ui);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--paper); }
-button, input, textarea { font: inherit; }
-button, a { -webkit-tap-highlight-color: transparent; }
-a { color: inherit; }
-button { color: inherit; }
-::selection { color: var(--ink); background: #bce7df; }
-:focus-visible { outline: 3px solid #0f766e; outline-offset: 3px; }
-code, pre, kbd { font-family: var(--mono); }
-img, svg { max-width: 100%; }
-.remediation-list article p { font-size: 9px; line-height: 1.55; color: #56655e; margin: 2px 0 4px; }
+/* Dark: the same hierarchy on deep ink. Declared twice so both an explicit choice and "system" work. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #0f171a;
+  --surface: #152125;
+  --surface-soft: #1c2b30;
+  --line: #2d3e44;
+  --line-strong: #5d7379;
+  --ink: #e4ecec;
+  --muted: #a0b1b5;
+  --teal: #5ccfbc;
+  --teal-dark: #88ded1;
+  --teal-soft: #173a3b;
+  --button-ink: #08201f;
+  --amber: #f2bf7a;
+  --danger: #ffb4a8;
+  --danger-soft: #3a1f1d;
+  --shadow-panel: 0 1px 2px rgb(2 8 10 / .4), 0 18px 40px -18px rgb(2 8 10 / .7);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #0f171a;
+    --surface: #152125;
+    --surface-soft: #1c2b30;
+    --line: #2d3e44;
+    --line-strong: #5d7379;
+    --ink: #e4ecec;
+    --muted: #a0b1b5;
+    --teal: #5ccfbc;
+    --teal-dark: #88ded1;
+    --teal-soft: #173a3b;
+    --button-ink: #08201f;
+    --amber: #f2bf7a;
+    --danger: #ffb4a8;
+    --danger-soft: #3a1f1d;
+    --shadow-panel: 0 1px 2px rgb(2 8 10 / .4), 0 18px 40px -18px rgb(2 8 10 / .7);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+
+@media (max-width: 390px) {
+  :root {
+    --gutter: 16px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  background: var(--paper);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  color: inherit;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--mono);
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* Emphasis uses the surrounding family; Plex italic is synthesized rather than downloaded. */
+em,
+i {
+  font-synthesis-style: auto;
+}
+
+::selection {
+  color: var(--ink);
+  background: var(--teal-soft);
+}
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-control);
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }

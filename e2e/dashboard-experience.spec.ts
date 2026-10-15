@@ -65,7 +65,7 @@ test("returning learner resumes the saved section and keeps versions and self-re
   await expect(page.getByRole("link", { name: "Resume assessment" })).toHaveAttribute("href", "/assessments/ai-01-formative?attemptId=attempt-active");
   await expect(page.locator(".lh-record-number")).toHaveText(["1", "1", "1"]);
   await expect(page.getByText("2 submitted attempts", { exact: true })).toBeVisible();
-  await expect(page.getByText(/Submitted—self-reported\. Repository contents and tests have not been verified/)).toBeVisible();
+  await expect(page.getByText(/Self-reported submissions\. Repository contents and tests have not been verified/)).toBeVisible();
   await expect(page.getByText(/Course version 3/)).toBeVisible();
   await expect(page.locator(".lh-history-item").filter({ hasText: "Foundations knowledge check" }).first()).toContainText("Version 2");
   await expect(page.getByRole("link", { name: /Open repository/ })).toHaveAttribute("href", "https://github.com/learner/document-intelligence");
@@ -107,9 +107,9 @@ test("the saved-record workspace repaints and remains accessible when switching 
   await page.goto("/dashboard");
   await expect(page.getByRole("heading", { name: "Your next chapter starts here." })).toBeVisible();
   await page.getByRole("combobox", { name: "Color theme" }).selectOption("dark");
-  await expect(page.locator(".academy-shell")).toHaveCSS("background-color", "rgb(20, 34, 31)");
+  await expect(page.locator(".academy-shell")).toHaveCSS("background-color", "rgb(15, 23, 26)");
   const scan = await new AxeBuilder({ page }).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
   expect(scan.violations.map((item) => ({ id: item.id, targets: item.nodes.map((node) => node.target) }))).toEqual([]);
   await page.getByRole("combobox", { name: "Color theme" }).selectOption("light");
-  await expect(page.locator(".academy-shell")).toHaveCSS("background-color", "rgb(247, 247, 242)");
+  await expect(page.locator(".academy-shell")).toHaveCSS("background-color", "rgb(245, 247, 246)");
 });

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 type Profile = { displayName: string | null; bio: string | null; updatedAt: string };
@@ -65,15 +64,15 @@ export function ProfileEditor({ signedIn }: { signedIn: boolean }) {
     }
   }
 
-  if (load === "guest") return <div className="settings-card"><span className="eyebrow">LEARNER PROFILE</span><h2>Sign in to edit your profile.</h2><p>Your display name and bio are saved to your account. Reading and visual labs remain open without an account.</p><Link className="button-primary" href="/sign-in?next=%2Fsettings">Sign in <span>↗</span></Link></div>;
+  if (load === "guest") return <div className="settings-card"><h2>Your learner profile</h2><p>Sign in to add a display name and a short bio. They are saved to your account.</p></div>;
 
-  if (load === "loading") return <div className="settings-card" aria-busy="true"><span className="eyebrow">LEARNER PROFILE</span><h2>Your learner profile</h2><p role="status">Loading your saved profile…</p></div>;
+  if (load === "loading") return <div className="settings-card" aria-busy="true"><h2>Your learner profile</h2><p role="status">Loading your saved profile…</p></div>;
 
-  if (load === "error") return <div className="settings-card"><span className="eyebrow">LEARNER PROFILE</span><h2>Your learner profile</h2><p>We could not load your saved profile. Nothing on this page has been changed.</p><button className="button-secondary" type="button" onClick={() => { setLoad("loading"); setAttempt((number) => number + 1); }}>Try again</button></div>;
+  if (load === "error") return <div className="settings-card"><h2>Your learner profile</h2><p>We could not load your saved profile. Nothing on this page has been changed.</p><button className="button-secondary" type="button" onClick={() => { setLoad("loading"); setAttempt((number) => number + 1); }}>Try again</button></div>;
 
   const statusText = save === "saving" ? "Saving your profile…" : save === "saved" ? "Profile saved." : save === "error" ? "We could not save your profile. Check the limits and try again." : "";
 
-  return <div className="settings-card"><span className="eyebrow">LEARNER PROFILE</span><h2>Your learner profile</h2><p>{profile === null ? "This profile is empty. Add a display name the workspace can greet you by, and a short bio for your saved records." : `Last updated ${profile.updatedAt ? new Date(profile.updatedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "recently"}. A display name is not a credential — your sign-in stays the same.`}</p>
+  return <div className="settings-card"><h2>Your learner profile</h2><p>{profile === null ? "This profile is empty. Add a display name the workspace can greet you by, and a short bio for your saved records." : `Last updated ${profile.updatedAt ? new Date(profile.updatedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }) : "recently"}. A display name is not a credential, so your sign-in stays the same.`}</p>
     <form className="settings-profile" onSubmit={(event) => void submit(event)}>
       <label htmlFor="profile-display-name">Display name<span className="settings-profile-count">{displayName.length}/80</span></label>
       <input id="profile-display-name" name="displayName" maxLength={80} value={displayName} onChange={(event) => setDisplayName(event.target.value)} disabled={save === "saving"} autoComplete="nickname" />

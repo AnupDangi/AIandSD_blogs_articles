@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { Monitor, Moon, Sun } from "@/components/icons";
 
 type Theme = "system" | "light" | "dark";
 let sessionOverride: Theme | undefined;
@@ -28,9 +29,12 @@ function subscribe(listener: () => void) {
   return () => { window.removeEventListener("storage", storageChanged); window.removeEventListener("academy:theme", changed); };
 }
 
+const themeIcons = { system: Monitor, light: Sun, dark: Moon } as const;
+
 export function ThemePreference() {
   const theme = useSyncExternalStore(subscribe, snapshot, () => "system" as Theme);
-  return <label className="theme-preference"><span className="sr-only">Color theme</span><select aria-label="Color theme" value={theme} onChange={(event) => {
+  const ThemeIcon = themeIcons[theme];
+  return <label className="theme-preference"><ThemeIcon /><span className="sr-only">Color theme</span><select aria-label="Color theme" value={theme} onChange={(event) => {
     const next = event.target.value as Theme;
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem("academy-theme", next); sessionOverride = undefined; } catch { sessionOverride = next; }

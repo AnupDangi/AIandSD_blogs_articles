@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore, type FormEvent } from "react";
 import { callbackErrorMessage } from "@/lib/auth-errors";
+import { ArrowRight, ArrowUpRight, GithubLogo, GoogleLogo } from "@/components/icons";
 
 type Status = { kind: "idle" | "loading" | "sent" | "error"; message: string };
 
@@ -43,14 +44,14 @@ export function SignInForm({ next, initialError, canonicalOrigin }: { next: stri
   return <div className="sign-in-form-wrap">
     {wrongOrigin && <div className="sign-in-status sign-in-status-error" role="alert">Sign-in only works at <a href={`${wrongOrigin}/sign-in?next=${encodeURIComponent(next)}`}>{wrongOrigin}</a>. You opened this page at {currentOrigin}, so the sign-in cookie and redirect would not match.</div>}
     <div className="oauth-sign-in-options">
-      <button className="oauth-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("google")}>Continue with Google <span aria-hidden="true">↗</span></button>
-      <button className="oauth-sign-in github-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("github")}>Continue with GitHub <span aria-hidden="true">↗</span></button>
+      <button className="oauth-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("google")}><GoogleLogo />Continue with Google<ArrowUpRight /></button>
+      <button className="oauth-sign-in github-sign-in" type="button" disabled={status.kind === "loading"} onClick={() => void submit("github")}><GithubLogo />Continue with GitHub<ArrowUpRight /></button>
     </div>
-    <div className="sign-in-divider"><span>OR USE EMAIL</span></div>
+    <div className="sign-in-divider"><span>or use email</span></div>
     <form className="email-sign-in" onSubmit={(event) => void submit("email", event)}>
       <label htmlFor="sign-in-email">Email address</label>
       <input id="sign-in-email" name="email" type="email" autoComplete="email" autoCapitalize="none" required maxLength={320} value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@example.com" disabled={status.kind === "loading"} />
-      <button className="button-primary sign-in-submit" type="submit" disabled={status.kind === "loading" || !email.trim()}>{status.kind === "loading" ? "Please wait…" : "Email me a sign-in link"}<span aria-hidden="true">→</span></button>
+      <button className="button-primary sign-in-submit" type="submit" disabled={status.kind === "loading" || !email.trim()}>{status.kind === "loading" ? "Please wait…" : "Email me a sign-in link"}{status.kind !== "loading" && <ArrowRight />}</button>
     </form>
     <div className={`sign-in-status sign-in-status-${status.kind}`} aria-live="polite" role={status.kind === "error" ? "alert" : "status"}>{status.message}</div>
     <p className="sign-in-privacy">We use your account to sync learning progress. Reading and interactive previews remain open to guests.</p>

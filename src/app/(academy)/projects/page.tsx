@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { courses } from "@/content/catalog";
 import { projectMilestones } from "@/content/project-milestones";
 import courseManifest from "../../../../curriculum/applied-ai-course.json";
 import { MilestoneSubmission } from "@/components/milestone-submission";
 import "@/components/library-discovery.css";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Build a document intelligence application across eight self-reported milestones.",
+};
 
 export default function ProjectsPage() {
   const course = courses.find((item) => item.id === courseManifest.courseId)!;
