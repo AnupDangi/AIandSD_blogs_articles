@@ -8,7 +8,8 @@
  * the production importer's human-review gate is untouched and nothing here can reach production.
  */
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, realpathSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import { dirname, delimiter, join } from "node:path";
 import pg from "pg";
 import { requireIntegrationDatabaseUrl } from "./integration-database";
@@ -31,6 +32,21 @@ function postgresBin() {
 }
 
 const bin = postgresBin();
+
+/** Fingerprint of everything the catalog importer reads, so a stale local snapshot is never served. */
+function contentFingerprint() {
+  const hash = createHash("sha256");
+  const walk = (directory: string) => {
+    if (!existsSync(directory)) return;
+    for (const name of readdirSync(directory).sort()) {
+      const path = join(directory, name);
+      if (statSync(path).isDirectory()) walk(path);
+      else hash.update(path.replace(project, "")).update(readFileSync(path));
+    }
+  };
+  for (const directory of ["docs/applied-ai", "curriculum", "src/content"]) walk(join(project, directory));
+  return hash.digest("hex");
+}
 const isolated: NodeJS.ProcessEnv = { NODE_ENV: "development", PATH: process.env.PATH, HOME: process.env.HOME, LC_ALL: "C", LANG: "C" };
 
 function sh(command: string, args: string[], env: NodeJS.ProcessEnv = isolated, allowFailure = false) {
@@ -54,6 +70,14 @@ async function main() {
     sh(join(bin, "pg_ctl"), ["-D", cluster, "-l", log, "-o", `-h 127.0.0.1 -p ${port} -k ''`, "-t", "20", "-w", "start"]);
   }
   console.log(`Local Postgres: 127.0.0.1:${port}/${database}`);
+  const fingerprintFile = join(root, "content.sha256");
+  const fingerprint = contentFingerprint();
+  const previous = existsSync(fingerprintFile) ? readFileSync(fingerprintFile, "utf8").trim() : "";
+  if (previous !== fingerprint) {
+    // The importer will not re-import a published version, so rebuild this disposable database from current content.
+    console.log("Lesson content changed since the last run; rebuilding the local database …");
+    sh(join(bin, "dropdb"), ["-h", "127.0.0.1", "-p", String(port), "-U", "academy_test", "--if-exists", database], isolated, true);
+  }
   sh(join(bin, "createdb"), ["-h", "127.0.0.1", "-p", String(port), "-U", "academy_test", database], isolated, true);
 
   const dbEnv = { ...process.env, DATABASE_URL: databaseUrl, DIRECT_URL: databaseUrl, ACADEMY_TEST_DATABASE_URL: databaseUrl };
@@ -75,6 +99,7 @@ async function main() {
     await client.query('update app."Assessment" set "publishedAt" = now() where "publishedAt" is null');
     await client.query('update app."Project" set "publishedAt" = now() where "publishedAt" is null');
     const published = (await client.query('select count(*) from app."Assessment" where "publishedAt" is not null')).rows[0].count;
+    writeFileSync(fingerprintFile, fingerprint + "\n");
     console.log(`Catalog ready in the local database (${published} assessments published locally).`);
   } finally {
     await client.end();
