@@ -15,7 +15,6 @@ src/generated/prisma/
 curriculum/private/
 supabase/.temp/
 *.tsbuildinfo
-certs/
 
 .venv/
 __pycache__/
@@ -28,8 +27,11 @@ future_plans/
 .planning/
 graphify-out/
 .vercel/
-/certs
 /.env
 /.env.local
 /curriculum/private
 /.local-stack/
+
+# Only Supabase's public root CA is tracked in certs/. Nothing else may be added there.
+certs/*
+!certs/supabase-prod-root.crt
