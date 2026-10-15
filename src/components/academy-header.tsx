@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/server/supabase";
 import { BrandLogo } from "@/components/brand-mark";
-import { List } from "@/components/icons";
+import { GithubLogo, List } from "@/components/icons";
+import { GITHUB_LABEL, GITHUB_URL } from "@/lib/site";
 import { AcademyNavigation } from "./academy-navigation";
 import { ThemePreference } from "./theme-preference";
 
@@ -20,6 +21,7 @@ export async function AcademyHeader() {
         </Link>
         <AcademyNavigation />
         <div className="header-tools">
+          <a className="header-github" href={GITHUB_URL} title={GITHUB_LABEL} target="_blank" rel="noopener noreferrer"><GithubLogo /><span className="header-github-text">{GITHUB_LABEL}</span><span className="sr-only"> (opens in a new tab)</span></a>
           <ThemePreference />
           <Link className="header-action" href={accountHref}>{accountLabel}</Link>
           <details className="mobile-menu">

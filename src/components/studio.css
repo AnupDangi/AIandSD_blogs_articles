@@ -122,6 +122,64 @@
   margin-left: 8px;
 }
 
+.academy-shell .header-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.academy-shell .header-github:hover {
+  background: var(--surface-soft);
+  color: var(--teal);
+}
+
+.header-github .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Between 1024 and 1179px the label would crowd the nav onto a second line, so it becomes icon-only. */
+@media (max-width: 1179px) {
+  .header-github-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .academy-shell .header-github {
+    padding: 0 9px;
+  }
+}
+
+/* Below 1024px the link lives in the mobile menu instead. */
+@media (max-width: 1023px) {
+  .academy-shell .header-github {
+    display: none;
+  }
+}
+
+.academy-shell .mobile-navigation a.mobile-github {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .theme-preference {
   position: relative;
   display: inline-flex;
@@ -311,7 +369,7 @@
 .footer-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px 48px;
+  gap: 32px 72px;
   max-width: calc(var(--page-width) + 2 * var(--gutter));
   margin: 0 auto;
   padding: 48px var(--gutter) 32px;
@@ -324,19 +382,53 @@
   font-size: 14px;
 }
 
-.site-footer nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: start;
-  gap: 10px 24px;
+.academy-shell .footer-identity .footer-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 9px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.academy-shell .site-footer nav a {
+.academy-shell .footer-identity .footer-github:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, auto));
+  gap: 28px 56px;
+  align-content: start;
+}
+
+.footer-group ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.academy-shell .footer-heading {
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.academy-shell .footer-group a {
   color: var(--muted);
   font-size: 14px;
 }
 
-.academy-shell .site-footer nav a:hover {
+.academy-shell .footer-group a:hover {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -355,6 +447,11 @@
   .footer-inner {
     grid-template-columns: 1fr;
     padding-top: 36px;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
 }
 
