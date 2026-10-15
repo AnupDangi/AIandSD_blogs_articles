@@ -34,7 +34,15 @@ export const metadata: Metadata = {
   title: { default: "LearnLikeADev: learn technology by building", template: "%s | LearnLikeADev" },
   description: "Understand the mechanism. Test it. Build something that works.",
   applicationName: "LearnLikeADev",
-  icons: { icon: "/brand-symbol.png", apple: "/brand-symbol.png" },
+  icons: {
+    icon: [
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/brand/app-icon-180.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

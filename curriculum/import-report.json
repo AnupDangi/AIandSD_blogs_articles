@@ -1461,11 +1461,11 @@
       "reviewStatus": "authored-needs-editorial-review"
     },
     {
-      "sourcePath": "public/brand-mark.svg",
+      "sourcePath": "public/brand/logo-light.svg; public/brand/logo-dark.svg",
       "sourceCategory": "brand-visual-asset",
-      "currentDisposition": "Legacy vector brand mark retained; the academy currently renders its generated transparent PNG counterpart through BrandMark.",
-      "destination": "public/brand-mark.svg",
-      "reviewStatus": "retained-legacy"
+      "currentDisposition": "Provided logo lockups (light and dark surfaces) rendered by BrandLogo in the header and footer; the previous generated symbol and legacy mark were removed.",
+      "destination": "src/components/brand-mark.tsx; public/brand/logo-light.svg; public/brand/logo-dark.svg",
+      "reviewStatus": "provided-by-owner"
     },
     {
       "sourcePath": "docs/applied-ai/ch40-complete-production-agent-architecture.md#project-briefs",
@@ -1503,11 +1503,11 @@
       "reviewStatus": "needs-source-verification"
     },
     {
-      "sourcePath": "public/brand-symbol.png",
+      "sourcePath": "public/brand/favicon.svg; public/brand/favicon-16.png; public/brand/favicon-32.png; public/brand/favicon-48.png; public/brand/app-icon.svg; public/brand/app-icon-180.png; public/brand/app-icon-512.png; public/favicon.ico",
       "sourceCategory": "brand-visual-asset",
-      "currentDisposition": "Generated transparent open-book/terminal-path symbol used by BrandMark across the header, sign-in, footer, and app icon.",
-      "destination": "src/components/brand-mark.tsx; public/brand-symbol.png",
-      "reviewStatus": "integrated-needs-small-size-review"
+      "currentDisposition": "Provided favicon and app-icon set used by page metadata and the web app manifest; favicon.ico is assembled from the provided 16, 32 and 48 pixel PNGs.",
+      "destination": "src/app/layout.tsx; src/app/manifest.ts; public/brand/; public/favicon.ico",
+      "reviewStatus": "provided-by-owner"
     },
     {
       "sourcePath": "docs/applied-ai/ch07-model-selection-routing-and-cascades.md",

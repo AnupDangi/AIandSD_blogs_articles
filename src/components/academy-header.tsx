@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/server/supabase";
-import { BrandMark } from "@/components/brand-mark";
+import { BrandLogo } from "@/components/brand-mark";
 import { List } from "@/components/icons";
 import { AcademyNavigation } from "./academy-navigation";
 import { ThemePreference } from "./theme-preference";
@@ -16,7 +16,7 @@ export async function AcademyHeader() {
     <header className="site-header">
       <div className="header-inner">
         <Link className="brand" href={signedIn ? "/dashboard" : "/"} aria-label="LearnLikeADev home">
-          <BrandMark priority /><span>learnlikeadev<span className="brand-period">.</span></span>
+          <BrandLogo priority />
         </Link>
         <AcademyNavigation />
         <div className="header-tools">

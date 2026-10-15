@@ -16,12 +16,6 @@ curriculum/private/
 supabase/.temp/
 *.tsbuildinfo
 certs/
-.agents/
-.claude/
-.opencode/
-/AGENTS.md
-/CLAUDE.md
-/skills-lock.json
 
 .venv/
 __pycache__/

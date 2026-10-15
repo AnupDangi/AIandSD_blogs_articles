@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Learn Like a Dev logo"><rect x="0" y="0" width="160" height="160" rx="34" fill="#0A121A"/><g transform="translate(6 6) scale(0.925)">
+<path d="M25 24 H84 C123 24 145 46 145 80 C145 114 123 136 84 136 H25" fill="none" stroke="#12AFC2" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="79" cy="64" r="10" fill="#12AFC2"/>
+<path d="M59 107 V101 C59 89 66 84 79 84 C91 84 98 90 103 99 L111 106" fill="none" stroke="#12AFC2" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M81 114 H119 L125 122 H76 Z" fill="#12AFC2"/>
+</g></svg>
