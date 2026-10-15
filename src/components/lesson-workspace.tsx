@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Course, Lesson, PublicQuestion } from "@/content/types";
@@ -12,7 +12,6 @@ import { VideoPlayer } from "@/components/video-player";
 import { VisualEngine } from "@/components/visual-engine";
 import { LessonDiagramSketch } from "@/components/lesson-diagram-sketch";
 import { HintCoach } from "@/components/hint-coach";
-import { ReadingPreferences } from "@/components/reading-preferences";
 
 type Tab = "learn" | "simulate" | "practice";
 type ProgressState = "visited" | "completed";
@@ -50,7 +49,6 @@ export function LessonWorkspace({ lesson, questions, sourceSections, courseVersi
   const [bookmarked, setBookmarked] = useState(false);
   const [bookmarkSync, setBookmarkSync] = useState<BookmarkSync>("loading");
   const [bookmarkPending, setBookmarkPending] = useState(false);
-  const [readerSize, setReaderSize] = useState(18);
   const section = lesson.sections[sectionIndex];
   const question = questions.length ? questions[questionIndex] : null;
   const course = courseSnapshot ?? courses.find((item) => item.id === "applied-ai");
@@ -190,11 +188,10 @@ export function LessonWorkspace({ lesson, questions, sourceSections, courseVersi
           {lesson.sections.map((item, index) => <button key={item.id} className={`section-nav ${index === sectionIndex ? "section-current" : ""}`} onClick={() => chooseSection(index)}><span className="section-number">{String(index + 1).padStart(2, "0")}</span><span>{item.title}</span>{sectionProgress[item.id] === "completed" && <span className="section-check" aria-label="Completed">✓</span>}</button>)}
           <div className="sidebar-next"><span className="eyebrow">SOURCE DRAFT</span><p>{lesson.sourceDraft.split("/").at(-1)}</p><span className="coming-soon">Needs editorial review</span></div>
         </aside>
-        <article id={`section-${section.id}`} className={`lesson-reading ${tab !== "learn" ? "mobile-hidden" : ""}`} style={{ "--lesson-reader-size": `${readerSize}px` } as CSSProperties}>
+        <article id={`section-${section.id}`} className={`lesson-reading ${tab !== "learn" ? "mobile-hidden" : ""}`}>
           <div className="reading-kicker"><span>SECTION {String(sectionIndex + 1).padStart(2, "0")}</span><span>·</span><span>6 MIN READ</span></div>
           <h2>{section.title}</h2>
           <p className="reading-lead">{section.summary}</p>
-          <ReadingPreferences size={readerSize} onSizeChange={setReaderSize} />
           {section.illustration && <figure className="lesson-illustration"><Image src={section.illustration.src} alt={section.illustration.alt} width={1672} height={941} sizes="(max-width: 760px) calc(100vw - 44px), 680px" /><figcaption>{section.illustration.caption}</figcaption></figure>}
           <div className="insight-note"><span className="note-mark">↗</span><p><strong>Section activity.</strong> Use the lesson’s lab to test the specific objective above. Change one control, record the visible output, and explain the trade-off in your own words.</p></div>
           {sourceSections[sectionIndex] ?? sourceSections[0]}

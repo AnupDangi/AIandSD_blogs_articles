@@ -28,19 +28,15 @@ test("reduced-motion readers can move between learning views with the keyboard",
   expect(transitionSeconds).toBeLessThanOrEqual(0.00001);
 });
 
-test("reader controls work by keyboard and lesson text reflows at a test-only 200% scale", async ({ page }) => {
+test("lesson text uses the fixed 18px reader size and reflows at a test-only 200% scale", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto(lessonPath);
 
-  const sizeOutput = page.getByRole("group", { name: "Text size" }).getByRole("status");
-  const increase = page.getByRole("button", { name: "Increase text size" });
-  await increase.focus();
-  for (let index = 0; index < 4; index += 1) await page.keyboard.press("Enter");
-  await expect(sizeOutput).toHaveText("22px");
-  await expect(increase).toBeDisabled();
-
   const readerParagraph = page.locator("article.lesson-reading .source-markdown p").first();
-  await expect.poll(() => readerParagraph.evaluate((element) => getComputedStyle(element).fontSize)).toBe("22px");
+  await expect.poll(() => readerParagraph.evaluate((element) => getComputedStyle(element).fontSize)).toBe("18px");
+  // The reader has no text-size control: size follows the fixed default plus browser zoom.
+  await expect(page.getByRole("group", { name: "Text size" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /text size/i })).toHaveCount(0);
 
   await expect(page.getByRole("group", { name: "Reading font" })).toHaveCount(0);
   // IBM Plex Sans is self-hosted through next/font/local and exposed as --font-ibm-plex-sans;
@@ -61,7 +57,7 @@ test("reader controls work by keyboard and lesson text reflows at a test-only 20
   await page.addStyleTag({
     content: ".lesson-reading > p:not(.reading-lead), .lesson-reading .source-markdown { font-size: calc(var(--lesson-reader-size) + var(--lesson-reader-size)) !important; }",
   });
-  await expect.poll(() => readerParagraph.evaluate((element) => getComputedStyle(element).fontSize)).toBe("44px");
+  await expect.poll(() => readerParagraph.evaluate((element) => getComputedStyle(element).fontSize)).toBe("36px");
 
   const pageWidth = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(pageWidth).toBeLessThanOrEqual(320);

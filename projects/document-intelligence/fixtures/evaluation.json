@@ -1,8 +1,0 @@
-[
-  {"id":"reliability-primary-timeout","query":"What happens when the primary provider times out?","expected_source":"ops-01","module":"reliability"},
-  {"id":"retrieval-index-rollback","query":"How can the previous index roll back?","expected_source":"ops-02","module":"retrieval"},
-  {"id":"safety-document-permissions","query":"Can a retrieved document change tool permissions?","expected_source":"ops-03","module":"safety"},
-  {"id":"workflow-restart-idempotency","query":"How should a restart resume a workflow and avoid repeating an already committed side effect?","expected_source":"ops-04","module":"workflow"},
-  {"id":"evaluation-slice-reporting","query":"Why report evaluation by slice?","expected_source":"ops-05","module":"evaluation"},
-  {"id":"retrieval-paraphrase-known-failure","query":"At which moment does the live catalog become authoritative?","expected_source":"ops-02","module":"retrieval","known_failure":true,"failure_reason":"The non-semantic feature-hashed retriever cannot bridge this paraphrase without lexical overlap."}
-]

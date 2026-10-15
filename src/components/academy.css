@@ -530,6 +530,7 @@
 }
 
 .lesson-reading {
+  --lesson-reader-size: 18px;
   padding: 3px 2px 20px;
 }
 
@@ -3992,56 +3993,6 @@
   line-height: 1.6;
 }
 
-.reading-preferences {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 12px;
-  margin: 0 0 18px;
-  padding: 10px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.reading-size-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.reading-preferences button {
-  min-width: 40px;
-  min-height: 40px;
-  padding: 7px 10px;
-  border: 1px solid #bdcbc3;
-  border-radius: 4px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.reading-preferences button:hover:not(:disabled) {
-  border-color: var(--teal);
-  background: var(--surface-soft);
-}
-
-.reading-preferences button:disabled {
-  color: var(--muted);
-  background: var(--surface-soft);
-  cursor: not-allowed;
-}
-
-.reading-size-control output {
-  min-width: 42px;
-  text-align: center;
-  font: 12px var(--mono);
-  color: var(--muted);
-}
-
 .lesson-reading>p:not(.reading-lead),
 .source-markdown {
   font-size: var(--lesson-reader-size,18px);
@@ -5669,17 +5620,17 @@ html[data-theme=dark] .academy-shell :is(.topic-card h2,.topic-card p,.topic-car
   color: var(--muted);
 }
 
-.academy-shell :is(.lesson-time,.lesson-time small,.lesson-meta,.sidebar-progress small,.sidebar-progress span,.sidebar-next p,.reading-kicker,.reading-preferences,.reading-size-control output,.progress-sync,.practice-question-nav,.practice-disclaimer,.hint-level-count,.hint-observation-label,.hint-observation-label span,.lab-intro,.lab-step,.query-caption,.caption-muted,.weight-value,.weight-word,.lesson-references :is(p,small,a,span),.submission-field :is(span,small),.submission-heading p,.engine-gallery-heading p,.engine-picker button,.engine-picker button>span,.demo-control-row label,.demo-control-row output,.demo-range-grid output,.engine-state-table span,.practice-card>p,.sign-in-divider) {
+.academy-shell :is(.lesson-time,.lesson-time small,.lesson-meta,.sidebar-progress small,.sidebar-progress span,.sidebar-next p,.reading-kicker,.progress-sync,.practice-question-nav,.practice-disclaimer,.hint-level-count,.hint-observation-label,.hint-observation-label span,.lab-intro,.lab-step,.query-caption,.caption-muted,.weight-value,.weight-word,.lesson-references :is(p,small,a,span),.submission-field :is(span,small),.submission-heading p,.engine-gallery-heading p,.engine-picker button,.engine-picker button>span,.demo-control-row label,.demo-control-row output,.demo-range-grid output,.engine-state-table span,.practice-card>p,.sign-in-divider) {
   color: var(--muted);
 }
 
-.academy-shell :is(.engine-gallery-demo,.engine-state-table,.sentence-panel,.token,.output-callout,.answer-options button,.insight-note,.sidebar-course,.section-current,.reading-preferences button,.demo-select,.academy-search-form input,.search-suggestions a) {
+.academy-shell :is(.engine-gallery-demo,.engine-state-table,.sentence-panel,.token,.output-callout,.answer-options button,.insight-note,.sidebar-course,.section-current button,.demo-select,.academy-search-form input,.search-suggestions a) {
   background: var(--surface);
   border-color: var(--line);
   color: var(--ink);
 }
 
-.academy-shell :is(.token-selected,.engine-picker button.engine-picker-active,.reading-preferences button[aria-pressed=true]) {
+.academy-shell :is(.token-selected,.engine-picker button.engine-picker-active) {
   background: var(--surface-soft);
   border-color: var(--teal);
   color: var(--teal);
