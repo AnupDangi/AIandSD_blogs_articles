@@ -1,5 +1,3 @@
-import "server-only";
-
 /**
  * Supabase's public root certificate (Supabase Root 2021 CA, valid until 2031-04-26).
  * It is a public CA certificate, not a secret. Embedding it means TLS verification to the
