@@ -1,58 +1,135 @@
 # LearnLikeADev
 
-Learn technology by understanding how a system works, testing it, and building a project around it. The academy is being rebuilt as a fullstack Next.js app with Supabase Auth/Postgres and Prisma.
+A learning site for software engineers. Each lesson explains one mechanism, lets you change its inputs in a visual lab, checks your understanding with a short quiz, and ties into a project you build yourself.
 
-## Run locally
+It is a Next.js app (App Router, React 19, TypeScript) with Supabase for sign-in and Postgres, and Prisma for server-side data access. Everything in the repository is TypeScript.
 
-Requires Node.js 22 or later. Copy `.env.example` to `.env.local` and fill in the Supabase project URL, publishable key, and server-only database URLs. AI hints remain disabled unless an `OPENAI_API_KEY` is configured.
+## Status
+
+| Course | Lessons | State |
+|---|---|---|
+| Reliable AI Applications | 40 chapters in 8 modules, 8 project milestones | Draft chapters are readable. Lessons, quiz questions and hints are still in editorial review, so the course is not published as complete. |
+| Practical System Design | 52 chapter drafts | Roadmap only. Not yet shown in the reader. |
+| Cloud Production Engineering | index only | Roadmap only. |
+| 60-Day AI + System Design Sprint | 60 daily pages | Roadmap only. Not yet shown in the reader. |
+
+Guests can read every lesson and use every lab. Signing in adds saved progress, quiz attempts that resume on another device, bookmarks, a profile, hint history and project submissions.
+
+## What learners do in the flagship course
+
+1. Read a chapter. Every chapter links its sources, and links open in a new tab.
+2. Predict, then run the chapter's visual lab (for example token sampling, attention, KV-cache scheduling, retrieval, trust boundaries).
+3. Take the chapter's knowledge check. Answers are graded on the server and answer keys are never sent to the browser.
+4. Build one reliable AI application in TypeScript, in their own GitHub repository, one milestone per module. They submit the repository link and a short reflection. Submissions are self-reported: the site does not inspect the repository.
+5. Watch the linked lecture videos in the page. A video loads from YouTube only after the learner presses play, and chapter buttons jump to published chapter times.
+
+## Requirements
+
+- Node.js 22 or later (`.nvmrc` pins 22)
+- npm 10 or later
+- A Supabase project for sign-in and the database (optional for reading lessons)
+- PostgreSQL server tools, only for `npm run dev:local` and `npm run test:integration`
+
+## Run it locally
 
 ```bash
 npm install
+cp .env.example .env.local   # then fill in the values below
 npm run dev
 ```
 
-Open http://localhost:3000. Public lessons and all eight interactive visual labs work without an account. Sign-in, saved progress, assessments, submissions, and tutor records need a configured Supabase project.
+Open http://localhost:3000. `npm run dev` is pinned to port 3000 and exits with an error if the port is busy. Sign-in depends on one address: `NEXT_PUBLIC_APP_URL` is used for the OAuth redirect, the sign-in cookie and the CSRF origin check, so open the app at exactly that address. The sign-in page warns if you open it somewhere else.
 
-The cumulative course project is a separate Python 3.12 package with local fixtures and no paid provider requirement:
+`npm run dev:local` serves the same app on port 3000 against a throwaway local PostgreSQL (data in `.local-stack/`). It applies the migrations and imports the draft catalog, marked published in that local database only, so quizzes and hints can be tried without touching a hosted database. Sign-in still uses your Supabase project. It needs the private review bundle described under "Content rules".
+
+## Environment variables
+
+Server-only values must never be exposed to browser code or committed.
+
+| Variable | Needed for | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | sign-in | Project URL. Public. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | sign-in | Publishable key. Public. `NEXT_PUBLIC_SUPABASE_ANON_KEY` is accepted as a fallback. |
+| `NEXT_PUBLIC_APP_URL` | sign-in, CSRF check | Exact origin of the site, for example `http://localhost:3000` or your production URL. Baked in at build time, so set it before building. |
+| `DATABASE_URL` | saved learner data | Supabase transaction pooler (port 6543). Server-only. |
+| `DIRECT_URL` | migrations | Supabase session pooler (port 5432). Server-only. |
+| `AI_MONTHLY_BUDGET_USD`, `AI_DAILY_REQUEST_LIMIT` | hint quotas | Defaults 30 and 10. |
+| `OPENAI_API_KEY`, `OPENAI_MODEL`, `OPENROUTER_API_KEY`, `OPENROUTER_MODEL` | optional hint selection | Hint text is always authored and reviewed. With a key set, a model may only pick which authored hint to show, never writes text and never sees answer keys. Without a key, a deterministic fallback picks the hint. See `prisma/README.md`. |
+| `CURRICULUM_IMPORT_TARGET`, `CURRICULUM_STAGING_PROJECT_REF`, `CURRICULUM_PRODUCTION_PROJECT_REF` | catalog import | Used only by the guarded importer. |
+
+Both database URLs need `sslmode=verify-full` and `sslrootcert=certs/supabase-prod-root.crt`. That file is Supabase's public root certificate and is committed in `certs/`.
+
+## Sign-in setup (Supabase)
+
+In the Supabase dashboard, under Authentication, URL configuration, add your site URL and `<your origin>/**` to the redirect URLs (for local work, `http://localhost:3000/**`). Enable the Google, GitHub and email providers you want. The Google and GitHub OAuth apps keep using Supabase's own callback, `https://<project-ref>.supabase.co/auth/v1/callback`. Email sign-in links must be opened in the same browser that requested them.
+
+## Database
+
+Learner data lives in a private Postgres schema called `app`. The Supabase Data API roles have no access to it, and the app reaches it only through server-side Prisma. See [`prisma/README.md`](prisma/README.md) for migrations and the guarded import path.
 
 ```bash
-cd projects/document-intelligence
-python -m unittest discover -s tests -v
-python -m document_intelligence --evaluate
+npm run prisma:generate   # type generation only, no connection
+npm run prisma:migrate    # applies reviewed migrations to DIRECT_URL
+npm run curriculum:check  # validates the catalog and private bundle, opens no connection
 ```
 
-## Technology
+The course catalog is imported only after the private review sign-off passes. Do not use `prisma migrate dev`, `db push` or `supabase db push` against a hosted project.
 
-- Next.js App Router, React, and TypeScript
-- Supabase Auth, PostgreSQL, `@supabase/ssr`
-- Prisma 7.10 with the PostgreSQL adapter
-- Repository-authored course material and browser-side learning simulations
+## Commands
 
-## Courses
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server on port 3000 |
+| `npm run dev:local` | Dev server plus a local Postgres with the draft catalog |
+| `npm run build` | Generate the Prisma client and build for production |
+| `npm run start` | Serve the production build |
+| `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
+| `npm test` | Unit tests (Vitest) |
+| `npm run test:e2e` | Browser tests (Playwright) against a production build on port 4179 |
+| `npm run test:integration` | Database tests against a disposable local Postgres |
+| `npm run content:check` | Validates lessons, questions and resources |
+| `npm run public-assets:check` | Checks public files for private answer material |
+| `npm run review:export` / `npm run review:restore` | Encrypted backup and restore of the private review bundle |
 
-The first course, **Reliable AI Applications: From Model Call to Production**, uses eight modules to build a document intelligence application. Its 40 chapter drafts are open for reading; the complete course is not published until editorial and assessment review passes. System Design, Cloud Production Engineering, and the 60-day sprint remain roadmaps while their course lessons are prepared.
+## Project layout
 
-The Python starter demonstrates evidence-backed answers, bounded retrieval, safe citations, resumable checkpoints, evaluation slices, bounded retries, and cache telemetry. Its extractive provider is deterministic; live-model work is an optional later exercise.
+```
+src/app/            routes: landing, courses, lessons, assessments, topics, resources,
+                    projects, dashboard, settings, sign-in, and the /api handlers
+src/components/     UI, lesson workspace, visual-lab engines, video player, styles
+src/content/        typed course catalog, lesson sections, questions, milestones
+src/lib/            pure logic for labs and scenarios, auth error messages, video helpers
+src/lib/server/     server-only code: database client, Supabase client, hint accounting
+prisma/             schema, migrations, import and publication guards
+curriculum/         public manifests, resources, scenario fixtures, diagram sketches
+docs/applied-ai/    the 40 chapter drafts and appendices (Markdown, read by the lesson page)
+docs/system-design/ docs/60-day/ docs/cloud/   roadmap drafts, not yet in the reader
+source-material/    the four original source PDFs, kept unchanged
+scripts/            content validation, import dry run, local stack, review bundle tools
+tests/ e2e/ integration/   unit, browser and database tests
+certs/              Supabase public root certificate
+```
 
-The four original source PDFs are preserved together in [`source-material/original-pdfs`](source-material/original-pdfs/README.md). The 60-day pages and 52 System Design drafts are retained. The 40 Applied AI Markdown files are cleaned working drafts; their exact pre-edit Markdown versions were not separately preserved, though the source PDF is intact.
+## Content rules
 
-## Database and deployment
+- Chapter drafts are plain Markdown in `docs/applied-ai`. The lesson page splits each into concept, worked example and project sections by its `##` headings. The line `## Course project — milestone N` is required in every chapter and is checked by `npm run content:check`.
+- Public question prompts are in the repository. Answer keys, feedback notes, hint packs and the review sign-off are private and live in `curriculum/private/`, which is never committed.
+- The catalog cannot be published to a production database until the private review file records a reviewer, a date and a matching content fingerprint for both the questions and the hints.
+- Resource links are checked for reachability and topic fit. Lesson claims still need editorial review before a lesson is marked reviewed.
 
-Do not put database URLs, provider secrets, OpenAI keys, or Supabase secret keys in browser variables or Git. Apply Prisma migrations only to a verified development or staging database first. Production deployment requires Vercel environment variables, Supabase email/Google/GitHub OAuth configuration, SMTP, and optional server-side AI credentials.
+## Deploying to Vercel
 
-Production deployment is a manual, reviewed step. The `Deploy to Vercel` GitHub Actions workflow is `workflow_dispatch` only and requires repository secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`); it never runs automatically.
+1. Create the Vercel project from this repository. The build command is `npm run build`.
+2. Set the environment variables above in Vercel. Set `NEXT_PUBLIC_APP_URL` to the production origin for the Production environment, and do not attach production credentials to Preview deployments.
+3. In Supabase, add the production URL to the redirect URLs.
+4. Keep function regions near your database (a Supabase project in Sydney pairs with Vercel's `syd1`).
+5. The `Deploy to Vercel` GitHub Actions workflow is manual (`workflow_dispatch`) and needs the repository secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID`. Nothing deploys on push.
 
+CI (`Academy CI`) runs content validation, unit tests, type checking, lint, a production build, the browser tests and the database tests on every push and pull request.
 
-## Running locally and signing in
+## Known limits
 
-`npm run dev` always serves on **http://localhost:3000** and exits with an error if that port is busy, because sign-in is tied to one address: `NEXT_PUBLIC_APP_URL` (default `http://localhost:3000`) is used for the OAuth redirect, the sign-in cookie, and the CSRF origin check. Opening the app at `127.0.0.1` or another port shows a notice on the sign-in page instead of failing silently.
-
-In the Supabase dashboard (Authentication, URL configuration) add `http://localhost:3000/**` to the redirect URLs. Google and GitHub OAuth apps keep using Supabase's own callback, `https://<project-ref>.supabase.co/auth/v1/callback`. Email links must be opened in the same browser that requested them.
-
-`npm run dev:local` runs the same app on port 3000 against a throwaway local PostgreSQL (data in `.local-stack/`, migrations applied, draft catalog imported and marked published in that local database only). Sign-in still uses your Supabase project, so Google, GitHub and email work, while progress, quiz attempts, hints and bookmarks stay on your machine. It needs PostgreSQL server tools and the private review bundle in `curriculum/private`.
-
-## Local checks and current release plan
-
-Run npm run test, npm run typecheck, npm run lint, npm run curriculum:public-check, and npm run build. Browser checks use npm run test:e2e against an isolated production build. Database acceptance uses npm run test:integration with disposable local PostgreSQL server tools (or PG_BIN); it never falls back to the app database.
-
-Public discovery and the signed-in learning workspace are separate; light/dark/system appearance is browser-local. System Design and sprint source files are retained in the repository but have not been routed into the academy reading UI yet.
+- The course catalog is not imported into the hosted database yet, so quizzes and hints show "not published" there until the review gate passes. Use `npm run dev:local` to try them.
+- Course project submissions are self-reported.
+- System Design, Cloud and the 60-day sprint are roadmaps; their source files are retained but not routed into the reader.
+- Manual screen-reader and browser-zoom testing, production sign-in with two real accounts, and an email provider for sign-in links are still to do.

@@ -9,8 +9,9 @@ Set `DATABASE_URL` to the Supabase transaction-pool connection string for the
 application runtime. Set `DIRECT_URL` to the project's session/direct connection
 for migrations. Use the exact endpoints shown in the target project's Connect
 dialog. Keep `sslmode=verify-full` and set `sslrootcert=certs/supabase-prod-root.crt`
-on both URLs. The public Supabase CA stays outside `public/`; Next's server-file
-tracing includes it in server deployments. Do not use `sslmode=no-verify` or
+on both URLs. The public Supabase root CA is committed at
+`certs/supabase-prod-root.crt` (a public certificate, no private key) and stays
+outside `public/`; Next's server-file tracing includes it in server deployments. Do not use `sslmode=no-verify` or
 disable TLS validation. The local URL uses the same relative certificate path.
 
 With a local `.env.local` configured, generate the client and apply reviewed
