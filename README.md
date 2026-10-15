@@ -6,6 +6,8 @@ It is a Next.js app (App Router, React 19, TypeScript) with Supabase for sign-in
 
 ## Status
 
+Version 1.0.0 (early beta). Reading, labs, sign-in and saved progress work. Quizzes and hints go live once the course catalog passes editorial review (see Known limits).
+
 | Course | Lessons | State |
 |---|---|---|
 | Reliable AI Applications | 40 chapters in 8 modules, 8 project milestones | Draft chapters are readable. Lessons, quiz questions and hints are still in editorial review, so the course is not published as complete. |
